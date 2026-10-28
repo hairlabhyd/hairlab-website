@@ -24,7 +24,7 @@ export function CartButton() {
   return (
     <Button
       onClick={toggleCart}
-      className="relative bg-[#2C2416] hover:bg-[#B8553C] text-[#F4ECD8] rounded-full px-4 sm:px-5 py-2 text-[11px] tracking-[0.15em] uppercase"
+      className="relative bg-[#F4ECD8] hover:bg-[#F4ECD8]/85 text-[#1A3D2A] rounded-full px-4 sm:px-5 py-2 text-[11px] tracking-[0.15em] uppercase font-medium"
       aria-label="Open cart"
     >
       <ShoppingBag className="h-3.5 w-3.5 sm:mr-1.5" />

@@ -100,60 +100,61 @@ export default function Home() {
       <CartDrawer />
       <AdminModal />
 
-      {/* ANNOUNCEMENT BAR — scrolling tagline */}
-      <div className="bg-[#2C2416] text-[#F4ECD8] py-2.5 overflow-hidden border-b border-[#7A8450]/30">
-        <div className="flex items-center gap-8 animate-[marquee_25s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.3em] uppercase">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-8">
-              <span>Ancient Luxury, Handcrafted</span>
-              <span className="text-[#7A8450]">✦</span>
-              <span>For Modern Age</span>
-              <span className="text-[#7A8450]">✦</span>
-            </div>
-          ))}
+      {/* GREEN WALL — announcement bar + nav as one continuous dark green wall */}
+      <div className="sticky top-0 z-40 bg-[#1A3D2A] text-[#F4ECD8] shadow-lg shadow-[#1A3D2A]/20">
+        {/* Scrolling tagline */}
+        <div className="py-2.5 overflow-hidden border-b border-[#F4ECD8]/10">
+          <div className="flex items-center gap-8 animate-[marquee_25s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.3em] uppercase">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-8">
+                <span>Ancient Luxury, Handcrafted</span>
+                <span className="text-[#B8860B]">✦</span>
+                <span>For Modern Age</span>
+                <span className="text-[#B8860B]">✦</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* NAV — Hamburger left, Logo center, Cart right */}
-      <header className="sticky top-0 z-40 bg-[#F4ECD8]/85 backdrop-blur-md border-b border-[#2C2416]/10">
+        {/* Nav — logo blends into the green wall, white text shows */}
         <nav className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between relative">
           {/* LEFT: Hamburger on mobile, nav links on desktop */}
           <div className="flex items-center gap-6 flex-1">
             <MobileMenu />
-            <div className="hidden md:flex items-center gap-8 text-[12px] tracking-[0.2em] uppercase text-[#2C2416]/70">
-              <a href="#shop" className="hover:text-[#B8553C] transition-colors">
+            <div className="hidden md:flex items-center gap-8 text-[12px] tracking-[0.2em] uppercase text-[#F4ECD8]/75">
+              <a href="#shop" className="hover:text-[#F4ECD8] transition-colors">
                 Shop
               </a>
-              <a href="#story" className="hover:text-[#B8553C] transition-colors">
+              <a href="#story" className="hover:text-[#F4ECD8] transition-colors">
                 Our Story
               </a>
-              <a href="#herbs" className="hover:text-[#B8553C] transition-colors">
+              <a href="#herbs" className="hover:text-[#F4ECD8] transition-colors">
                 Herbs
               </a>
             </div>
           </div>
 
-          {/* CENTER: Hair Lab. logo — green badge with woman icon + HAIR LAB. text */}
+          {/* CENTER: Hair Lab. logo — dark green wall, logo's white parts (woman icon + HAIR LAB.) show */}
           <a
             href="#top"
-            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-10 sm:h-12"
+            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-12 sm:h-14"
             aria-label="HAIR LAB. home"
           >
             { }
             <img
               src="/hairlab-logo-green.png"
               alt="HAIR LAB. logo"
-              className="h-full w-auto object-contain"
+              className="h-full w-auto object-contain mix-blend-normal"
             />
           </a>
 
-          {/* RIGHT: Instagram + Cart */}
+          {/* RIGHT: Instagram + Cart (cream icons on green wall) */}
           <div className="flex items-center gap-3 flex-1 justify-end">
             <a
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:block text-[#2C2416]/70 hover:text-[#B8553C] transition-colors"
+              className="hidden sm:block text-[#F4ECD8]/75 hover:text-[#F4ECD8] transition-colors"
               aria-label="Instagram"
             >
               <Instagram className="h-4 w-4" />
@@ -161,7 +162,7 @@ export default function Home() {
             <CartButton />
           </div>
         </nav>
-      </header>
+      </div>
 
       {/* HERO */}
       <section id="top" className="relative overflow-hidden">
