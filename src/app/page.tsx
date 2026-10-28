@@ -305,31 +305,39 @@ export default function Home() {
             <div className="flex items-center gap-3 mb-5">
               <div className="h-px w-10 bg-[#7A8450]" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                The House of HAIR LAB.
+                Founder&apos;s Message
               </span>
             </div>
             <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
-              Roots run deep.
+              Founder&apos;s
               <br />
-              <span className="italic text-[#B8553C]">Rituals run deeper.</span>
+              <span className="italic text-[#B8553C]">Message.</span>
             </h2>
             <div className="mt-8 space-y-5 text-[#2C2416]/75 leading-relaxed font-[family-name:var(--font-inter)]">
               <p>
-                HAIR LAB. began as a love letter to the rituals we grew up with
-                — the Sunday evening scalp massage, the slow infusion of
-                bhringraj in sesame, the patience of waiting for herbs to give
-                themselves to the oil. We wanted to honor that wisdom, not
-                replace it.
+                At HAIR LAB., we believe good haircare begins with understanding
+                your hair, not following trends.
               </p>
               <p>
-                Each batch is hand-blended in small quantities. We love
-                coconut, but we also love sesame in winters especially — so we
-                use both, depending on the season and the ritual. Slow-infused
-                over days, bottled with intention. A quiet inheritance passed
-                forward, one ritual at a time.
+                Understanding your hair porosity, its needs, and how it responds
+                to different ingredients can help you make more informed choices
+                for your hair.
+              </p>
+              <p>
+                Natural doesn&apos;t automatically mean better, just as synthetic
+                doesn&apos;t automatically mean harmful. What matters is the
+                ingredient, how it&apos;s formulated, and the purpose it serves.
+              </p>
+              <p>
+                Our approach brings together traditional botanical knowledge and
+                modern scientific understanding to create products that are
+                thoughtfully developed and designed for real-life needs.
+              </p>
+              <p>
+                Because we believe personal care should be as individual as you are.
               </p>
               <p className="font-[family-name:var(--font-playfair)] italic text-xl text-[#7A8450]">
-                Heritage, hand-blended. Ritual, restored.
+                HAIR LAB. · Made with intention.
               </p>
               <p className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A] mt-4">
                 Botanical · Intentional · Rooted in ritual
@@ -572,7 +580,7 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-5">
               <div className="h-px w-10 bg-[#B8860B]" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-[#B8860B]">
-                Letters from Sruwa
+                Notes from the Lab
               </span>
               <div className="h-px w-10 bg-[#B8860B]" />
             </div>
