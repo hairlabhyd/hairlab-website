@@ -45,7 +45,7 @@ export function MobileMenu() {
             <SheetTitle className="flex items-center h-10 w-10">
               { }
               <img
-                src="/hairlab-logo-color.png"
+                src="/hairlab-logo-green.png"
                 alt="HAIR LAB."
                 className="h-full w-auto object-contain"
               />

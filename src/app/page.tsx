@@ -141,7 +141,7 @@ export default function Home() {
           >
             { }
             <img
-              src="/hairlab-logo-color.png"
+              src="/hairlab-logo-green.png"
               alt="HAIR LAB. logo"
               className="h-full w-auto object-contain"
             />
@@ -635,7 +635,7 @@ export default function Home() {
             <div>
               { }
               <img
-                src="/hairlab-logo-white.png"
+                src="/hairlab-logo-green.png"
                 alt="HAIR LAB."
                 className="h-16 w-16 object-contain mb-4"
               />
