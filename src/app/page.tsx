@@ -59,28 +59,36 @@ const favHerbs = [
   { name: "Brahmi", note: "Calms the scalp, soothes the mind" },
   { name: "Hibiscus", note: "Softens, conditions, revives" },
   { name: "Fenugreek", note: "Protein, shine, strength" },
+  { name: "Black Seed Oil", note: "Anti-inflammatory heritage" },
+  { name: "Sesame", note: "The Ayurvedic base, slow-infused" },
+  { name: "Pumpkin Seed Oil", note: "Rich in zinc, for scalp health" },
   { name: "Curry Leaf", note: "South Indian heritage staple" },
-  { name: "Shikakai", note: "The original gentle cleanser" },
 ];
 
 const testimonials = [
   {
     quote:
-      "Three weeks in. My mother asked what I was doing differently. I told her: nothing — just the oil, every night.",
+      "Three weeks with Neelam. My grandmother asked what I was doing differently. I told her: just the oil, every night — like she taught me.",
+    name: "Neelam R.",
+    place: "Hyderabad, Telangana",
+  },
+  {
+    quote:
+      "The Mane oil has become my Sunday ritual. Two minutes, scalp to ends. My hair feels softer on Monday morning than it has in years.",
+    name: "Dhanu K.",
+    place: "Hyderabad, Telangana",
+  },
+  {
+    quote:
+      "The Kāru comb is the most underrated product on the site. I use it morning and night — neem wood feels different on the scalp. No static, no snags.",
+    name: "Mukta S.",
+    place: "Hyderabad, Telangana",
+  },
+  {
+    quote:
+      "Ojas powder mask felt dry and chalky the first time. Then Sruwa told me to mix a few drops of Mane oil into the paste before applying. Game-changer. Soft, conditioned hair after one use.",
     name: "Lakshmi P.",
     place: "Hyderabad, Telangana",
-  },
-  {
-    quote:
-      "I bought Mane for the bottle. I stayed for the way my hair feels in the morning — softer, calmer, alive.",
-    name: "Deepa R.",
-    place: "Hyderabad, Telangana",
-  },
-  {
-    quote:
-      "The Neelam smells like my grandmother's house. That alone is worth it. The hair growth is a bonus.",
-    name: "Sahana K.",
-    place: "Bengaluru, Karnataka",
   },
 ];
 
@@ -125,12 +133,18 @@ export default function Home() {
             </div>
           </div>
 
-          {/* CENTER: Logo */}
+          {/* CENTER: Hair Lab. logo (color version for cream background) */}
           <a
             href="#top"
-            className="font-[family-name:var(--font-playfair)] text-2xl sm:text-3xl tracking-[0.15em] uppercase text-[#2C2416] absolute left-1/2 -translate-x-1/2"
+            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14"
+            aria-label="HAIR LAB. home"
           >
-            Hair Lab.
+            { }
+            <img
+              src="/hairlab-logo-color.png"
+              alt="HAIR LAB. logo"
+              className="h-full w-auto object-contain"
+            />
           </a>
 
           {/* RIGHT: Instagram + Cart */}
@@ -550,7 +564,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {testimonials.map((t) => (
               <Card
                 key={t.name}
@@ -619,10 +633,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             <div>
-              <h3 className="font-[family-name:var(--font-playfair)] text-3xl tracking-[0.15em] uppercase">
-                Hair Lab.
-              </h3>
-              <p className="mt-4 text-sm text-[#F4ECD8]/60 leading-relaxed max-w-xs">
+              { }
+              <img
+                src="/hairlab-logo-white.png"
+                alt="HAIR LAB."
+                className="h-16 w-16 object-contain mb-4"
+              />
+              <p className="text-sm text-[#F4ECD8]/60 leading-relaxed max-w-xs">
                 Ancient luxury, handcrafted. All-natural, cruelty-free hair care
                 made in small batches, with intention.
               </p>

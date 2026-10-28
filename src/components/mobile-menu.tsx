@@ -42,8 +42,13 @@ export function MobileMenu() {
           className="w-[280px] sm:w-[320px] bg-[#F4ECD8] border-r border-[#2C2416]/10 p-0 flex flex-col"
         >
           <SheetHeader className="px-5 py-4 border-b border-[#2C2416]/10 flex flex-row items-center justify-between space-y-0">
-            <SheetTitle className="font-[family-name:var(--font-playfair)] text-2xl tracking-[0.15em] uppercase text-[#2C2416]">
-              Hair Lab.
+            <SheetTitle className="flex items-center h-10 w-10">
+              { }
+              <img
+                src="/hairlab-logo-color.png"
+                alt="HAIR LAB."
+                className="h-full w-auto object-contain"
+              />
             </SheetTitle>
             <button
               onClick={() => setIsOpen(false)}

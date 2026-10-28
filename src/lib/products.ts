@@ -34,9 +34,9 @@ export const products: Product[] = [
     accentTo: "#5C6B3A",
     ingredients: [
       "Hibiscus",
-      "Black Seed",
+      "Black Seed Oil",
       "Fenugreek",
-      "Coconut",
+      "Sesame",
       "Amla",
       "Curry Leaf",
     ],
@@ -83,7 +83,7 @@ export const products: Product[] = [
       "Amla",
       "Bhringraj",
       "Brahmi",
-      "Shikakai",
+      "Sesame",
     ],
   },
   {
