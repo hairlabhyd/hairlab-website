@@ -71,24 +71,28 @@ const testimonials = [
       "Neelam smells so good. 4.5/5.",
     name: "Jahnvi",
     place: "Hyderabad, Telangana",
+    rating: 4.5,
   },
   {
     quote:
       "The Mane oil has become my Sunday ritual. Two minutes, scalp to ends. My hair feels softer on Monday morning than it has in years.",
     name: "Dhanu K.",
     place: "Hyderabad, Telangana",
+    rating: 5,
   },
   {
     quote:
       "The Kāru comb is the most underrated product on the site. I use it morning and night — neem wood feels different on the scalp. No static, no snags.",
     name: "Mukta K.",
     place: "Hyderabad, Telangana",
+    rating: 5,
   },
   {
     quote:
-      "I mixed it with Mane oil and tea decoction. The best. I also mixed curd once. That's it.",
+      "Ojas is the best. I mixed it with Mane oil and tea decoction. I also mixed curd once. That's it.",
     name: "Lakshmi P.",
     place: "Hyderabad, Telangana",
+    rating: 5,
   },
 ];
 
@@ -116,12 +120,36 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Nav — logo blends into the green wall, white text shows */}
+        {/* Nav — logo on LEFT, 'HAIR LAB.' white text CENTER, cart on RIGHT */}
         <nav className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between relative">
-          {/* LEFT: Hamburger on mobile, nav links on desktop */}
-          <div className="flex items-center gap-6 flex-1">
+          {/* LEFT: Hamburger + Logo */}
+          <div className="flex items-center gap-3">
             <MobileMenu />
-            <div className="hidden md:flex items-center gap-8 text-[12px] tracking-[0.2em] uppercase text-[#F4ECD8]/75">
+            <a
+              href="#top"
+              className="flex items-center justify-center h-10 sm:h-12"
+              aria-label="HAIR LAB. home"
+            >
+              { }
+              <img
+                src="/hairlab-logo-green.png"
+                alt="HAIR LAB. logo"
+                className="h-full w-auto object-contain"
+              />
+            </a>
+          </div>
+
+          {/* CENTER: 'HAIR LAB.' in white text (visible on the green wall) */}
+          <a
+            href="#top"
+            className="absolute left-1/2 -translate-x-1/2 font-[family-name:var(--font-playfair)] text-2xl sm:text-3xl tracking-[0.2em] uppercase text-[#F4ECD8] hover:text-white transition-colors"
+          >
+            Hair Lab.
+          </a>
+
+          {/* RIGHT: Desktop nav links + Instagram + Cart */}
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6 text-[12px] tracking-[0.2em] uppercase text-[#F4ECD8]/75">
               <a href="#shop" className="hover:text-[#F4ECD8] transition-colors">
                 Shop
               </a>
@@ -132,24 +160,6 @@ export default function Home() {
                 Herbs
               </a>
             </div>
-          </div>
-
-          {/* CENTER: Hair Lab. logo — dark green wall, logo's white parts (woman icon + HAIR LAB.) show */}
-          <a
-            href="#top"
-            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-12 sm:h-14"
-            aria-label="HAIR LAB. home"
-          >
-            { }
-            <img
-              src="/hairlab-logo-green.png"
-              alt="HAIR LAB. logo"
-              className="h-full w-auto object-contain mix-blend-normal"
-            />
-          </a>
-
-          {/* RIGHT: Instagram + Cart (cream icons on green wall) */}
-          <div className="flex items-center gap-3 flex-1 justify-end">
             <a
               href={INSTAGRAM_URL}
               target="_blank"
@@ -571,12 +581,23 @@ export default function Home() {
                 className="bg-white border-0 rounded-sm p-8 flex flex-col"
               >
                 <div className="flex gap-1 mb-5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-3.5 w-3.5 fill-[#B8860B] text-[#B8860B]"
-                    />
-                  ))}
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    const isHalf = t.rating >= star - 0.5 && t.rating < star;
+                    const isFull = t.rating >= star;
+                    return (
+                      <div key={star} className="relative">
+                        <Star className="h-3.5 w-3.5 text-[#B8860B]/30" />
+                        {(isFull || isHalf) && (
+                          <div
+                            className="absolute inset-0 overflow-hidden"
+                            style={{ width: isHalf ? "50%" : "100%" }}
+                          >
+                            <Star className="h-3.5 w-3.5 fill-[#B8860B] text-[#B8860B]" />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
                 <p className="font-[family-name:var(--font-playfair)] italic text-lg text-[#2C2416]/85 leading-relaxed flex-1">
                   &ldquo;{t.quote}&rdquo;
