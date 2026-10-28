@@ -52,3 +52,10 @@ prompt
 server.log
 # Skills directory
 /skills/
+# local env files
+.env
+.env.local
+
+# database (will be seeded on deploy)
+/db/*.db
+/db/*.db-journal
