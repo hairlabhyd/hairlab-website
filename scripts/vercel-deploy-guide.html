@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vercel Deploy Guide</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f8fa; margin: 0; padding: 40px 20px; }
+  .step { max-width: 900px; margin: 0 auto 60px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .step-header { background: #000; color: white; padding: 20px 30px; font-size: 22px; font-weight: 600; }
+  .step-sub { padding: 8px 30px; background: #f6f8fa; color: #57606a; font-size: 14px; border-bottom: 1px solid #d0d7de; }
+  .vercel-ui { background: white; padding: 30px; }
+  .env-row { display: grid; grid-template-columns: 200px 1fr; gap: 12px; padding: 14px; border: 1px solid #eaeaea; border-radius: 6px; margin-bottom: 14px; background: #fafbfc; }
+  .env-row.highlighted { border: 3px solid #d4a72c; background: #fff8c5; }
+  .env-label { font-weight: 600; font-size: 13px; color: #24292f; padding-top: 6px; }
+  .env-label small { display: block; font-weight: 400; color: #57606a; font-size: 11px; margin-top: 2px; }
+  .env-input { padding: 8px 12px; border: 1px solid #d0d7de; border-radius: 4px; font-size: 13px; background: white; font-family: 'SF Mono', Consolas, monospace; }
+  .env-input.placeholder { color: #57606a; background: #f6f8fa; }
+  .env-input.filled { color: #24292f; background: white; border: 1px solid #2da44e; }
+  .btn { padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 500; display: inline-block; }
+  .btn-blue { background: #0070f3; color: white; }
+  .btn-gray { background: #f6f8fa; color: #57606a; border: 1px solid #d0d7de; }
+  .helper { font-size: 11px; color: #57606a; margin-top: 4px; }
+  .section-title { font-weight: 700; font-size: 16px; color: #24292f; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: "▼"; font-size: 10px; color: #57606a; }
+  .arrow { font-size: 18px; color: #d4a72c; }
+  .warning { background: #fff8c5; border: 1px solid #d4a72c; padding: 12px 16px; border-radius: 6px; margin: 14px 0; font-size: 13px; color: #57606a; }
+  .deploy-btn { background: #0070f3; color: white; padding: 14px 28px; border-radius: 6px; font-size: 15px; font-weight: 600; display: block; text-align: center; margin: 20px 0; }
+  .deploy-section { background: white; padding: 20px; border-top: 2px solid #eaeaea; }
+</style>
+</head>
+<body>
+
+<div class="step">
+  <div class="step-header">📍 You are here: Vercel Project Import</div>
+  <div class="step-sub">Project: <strong>hairlab-website</strong> · Framework: Next.js · Don't change anything else, just add the env vars below 👇</div>
+
+  <div class="vercel-ui">
+    <div class="section-title">Environment Variables</div>
+    <p style="font-size:13px;color:#57606a;margin-bottom:18px;">Add these 4 variables one by one. For each: type the Key, type the Value, leave checkboxes as default, click "Add".</p>
+
+    <div class="env-row highlighted">
+      <div class="env-label">Variable 1<small>Database location</small></div>
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div class="env-input filled" style="width:220px;">DATABASE_URL</div>
+          <div class="env-input filled" style="flex:1;">file:/tmp/custom.db</div>
+        </div>
+        <div class="helper">👆 Key = <code>DATABASE_URL</code> · Value = <code>file:/tmp/custom.db</code> · click "Add"</div>
+      </div>
+    </div>
+
+    <div class="env-row highlighted">
+      <div class="env-label">Variable 2<small>Admin panel passcode</small></div>
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div class="env-input filled" style="width:220px;">ADMIN_PASSCODE</div>
+          <div class="env-input filled" style="flex:1;">hairlab2026</div>
+        </div>
+        <div class="helper">👆 Key = <code>ADMIN_PASSCODE</code> · Value = <code>hairlab2026</code> · click "Add"</div>
+      </div>
+    </div>
+
+    <div class="env-row highlighted">
+      <div class="env-label">Variable 3<small>Razorpay Key ID</small></div>
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div class="env-input filled" style="width:220px;">RAZORPAY_KEY_ID</div>
+          <div class="env-input filled" style="flex:1;">rzp_live_your_live_key_id</div>
+        </div>
+        <div class="helper">👆 Key = <code>RAZORPAY_KEY_ID</code> · Value = paste YOUR live Key ID from Razorpay (starts with <code>rzp_live_</code>)</div>
+      </div>
+    </div>
+
+    <div class="env-row highlighted">
+      <div class="env-label">Variable 4<small>Razorpay Secret</small></div>
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div class="env-input filled" style="width:220px;">RAZORPAY_KEY_SECRET</div>
+          <div class="env-input filled" style="flex:1;">your_live_secret_here</div>
+        </div>
+        <div class="helper">👆 Key = <code>RAZORPAY_KEY_SECRET</code> · Value = paste YOUR live Secret from Razorpay</div>
+      </div>
+    </div>
+
+    <div class="warning">
+      ⚠️ <strong>Important:</strong> For each variable, after typing Key + Value, scroll down and click the <strong>"Add"</strong> button. Otherwise it won't save.
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header">🚀 Last step: Click Deploy</div>
+  <div class="vercel-ui">
+    <p style="font-size:14px;color:#57606a;">After adding all 4 env vars, scroll ALL the way down to the bottom of the page.</p>
+    <div class="deploy-btn">↓ Deploy ↓</div>
+    <p style="font-size:13px;color:#57606a;margin-top:10px;">👆 Big blue button at the very bottom of the page. Click it. Done!</p>
+    
+    <div class="warning">
+      ⏳ After clicking Deploy, Vercel will build your site (takes 2-4 minutes). You'll see a build log streaming. <strong>Wait until it says "Ready" with a green checkmark.</strong>
+    </div>
+
+    <div style="margin-top:20px;padding:16px;background:#f6f8fa;border-radius:6px;">
+      <p style="margin:0;font-size:13px;color:#24292f;"><strong>✅ When it's done, Vercel will give you a URL like:</strong></p>
+      <p style="margin:6px 0 0;font-family:monospace;font-size:14px;color:#0070f3;">hairlab-website.vercel.app</p>
+      <p style="margin:10px 0 0;font-size:13px;color:#57606a;">Click it → your store is LIVE on the internet! 🎉</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header">✅ Quick Recap</div>
+  <div class="vercel-ui">
+    <ol style="font-size:15px;line-height:1.9;color:#24292f;">
+      <li>Add env var #1: <code>DATABASE_URL</code> = <code>file:/tmp/custom.db</code> → click Add</li>
+      <li>Add env var #2: <code>ADMIN_PASSCODE</code> = <code>hairlab2026</code> → click Add</li>
+      <li>Add env var #3: <code>RAZORPAY_KEY_ID</code> = your live Razorpay Key ID → click Add</li>
+      <li>Add env var #4: <code>RAZORPAY_KEY_SECRET</code> = your live Secret → click Add</li>
+      <li>Scroll to very bottom → click the big blue <strong>Deploy</strong> button</li>
+      <li>Wait 2-4 min → click the URL Vercel gives you → site is LIVE</li>
+      <li>Send me the URL it gave you — we'll connect hairlab.one next</li>
+    </ol>
+  </div>
+</div>
+
+</body>
+</html>
