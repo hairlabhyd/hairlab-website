@@ -1,41 +1,15 @@
 import { db } from "@/lib/db";
 
 async function seed() {
-  console.log("🌱 Seeding Hairlab products...");
+  console.log("🌱 Seeding REAL Hairlab products from SmartBiz...");
 
   const products = [
     {
-      slug: "resham",
-      name: "Resham",
-      subtitle: "Everyday Night Oil",
-      description:
-        "A silken nightly ritual of argan, grapeseed, and fenugreek — massaged in for two minutes, washed out by morning light. Each bottle comes with a 30-night ritual calendar printed on the side.",
-      price: 38900, // ₹389 in paise
-      volume: "30 ml",
-      image: "/products/resham-packaging.png",
-      tagline: "Made with intention",
-      nights: 30,
-      accentFrom: "#B8553C",
-      accentTo: "#8C3A24",
-      ingredients: JSON.stringify([
-        "Argan",
-        "Grapeseed",
-        "Castor",
-        "Almond",
-        "Rosemary",
-        "Jojoba",
-        "Black Seed",
-        "Fenugreek",
-        "Hibiscus",
-        "Vitamin E",
-      ]),
-    },
-    {
       slug: "mane",
       name: "Mane",
-      subtitle: "Daily Hair Oil",
+      subtitle: "Hair Oil",
       description:
-        "A featherweight daily oil for softness without weight. Hibiscus and black seed woven through a cold-pressed coconut base — for hair that moves like it remembers silk.",
+        "A featherweight daily oil for softness without weight. Cold-pressed coconut base woven with hibiscus, black seed, and fenugreek — for hair that moves like it remembers silk. Massaged in for two minutes, rinsed by morning light.",
       price: 28900, // ₹289
       volume: "100 ml",
       image: "/products/resham-packaging.png",
@@ -53,11 +27,11 @@ async function seed() {
       ]),
     },
     {
-      slug: "blue-bhring",
-      name: "Blue Bhring",
-      subtitle: "Bhringraj Ritual Oil",
+      slug: "neelam",
+      name: "Neelam",
+      subtitle: "Blue Bhring Oil",
       description:
-        "The deep indigo of true bhringraj. For scalp health, strength, and the kind of hair that remembers it has roots. Steeped slow for 72 hours.",
+        "The deep indigo of true bhringraj. For scalp health, strength, and the kind of hair that remembers it has roots. Steeped slow for 72 hours in cold-pressed sesame, infused with brahmi and amla.",
       price: 21900, // ₹219
       volume: "100 ml",
       image: "/products/resham-packaging.png",
@@ -74,6 +48,48 @@ async function seed() {
         "Nilini",
       ]),
     },
+    {
+      slug: "ojas",
+      name: "Ojas",
+      subtitle: "Power Mix Hair Mask",
+      description:
+        "A weekly power mask for hair that needs more. Hibiscus, fenugreek, and a chorus of Ayurvedic herbs mixed fresh into a powder base — activated with water or yogurt when you're ready. Strength in a bowl.",
+      price: 18900, // ₹189
+      volume: "100 g",
+      image: "/products/resham-packaging.png",
+      tagline: "Weekly ritual",
+      nights: null,
+      accentFrom: "#B8860B",
+      accentTo: "#8C6708",
+      ingredients: JSON.stringify([
+        "Hibiscus",
+        "Fenugreek",
+        "Amla",
+        "Bhringraj",
+        "Brahmi",
+        "Shikakai",
+      ]),
+    },
+    {
+      slug: "karu",
+      name: "Kāru",
+      subtitle: "Neem Wood Comb",
+      description:
+        "Hand-carved from a single piece of neem wood. Anti-bacterial by nature, gentle by design. The comb your grandmother used, made the way it was always meant to be made — no plastic, no lacquer, no compromise.",
+      price: 18900, // ₹189
+      volume: "1 piece",
+      image: "/products/resham-packaging.png",
+      tagline: "Hand-carved",
+      nights: null,
+      accentFrom: "#8C6F4A",
+      accentTo: "#5C4A2F",
+      ingredients: JSON.stringify([
+        "Neem Wood",
+        "Hand-carved",
+        "Anti-bacterial",
+        "Plastic-free",
+      ]),
+    },
   ];
 
   for (const p of products) {
@@ -85,7 +101,16 @@ async function seed() {
     console.log(`✓ ${p.name} — ₹${(p.price / 100).toFixed(0)} / ${p.volume}`);
   }
 
-  console.log("✅ Seed complete!");
+  // Delete any products not in this list (e.g., the old "resham" sample)
+  const slugs = products.map((p) => p.slug);
+  const deleted = await db.product.deleteMany({
+    where: { slug: { notIn: slugs } },
+  });
+  if (deleted.count > 0) {
+    console.log(`🧹 Removed ${deleted.count} old sample product(s)`);
+  }
+
+  console.log("✅ Seed complete — 4 real products live!");
 }
 
 seed()
