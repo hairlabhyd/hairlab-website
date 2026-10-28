@@ -24,6 +24,7 @@ import { AdminModal } from "@/components/admin-modal";
 import { CopyrightTrigger } from "@/components/copyright-trigger";
 import { MobileMenu } from "@/components/mobile-menu";
 import { RitualQuiz } from "@/components/ritual-quiz";
+import { DidYouKnowPopup } from "@/components/did-you-know-popup";
 
 const INSTAGRAM_URL = "https://www.instagram.com/yourhairourlab/";
 const WHATSAPP_URL = "https://wa.me/919502194263";
@@ -33,8 +34,8 @@ const EMAIL = "hairlabhyd@gmail.com";
 const ourPromise = [
   {
     icon: Sparkles,
-    title: "Tested on us first",
-    body: "Every batch goes on Sruwa's scalp before it goes on yours. No fillers, no shortcuts.",
+    title: "Every batch, in our own hands first",
+    body: "Tested and then delivered to you. What we wouldn't use ourselves, we wouldn't ship.",
   },
   {
     icon: Truck,
@@ -49,7 +50,7 @@ const ourPromise = [
   {
     icon: RefreshCw,
     title: "Hated it? Tell us.",
-    body: "We'll fix it. Promise. No 7-day windows, no fine print. Just write to us.",
+    body: "We'll make it right. Promise. No 7-day windows, no fine print. Just write to us.",
   },
 ];
 
@@ -104,6 +105,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-[#F4ECD8]">
       <CartDrawer />
       <AdminModal />
+      <DidYouKnowPopup />
 
       {/* GREEN WALL — announcement bar + nav as one continuous dark green wall */}
       <div className="sticky top-0 z-40 bg-[#1A3D2A] text-[#F4ECD8] shadow-lg shadow-[#1A3D2A]/20">
@@ -262,7 +264,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Badge className="bg-[#F4ECD8] text-[#2C2416] hover:bg-[#F4ECD8] rounded-full px-3 text-[10px] tracking-[0.15em] uppercase">
-                  Small batch
+                  Made with intention
                 </Badge>
               </div>
             </div>
@@ -282,8 +284,6 @@ export default function Home() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="flex items-center gap-12">
               <span>Hand-blended</span>
-              <span className="text-[#7A8450]">✦</span>
-              <span>Small batch</span>
               <span className="text-[#7A8450]">✦</span>
               <span>Botanical</span>
               <span className="text-[#7A8450]">✦</span>
@@ -413,7 +413,7 @@ export default function Home() {
             </h2>
           </div>
           <p className="text-sm text-[#2C2416]/60 max-w-xs">
-            Made in small batches. Shipped pan-India. Cash on delivery available.
+            Shipped pan-India. Cash on delivery available.
           </p>
         </div>
 
@@ -594,35 +594,35 @@ export default function Home() {
           <div className="grid sm:grid-cols-3 gap-6">
             <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 -rotate-1 hover:rotate-0 transition-transform duration-500">
               <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                &ldquo;The brands I admired felt distant — luxury price tags,
-                celebrity faces, labs I couldn&apos;t see. I wanted the same
-                ritual, closer to home. Hand-blended, founder-led, honestly
-                priced.&rdquo;
+                &ldquo;Every active in HAIR LAB. comes from a plant. Seed oils,
+                sugarcane-derived ingredients, flowers and roots today. The
+                source never changes.&rdquo;
               </p>
               <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                — On the why
+                — On the source
               </p>
             </div>
 
             <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 rotate-1 hover:rotate-0 transition-transform duration-500">
               <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                &ldquo;Every bottle goes on my scalp before it goes on yours. If
-                it doesn&apos;t feel like ritual to me, it doesn&apos;t ship.
-                That&apos;s the only test I trust.&rdquo;
+                &ldquo;Ritual isn&apos;t about doing more. It&apos;s about doing
+                it often. Detangle. Warm a few drops between your palms. Press
+                into your scalp. Sleep. Repeat. That&apos;s the whole
+                practice.&rdquo;
               </p>
               <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                — On the products
+                — On ritual
               </p>
             </div>
 
             <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 -rotate-1 hover:rotate-0 transition-transform duration-500">
               <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                &ldquo;HAIR LAB. isn&apos;t a lab in the corporate sense.
-                It&apos;s a kitchen in Hyderabad, a sister who runs social,
-                and a founder who answers every DM. Small, by design.&rdquo;
+                &ldquo;Hair porosity matters more than hair type. It tells you
+                how your hair takes in moisture — and how long it holds. Know
+                yours, and most of your hair questions answer themselves.&rdquo;
               </p>
               <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                — On the lab
+                — On porosity
               </p>
             </div>
           </div>
