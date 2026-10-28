@@ -133,10 +133,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* CENTER: Hair Lab. logo (color version for cream background) */}
+          {/* CENTER: Hair Lab. logo — green badge with woman icon + HAIR LAB. text */}
           <a
             href="#top"
-            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14"
+            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-10 sm:h-12"
             aria-label="HAIR LAB. home"
           >
             { }
@@ -637,7 +637,7 @@ export default function Home() {
               <img
                 src="/hairlab-logo-green.png"
                 alt="HAIR LAB."
-                className="h-16 w-16 object-contain mb-4"
+                className="h-12 sm:h-14 w-auto object-contain mb-4"
               />
               <p className="text-sm text-[#F4ECD8]/60 leading-relaxed max-w-xs">
                 Ancient luxury, handcrafted. All-natural, cruelty-free hair care
