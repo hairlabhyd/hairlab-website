@@ -1,4 +1,3 @@
-import { db } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +18,7 @@ import {
   Heart,
   Plus,
 } from "lucide-react";
+import { products as allProducts } from "@/lib/products";
 import { CartDrawer } from "@/components/cart-drawer";
 import { CartButton } from "@/components/cart-button";
 import { AddToCartButton } from "@/components/add-to-cart-button";
@@ -83,10 +83,8 @@ const testimonials = [
   },
 ];
 
-export default async function Home() {
-  const products = await db.product.findMany({
-    orderBy: { price: "desc" },
-  });
+export default function Home() {
+  const products = [...allProducts].sort((a, b) => b.price - a.price);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F4ECD8]">
@@ -433,7 +431,7 @@ export default async function Home() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {products.map((p) => {
-            const ingredientsList = JSON.parse(p.ingredients) as string[];
+            const ingredientsList = p.ingredients;
             const isUpcoming =
               (p.tagline || "").toLowerCase().includes("coming soon") ||
               (p.tagline || "").toLowerCase().includes("upcoming");

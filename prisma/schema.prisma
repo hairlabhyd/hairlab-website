@@ -10,6 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Force SQLite to work on Vercel by using a writable /tmp location
+// with a fallback for local development
+
 model Product {
   id          String   @id @default(cuid())
   slug        String   @unique

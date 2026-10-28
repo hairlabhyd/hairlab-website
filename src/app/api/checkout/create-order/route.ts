@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Razorpay from "razorpay";
-import { db } from "@/lib/db";
+import { createOrder } from "@/lib/orders";
 import { z } from "zod";
 
 const CheckoutSchema = z.object({
@@ -25,7 +25,7 @@ const CheckoutSchema = z.object({
 function getRazorpay() {
   const key_id = process.env.RAZORPAY_KEY_ID;
   const key_secret = process.env.RAZORPAY_KEY_SECRET;
-  if (!key_id || !key_secret || key_id.includes("YOUR_")) {
+  if (!key_id || !key_secret || key_id.includes("YOUR_") || key_id.includes("rzp_test_YOUR")) {
     return null;
   }
   return new Razorpay({ key_id, key_secret });
@@ -55,34 +55,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const order = await db.order.create({
-      data: {
-        customerName: data.customerName,
-        customerEmail: data.customerEmail,
-        customerPhone: data.customerPhone,
-        shippingAddress: data.shippingAddress,
-        shippingCity: data.shippingCity,
-        shippingPincode: data.shippingPincode,
-        shippingState: data.shippingState,
-        amount: amountInPaise,
-        currency: "INR",
-        status: "CREATED",
-        items: {
-          create: data.items.map((i) => ({
-            productId: i.id,
-            name: i.name,
-            price: i.price,
-            quantity: i.quantity,
-          })),
-        },
-      },
+    // Create order in memory
+    const order = createOrder({
+      customerName: data.customerName,
+      customerEmail: data.customerEmail,
+      customerPhone: data.customerPhone,
+      shippingAddress: data.shippingAddress,
+      shippingCity: data.shippingCity,
+      shippingPincode: data.shippingPincode,
+      shippingState: data.shippingState,
+      items: data.items.map((i) => ({
+        id: i.id,
+        name: i.name,
+        price: i.price,
+        quantity: i.quantity,
+      })),
     });
 
     const razorpay = getRazorpay();
     if (!razorpay) {
-      console.warn(
-        "⚠️ Razorpay keys not set. Running in DEMO mode. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env to go live."
-      );
+      console.warn("⚠️ Razorpay keys not set. Running in DEMO mode.");
       return NextResponse.json({
         orderId: order.id,
         razorpayOrderId: `demo_${order.id}`,
@@ -104,10 +96,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    await db.order.update({
-      where: { id: order.id },
-      data: { razorpayOrderId: razorpayOrder.id },
-    });
+    updateOrder(order.id, { razorpayOrderId: razorpayOrder.id });
 
     return NextResponse.json({
       orderId: order.id,
@@ -119,8 +108,11 @@ export async function POST(req: NextRequest) {
   } catch (e) {
     console.error("❌ /api/checkout/create-order error:", e);
     return NextResponse.json(
-      { error: "Could not create order" },
+      { error: "Could not create order: " + (e as Error).message },
       { status: 500 }
     );
   }
 }
+
+// Need to import updateOrder
+import { updateOrder } from "@/lib/orders";

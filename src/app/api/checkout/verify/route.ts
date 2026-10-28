@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Razorpay from "razorpay";
-import { db } from "@/lib/db";
+import { updateOrder } from "@/lib/orders";
 import { z } from "zod";
 
 const VerifySchema = z.object({
@@ -9,15 +8,6 @@ const VerifySchema = z.object({
   razorpayPaymentId: z.string(),
   razorpaySignature: z.string(),
 });
-
-function getRazorpay() {
-  const key_id = process.env.RAZORPAY_KEY_ID;
-  const key_secret = process.env.RAZORPAY_KEY_SECRET;
-  if (!key_id || !key_secret || key_id.includes("YOUR_")) {
-    return null;
-  }
-  return new Razorpay({ key_id, key_secret });
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,41 +22,24 @@ export async function POST(req: NextRequest) {
 
     const data = parsed.data;
 
-    // 1. Look up our internal order
-    const internalOrder = await db.order.findUnique({
-      where: { id: data.orderId },
-      include: { items: true },
-    });
-
-    if (!internalOrder) {
-      return NextResponse.json(
-        { error: "Order not found" },
-        { status: 404 }
-      );
-    }
-
-    // 2. DEMO mode (no keys set): trust the client, mark as PAID
-    const razorpay = getRazorpay();
-    if (!razorpay || data.razorpayOrderId.startsWith("demo_")) {
-      await db.order.update({
-        where: { id: internalOrder.id },
-        data: {
-          razorpayOrderId: data.razorpayOrderId,
-          razorpayPaymentId: data.razorpayPaymentId,
-          razorpaySignature: data.razorpaySignature,
-          status: "PAID",
-        },
+    // Demo mode (no real Razorpay keys)
+    if (data.razorpayOrderId.startsWith("demo_")) {
+      updateOrder(data.orderId, {
+        razorpayOrderId: data.razorpayOrderId,
+        razorpayPaymentId: data.razorpayPaymentId,
+        razorpaySignature: data.razorpaySignature,
+        status: "PAID",
       });
 
       return NextResponse.json({
         success: true,
-        orderId: internalOrder.id,
+        orderId: data.orderId,
         status: "PAID",
         demo: true,
       });
     }
 
-    // 3. REAL mode: verify signature
+    // Real mode: verify signature
     const crypto = await import("crypto");
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
@@ -74,30 +47,23 @@ export async function POST(req: NextRequest) {
       .digest("hex");
 
     if (expectedSignature !== data.razorpaySignature) {
-      await db.order.update({
-        where: { id: internalOrder.id },
-        data: { status: "FAILED" },
-      });
+      updateOrder(data.orderId, { status: "FAILED" });
       return NextResponse.json(
         { error: "Payment signature verification failed" },
         { status: 400 }
       );
     }
 
-    // 4. Mark as PAID
-    await db.order.update({
-      where: { id: internalOrder.id },
-      data: {
-        razorpayOrderId: data.razorpayOrderId,
-        razorpayPaymentId: data.razorpayPaymentId,
-        razorpaySignature: data.razorpaySignature,
-        status: "PAID",
-      },
+    updateOrder(data.orderId, {
+      razorpayOrderId: data.razorpayOrderId,
+      razorpayPaymentId: data.razorpayPaymentId,
+      razorpaySignature: data.razorpaySignature,
+      status: "PAID",
     });
 
     return NextResponse.json({
       success: true,
-      orderId: internalOrder.id,
+      orderId: data.orderId,
       status: "PAID",
     });
   } catch (e) {
