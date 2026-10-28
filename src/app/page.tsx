@@ -4,19 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
   Leaf,
-  Sparkles,
-  Droplets,
-  Moon,
   Star,
   ArrowRight,
   ShoppingBag,
   Mail,
   Phone,
-  Instagram,
   Truck,
   ShieldCheck,
   Heart,
-  Plus,
+  RefreshCw,
+  Sparkles,
+  Instagram,
 } from "lucide-react";
 import { products as allProducts } from "@/lib/products";
 import { CartDrawer } from "@/components/cart-drawer";
@@ -24,62 +22,65 @@ import { CartButton } from "@/components/cart-button";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { AdminModal } from "@/components/admin-modal";
 import { CopyrightTrigger } from "@/components/copyright-trigger";
+import { MobileMenu } from "@/components/mobile-menu";
 
 const INSTAGRAM_URL = "https://www.instagram.com/yourhairourlab/";
 const WHATSAPP_URL = "https://wa.me/919502194263";
+const SUBSTACK_URL = "https://yourhairourlab.substack.com/?utm_campaign=profile_chips";
+const EMAIL = "hairlabhyd@gmail.com";
 
-const rituals = [
-  {
-    icon: Droplets,
-    title: "Two minutes",
-    body: "Massage into damp or dry scalp each night. Not more. Ritual lives in restraint.",
-  },
-  {
-    icon: Moon,
-    title: "Let it rest",
-    body: "Sleep with the oil on. The actives work while you dream. Cover with a silk cap if you have one.",
-  },
+const ourPromise = [
   {
     icon: Sparkles,
-    title: "Morning rinse",
-    body: "A mild cleanser, warm water, gentle hands. The hair emerges softer, scalier, alive.",
+    title: "Assured Quality",
+    body: "Every batch tested by hand. No fillers, no shortcuts — just botanicals, slow-infused.",
   },
   {
-    icon: Leaf,
-    title: "Repeat for 30",
-    body: "Mark each night on your calendar. By night 30, the difference is no longer a question.",
+    icon: Truck,
+    title: "Fast & Free Delivery",
+    body: "Free delivery on orders above ₹800. Pan-India in 5–10 days. COD available.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Secure Payments",
+    body: "256-bit encrypted checkout via Razorpay. UPI, cards, net banking, COD.",
+  },
+  {
+    icon: RefreshCw,
+    title: "Easy Returns",
+    body: "Not happy? Tell us within 7 days. We'll make it right.",
   },
 ];
 
-const ingredients = [
+const favHerbs = [
+  { name: "Aparajita", note: "Butterfly pea — for natural shine" },
   { name: "Bhringraj", note: "The king of hair herbs" },
   { name: "Amla", note: "Vitamin C-rich, cold-pressed" },
   { name: "Brahmi", note: "Calms the scalp, soothes the mind" },
   { name: "Hibiscus", note: "Softens, conditions, revives" },
   { name: "Fenugreek", note: "Protein, shine, strength" },
-  { name: "Black Seed", note: "Anti-inflammatory heritage" },
-  { name: "Neem", note: "Purifying, antimicrobial" },
-  { name: "Coconut", note: "Deep conditioning base" },
+  { name: "Curry Leaf", note: "South Indian heritage staple" },
+  { name: "Shikakai", note: "The original gentle cleanser" },
 ];
 
 const testimonials = [
   {
     quote:
       "Three weeks in. My mother asked what I was doing differently. I told her: nothing — just the oil, every night.",
-    name: "Ananya R.",
-    place: "Bengaluru",
+    name: "Lakshmi P.",
+    place: "Hyderabad, Telangana",
   },
   {
     quote:
-      "I bought Mane for the bottle. I stayed for the way my hair feels in the morning.",
-    name: "Meera K.",
-    place: "Pune",
+      "I bought Mane for the bottle. I stayed for the way my hair feels in the morning — softer, calmer, alive.",
+    name: "Deepa R.",
+    place: "Hyderabad, Telangana",
   },
   {
     quote:
       "The Neelam smells like my grandmother's house. That alone is worth it. The hair growth is a bonus.",
-    name: "Priya S.",
-    place: "Jaipur",
+    name: "Sahana K.",
+    place: "Bengaluru, Karnataka",
   },
 ];
 
@@ -91,34 +92,49 @@ export default function Home() {
       <CartDrawer />
       <AdminModal />
 
-      {/* ANNOUNCEMENT BAR */}
-      <div className="bg-[#2C2416] text-[#F4ECD8] text-center text-[11px] tracking-[0.25em] uppercase py-2.5 px-4">
-        Handcrafted in small batches · Free delivery above ₹800 · Delivered in 5–10 days
+      {/* ANNOUNCEMENT BAR — scrolling tagline */}
+      <div className="bg-[#2C2416] text-[#F4ECD8] py-2.5 overflow-hidden border-b border-[#7A8450]/30">
+        <div className="flex items-center gap-8 animate-[marquee_25s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.3em] uppercase">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-8">
+              <span>Ancient Luxury, Handcrafted</span>
+              <span className="text-[#7A8450]">✦</span>
+              <span>For Modern Age</span>
+              <span className="text-[#7A8450]">✦</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* NAV */}
+      {/* NAV — Hamburger left, Logo center, Cart right */}
       <header className="sticky top-0 z-40 bg-[#F4ECD8]/85 backdrop-blur-md border-b border-[#2C2416]/10">
-        <nav className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <div className="hidden md:flex items-center gap-8 text-[12px] tracking-[0.2em] uppercase text-[#2C2416]/70">
-            <a href="#ritual" className="hover:text-[#B8553C] transition-colors">
-              The Ritual
-            </a>
-            <a href="#shop" className="hover:text-[#B8553C] transition-colors">
-              Shop
-            </a>
-            <a href="#ingredients" className="hover:text-[#B8553C] transition-colors">
-              Ingredients
-            </a>
+        <nav className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between relative">
+          {/* LEFT: Hamburger on mobile, nav links on desktop */}
+          <div className="flex items-center gap-6 flex-1">
+            <MobileMenu />
+            <div className="hidden md:flex items-center gap-8 text-[12px] tracking-[0.2em] uppercase text-[#2C2416]/70">
+              <a href="#shop" className="hover:text-[#B8553C] transition-colors">
+                Shop
+              </a>
+              <a href="#story" className="hover:text-[#B8553C] transition-colors">
+                Our Story
+              </a>
+              <a href="#herbs" className="hover:text-[#B8553C] transition-colors">
+                Herbs
+              </a>
+            </div>
           </div>
 
+          {/* CENTER: Logo */}
           <a
             href="#top"
-            className="font-[family-name:var(--font-playfair)] text-2xl sm:text-3xl tracking-[0.15em] uppercase text-[#2C2416] mx-auto md:mx-0"
+            className="font-[family-name:var(--font-playfair)] text-2xl sm:text-3xl tracking-[0.15em] uppercase text-[#2C2416] absolute left-1/2 -translate-x-1/2"
           >
             Hair Lab.
           </a>
 
-          <div className="flex items-center gap-3">
+          {/* RIGHT: Instagram + Cart */}
+          <div className="flex items-center gap-3 flex-1 justify-end">
             <a
               href={INSTAGRAM_URL}
               target="_blank"
@@ -157,13 +173,13 @@ export default function Home() {
               <br />
               <span className="italic text-[#B8553C]">handcrafted</span>
               <br />
-              for modern hair.
+              for modern age.
             </h1>
 
             <p className="mt-8 text-[#2C2416]/75 text-base sm:text-lg leading-relaxed max-w-md font-[family-name:var(--font-inter)]">
-              All-natural, cruelty-free hair care. Cold-pressed botanicals, slow
-              infusions, hand-blended formulas. Each bottle made in small
-              batches — never mass produced, never rushed.
+              All-natural, cruelty-free hair care rooted in Indian ritual.
+              Cold-pressed botanicals, slow infusions, hand-blended formulas —
+              made in small batches, with intention.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -177,10 +193,10 @@ export default function Home() {
                 </a>
               </Button>
               <a
-                href="#ritual"
+                href="#story"
                 className="text-[12px] tracking-[0.2em] uppercase text-[#2C2416] underline-offset-8 hover:underline hover:text-[#B8553C] transition-colors"
               >
-                Discover the ritual
+                Our Story
               </a>
             </div>
 
@@ -204,7 +220,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] sm:aspect-[5/6] overflow-hidden rounded-sm bg-[#E8DDC3] shadow-2xl shadow-[#2C2416]/20">
               { }
               <img
-                src="/products/resham-packaging.png"
+                src="/products/mane.jpg"
                 alt="HAIR LAB. handcrafted hair oil"
                 className="w-full h-full object-cover"
               />
@@ -213,10 +229,10 @@ export default function Home() {
               <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
                 <div className="text-[#F4ECD8]">
                   <p className="text-[10px] tracking-[0.3em] uppercase opacity-80">
-                    Made with intention
+                    Ancient luxury, handcrafted
                   </p>
                   <p className="font-[family-name:var(--font-playfair)] text-2xl italic mt-1">
-                    Hand-blended
+                    For modern age
                   </p>
                 </div>
                 <Badge className="bg-[#F4ECD8] text-[#2C2416] hover:bg-[#F4ECD8] rounded-full px-3 text-[10px] tracking-[0.15em] uppercase">
@@ -234,7 +250,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MARQUEE */}
+      {/* MARQUEE — brand values */}
       <div className="bg-[#2C2416] text-[#F4ECD8] py-4 overflow-hidden border-y border-[#7A8450]/30">
         <div className="flex items-center gap-12 animate-[marquee_30s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.3em] uppercase">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -259,7 +275,7 @@ export default function Home() {
       </div>
 
       {/* BRAND STORY */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+      <section id="story" className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <div className="flex items-center gap-3 mb-5">
@@ -277,19 +293,22 @@ export default function Home() {
             <div className="mt-8 space-y-5 text-[#2C2416]/75 leading-relaxed font-[family-name:var(--font-inter)]">
               <p>
                 HAIR LAB. began as a love letter to the rituals our
-                grandmothers knew by heart — the Sunday evening scalp
-                massage, the slow infusion of bhringraj in sesame, the
-                patience of waiting for herbs to give themselves to the
-                oil. We wanted to honor that wisdom, not replace it.
+                grandmothers knew by heart — the Sunday evening scalp massage,
+                the slow infusion of bhringraj in sesame, the patience of
+                waiting for herbs to give themselves to the oil. We wanted to
+                honor that wisdom, not replace it.
               </p>
               <p>
-                Each batch is hand-blended in small quantities. We
-                cold-press our bases, slow-infuse our herbs over days,
-                and bottle them with intention — a quiet inheritance
-                passed forward, one ritual at a time.
+                Each batch is hand-blended in small quantities. We cold-press
+                our bases, slow-infuse our herbs over days, and bottle them
+                with intention — a quiet inheritance passed forward, one
+                ritual at a time.
               </p>
               <p className="font-[family-name:var(--font-playfair)] italic text-xl text-[#7A8450]">
                 Heritage, hand-blended. Ritual, restored.
+              </p>
+              <p className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A] mt-4">
+                Botanical · Intentional · Rooted in ritual
               </p>
               <div className="flex items-center gap-3 pt-4">
                 <div className="h-10 w-10 rounded-full bg-[#7A8450] text-[#F4ECD8] flex items-center justify-center font-[family-name:var(--font-playfair)] italic text-sm">
@@ -311,101 +330,29 @@ export default function Home() {
             <div className="aspect-[3/4] rounded-sm overflow-hidden bg-[#E8DDC3]">
               { }
               <img
-                src="/products/resham-packaging.png"
+                src="/products/neelam.jpg"
                 alt="HAIR LAB. product"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="grid grid-rows-2 gap-4">
-              <div className="bg-[#7A8450] text-[#F4ECD8] p-6 rounded-sm flex flex-col justify-between aspect-square">
-                <span className="text-[11px] tracking-[0.25em] uppercase opacity-80">
-                  Small batch
-                </span>
-                <div>
-                  <p className="font-[family-name:var(--font-playfair)] text-5xl">
-                    48
-                  </p>
-                  <p className="text-xs opacity-80 mt-1">bottles per blend</p>
-                </div>
+              <div className="aspect-[3/4] rounded-sm overflow-hidden bg-[#E8DDC3]">
+                { }
+                <img
+                  src="/products/ojas.jpg"
+                  alt="HAIR LAB. product"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="bg-[#2C2416] text-[#F4ECD8] p-6 rounded-sm flex flex-col justify-between aspect-square">
-                <span className="text-[11px] tracking-[0.25em] uppercase opacity-80">
-                  Slow infusion
-                </span>
-                <div>
-                  <p className="font-[family-name:var(--font-playfair)] text-5xl">
-                    72h
-                  </p>
-                  <p className="text-xs opacity-80 mt-1">minimum steep time</p>
-                </div>
+              <div className="aspect-[3/4] rounded-sm overflow-hidden bg-[#E8DDC3]">
+                { }
+                <img
+                  src="/products/karu.jpg"
+                  alt="HAIR LAB. product"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* RITUAL */}
-      <section
-        id="ritual"
-        className="bg-[#2C2416] text-[#F4ECD8] py-20 sm:py-28"
-      >
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="max-w-2xl mb-16">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="h-px w-10 bg-[#7A8450]" />
-              <span className="text-[11px] tracking-[0.3em] uppercase text-[#7A8450]">
-                The Ritual
-              </span>
-            </div>
-            <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl leading-tight">
-              Four steps.
-              <br />
-              <span className="italic text-[#7A8450]">One promise.</span>
-              <br />
-              Hair that remembers.
-            </h2>
-            <p className="mt-6 text-[#F4ECD8]/70 leading-relaxed">
-              A simple ritual, repeated. Massaged in for two minutes, left to
-              work through the night, rinsed by morning light. By the thirtieth
-              night, the difference is no longer a question.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {rituals.map((r, i) => (
-              <div
-                key={r.title}
-                className="bg-[#F4ECD8]/5 border border-[#F4ECD8]/10 p-6 rounded-sm hover:bg-[#F4ECD8]/10 transition-colors"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-[family-name:var(--font-playfair)] italic text-[#7A8450] text-2xl">
-                    0{i + 1}
-                  </span>
-                  <r.icon
-                    className="h-5 w-5 text-[#7A8450]"
-                    strokeWidth={1.4}
-                  />
-                </div>
-                <h3 className="font-[family-name:var(--font-playfair)] text-xl mb-2">
-                  {r.title}
-                </h3>
-                <p className="text-sm text-[#F4ECD8]/60 leading-relaxed">
-                  {r.body}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-14 text-center">
-            <Button
-              asChild
-              className="bg-[#7A8450] hover:bg-[#5C6B3A] text-[#F4ECD8] rounded-full px-8 py-6 text-[12px] tracking-[0.2em] uppercase font-medium"
-            >
-              <a href="#shop">
-                Begin Your Ritual
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
           </div>
         </div>
       </section>
@@ -421,29 +368,23 @@ export default function Home() {
               </span>
             </div>
             <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
-              Four rituals,
+              Hand-blended rituals,
               <br />
-              <span className="italic text-[#B8553C]">one promise.</span>
+              <span className="italic text-[#B8553C]">rooted in tradition.</span>
             </h2>
           </div>
           <p className="text-sm text-[#2C2416]/60 max-w-xs">
-            Hand-blended in small batches. Shipped pan-India. Cash on delivery
-            available.
+            Made in small batches. Shipped pan-India. Cash on delivery available.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {products.map((p) => {
             const ingredientsList = p.ingredients;
-            const isUpcoming =
-              (p.tagline || "").toLowerCase().includes("coming soon") ||
-              (p.tagline || "").toLowerCase().includes("upcoming");
             return (
               <Card
                 key={p.id}
-                className={`overflow-hidden border-0 bg-[#FBF6E9] rounded-sm shadow-sm hover:shadow-xl hover:shadow-[#2C2416]/10 transition-all duration-500 group flex flex-col ${
-                  isUpcoming ? "opacity-90" : ""
-                }`}
+                className="overflow-hidden border-0 bg-[#FBF6E9] rounded-sm shadow-sm hover:shadow-xl hover:shadow-[#2C2416]/10 transition-all duration-500 group flex flex-col"
               >
                 <div
                   className="relative aspect-[4/5] overflow-hidden"
@@ -455,21 +396,13 @@ export default function Home() {
                   <img
                     src={p.image}
                     alt={`${p.name} — ${p.subtitle}`}
-                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ${
-                      isUpcoming ? "grayscale-[20%]" : ""
-                    }`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2C2416]/40 via-transparent to-transparent" />
 
                   {p.tagline && (
                     <div className="absolute top-4 left-4">
-                      <Badge
-                        className={`rounded-full px-3 text-[10px] tracking-[0.15em] uppercase backdrop-blur-sm ${
-                          isUpcoming
-                            ? "bg-[#B8860B] text-[#2C2416] hover:bg-[#B8860B]"
-                            : "bg-[#F4ECD8]/90 text-[#2C2416] hover:bg-[#F4ECD8]/90"
-                        }`}
-                      >
+                      <Badge className="bg-[#F4ECD8]/90 text-[#2C2416] hover:bg-[#F4ECD8]/90 rounded-full px-3 text-[10px] tracking-[0.15em] uppercase backdrop-blur-sm">
                         {p.tagline}
                       </Badge>
                     </div>
@@ -503,45 +436,17 @@ export default function Home() {
 
                   <Separator className="bg-[#2C2416]/10 mb-5" />
 
-                  {isUpcoming ? (
-                    <div className="mt-auto">
-                      <div className="flex items-end justify-between mb-3">
-                        <div>
-                          <p className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/50">
-                            {p.volume}
-                          </p>
-                          <p className="font-[family-name:var(--font-playfair)] text-2xl text-[#2C2416]/60 mt-1 italic">
-                            Price TBA
-                          </p>
-                        </div>
-                      </div>
-                      <Button
-                        asChild
-                        size="sm"
-                        className="w-full bg-[#2C2416] hover:bg-[#B8860B] text-[#F4ECD8] rounded-full px-4 py-2 text-[11px] tracking-[0.15em] uppercase"
-                      >
-                        <a
-                          href={WHATSAPP_URL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Notify Me When Launched
-                        </a>
-                      </Button>
+                  <div className="flex items-end justify-between mt-auto">
+                    <div>
+                      <p className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/50">
+                        {p.volume}
+                      </p>
+                      <p className="font-[family-name:var(--font-playfair)] text-2xl text-[#2C2416] mt-1">
+                        ₹{(p.price / 100).toFixed(0)}
+                      </p>
                     </div>
-                  ) : (
-                    <div className="flex items-end justify-between mt-auto">
-                      <div>
-                        <p className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/50">
-                          {p.volume}
-                        </p>
-                        <p className="font-[family-name:var(--font-playfair)] text-2xl text-[#2C2416] mt-1">
-                          ₹{(p.price / 100).toFixed(0)}
-                        </p>
-                      </div>
-                      <AddToCartButton product={p} />
-                    </div>
-                  )}
+                    <AddToCartButton product={p} />
+                  </div>
                 </div>
               </Card>
             );
@@ -549,46 +454,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* INGREDIENTS */}
-      <section
-        id="ingredients"
-        className="bg-[#FBF6E9] py-20 sm:py-28 border-y border-[#2C2416]/8"
-      >
+      {/* OUR PROMISE */}
+      <section id="promise" className="bg-[#FBF6E9] py-20 sm:py-28 border-y border-[#2C2416]/8">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <div className="flex items-center justify-center gap-3 mb-5">
               <div className="h-px w-10 bg-[#7A8450]" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                The Pantry
+                Our Promise To You
               </span>
               <div className="h-px w-10 bg-[#7A8450]" />
             </div>
             <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
-              Every bottle begins
+              Made with intention,
               <br />
-              <span className="italic text-[#7A8450]">in the soil.</span>
+              <span className="italic text-[#B8553C]">delivered with care.</span>
             </h2>
-            <p className="mt-6 text-[#2C2416]/70 leading-relaxed">
-              No synthesized actives. No lab-born silicones. Just herbs grown by
-              farmers we know, cold-pressed in batches we can count on one hand.
-            </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#2C2416]/10 rounded-sm overflow-hidden">
-            {ingredients.map((ing) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {ourPromise.map((item) => (
               <div
-                key={ing.name}
-                className="bg-[#FBF6E9] p-6 sm:p-8 hover:bg-[#F4ECD8] transition-colors text-center"
+                key={item.title}
+                className="bg-white p-6 rounded-sm border border-[#2C2416]/8 hover:border-[#7A8450]/30 transition-colors"
               >
-                <Leaf
-                  className="h-6 w-6 text-[#7A8450] mx-auto mb-3"
+                <item.icon
+                  className="h-7 w-7 text-[#7A8450] mb-4"
                   strokeWidth={1.4}
                 />
-                <h3 className="font-[family-name:var(--font-playfair)] text-xl text-[#2C2416]">
-                  {ing.name}
+                <h3 className="font-[family-name:var(--font-playfair)] text-xl text-[#2C2416] mb-2">
+                  {item.title}
                 </h3>
-                <p className="text-[11px] text-[#2C2416]/60 mt-1 italic">
-                  {ing.note}
+                <p className="text-sm text-[#2C2416]/70 leading-relaxed">
+                  {item.body}
                 </p>
               </div>
             ))}
@@ -596,46 +494,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+      {/* OUR FAV HERBS */}
+      <section id="herbs" className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="flex items-center justify-center gap-3 mb-5">
             <div className="h-px w-10 bg-[#7A8450]" />
             <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-              Their Words
+              The Pantry
             </span>
             <div className="h-px w-10 bg-[#7A8450]" />
           </div>
           <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
-            The letters we keep.
+            Our favourite herbs.
           </h2>
+          <p className="mt-6 text-[#2C2416]/70 leading-relaxed">
+            Sourced from farms across South India — slow-infused in cold-pressed
+            bases, the way it has always been done.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
-          {testimonials.map((t) => (
-            <Card
-              key={t.name}
-              className="bg-[#FBF6E9] border-0 rounded-sm p-8 flex flex-col"
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#2C2416]/10 rounded-sm overflow-hidden">
+          {favHerbs.map((ing) => (
+            <div
+              key={ing.name}
+              className="bg-[#FBF6E9] p-6 sm:p-8 hover:bg-[#F4ECD8] transition-colors text-center"
             >
-              <div className="flex gap-1 mb-5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-3.5 w-3.5 fill-[#B8860B] text-[#B8860B]"
-                  />
-                ))}
-              </div>
-              <p className="font-[family-name:var(--font-playfair)] italic text-lg text-[#2C2416]/85 leading-relaxed flex-1">
-                &ldquo;{t.quote}&rdquo;
+              <Leaf
+                className="h-6 w-6 text-[#7A8450] mx-auto mb-3"
+                strokeWidth={1.4}
+              />
+              <h3 className="font-[family-name:var(--font-playfair)] text-xl text-[#2C2416]">
+                {ing.name}
+              </h3>
+              <p className="text-[11px] text-[#2C2416]/60 mt-1 italic">
+                {ing.note}
               </p>
-              <div className="mt-6 pt-5 border-t border-[#2C2416]/10">
-                <p className="font-medium text-[#2C2416] text-sm">{t.name}</p>
-                <p className="text-[11px] text-[#2C2416]/50 tracking-wide uppercase mt-0.5">
-                  {t.place}
-                </p>
-              </div>
-            </Card>
+            </div>
           ))}
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section id="testimonials" className="bg-[#FBF6E9] py-20 sm:py-28 border-y border-[#2C2416]/8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-10 bg-[#7A8450]" />
+              <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+                Their Words
+              </span>
+              <div className="h-px w-10 bg-[#7A8450]" />
+            </div>
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
+              The letters we keep.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+            {testimonials.map((t) => (
+              <Card
+                key={t.name}
+                className="bg-white border-0 rounded-sm p-8 flex flex-col"
+              >
+                <div className="flex gap-1 mb-5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="h-3.5 w-3.5 fill-[#B8860B] text-[#B8860B]"
+                    />
+                  ))}
+                </div>
+                <p className="font-[family-name:var(--font-playfair)] italic text-lg text-[#2C2416]/85 leading-relaxed flex-1">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="mt-6 pt-5 border-t border-[#2C2416]/10">
+                  <p className="font-medium text-[#2C2416] text-sm">{t.name}</p>
+                  <p className="text-[11px] text-[#2C2416]/50 tracking-wide uppercase mt-0.5">
+                    {t.place}
+                  </p>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -717,27 +657,32 @@ export default function Home() {
 
             <div>
               <h4 className="text-[11px] tracking-[0.25em] uppercase text-[#7A8450] mb-5">
-                House
+                Explore
               </h4>
               <ul className="space-y-3 text-sm text-[#F4ECD8]/70">
                 <li>
-                  <a href="#ritual" className="hover:text-[#F4ECD8] transition-colors">
-                    The Ritual
+                  <a href="#story" className="hover:text-[#F4ECD8] transition-colors">
+                    Our Story
                   </a>
                 </li>
                 <li>
-                  <a href="#ingredients" className="hover:text-[#F4ECD8] transition-colors">
-                    Ingredients
+                  <a href="#promise" className="hover:text-[#F4ECD8] transition-colors">
+                    Our Promise
                   </a>
                 </li>
                 <li>
-                  <a href="#top" className="hover:text-[#F4ECD8] transition-colors">
-                    Shipping & Returns
+                  <a href="#herbs" className="hover:text-[#F4ECD8] transition-colors">
+                    Our Fav Herbs
                   </a>
                 </li>
                 <li>
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[#F4ECD8] transition-colors">
-                    WhatsApp Us
+                  <a
+                    href={SUBSTACK_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#F4ECD8] transition-colors"
+                  >
+                    Read Our Substack
                   </a>
                 </li>
               </ul>
@@ -760,10 +705,10 @@ export default function Home() {
                 <li className="flex items-start gap-2">
                   <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <a
-                    href="mailto:hello@hairlab.one"
+                    href={`mailto:${EMAIL}`}
                     className="hover:text-[#F4ECD8] transition-colors"
                   >
-                    hello@hairlab.one
+                    {EMAIL}
                   </a>
                 </li>
                 <li className="flex items-start gap-2">
