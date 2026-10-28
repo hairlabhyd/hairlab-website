@@ -13,6 +13,7 @@ import {
   ShoppingBag,
   Mail,
   Phone,
+  Instagram,
   Truck,
   ShieldCheck,
   Heart,
@@ -24,6 +25,7 @@ import { AddToCartButton } from "@/components/add-to-cart-button";
 import { AdminModal } from "@/components/admin-modal";
 import { CopyrightTrigger } from "@/components/copyright-trigger";
 
+const INSTAGRAM_URL = "https://www.instagram.com/yourhairourlab/";
 const WHATSAPP_URL = "https://wa.me/919502194263";
 
 const rituals = [
@@ -119,6 +121,15 @@ export default async function Home() {
           </a>
 
           <div className="flex items-center gap-3">
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:block text-[#2C2416]/70 hover:text-[#B8553C] transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
             <CartButton />
           </div>
         </nav>
@@ -423,10 +434,15 @@ export default async function Home() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {products.map((p) => {
             const ingredientsList = JSON.parse(p.ingredients) as string[];
+            const isUpcoming =
+              (p.tagline || "").toLowerCase().includes("coming soon") ||
+              (p.tagline || "").toLowerCase().includes("upcoming");
             return (
               <Card
                 key={p.id}
-                className="overflow-hidden border-0 bg-[#FBF6E9] rounded-sm shadow-sm hover:shadow-xl hover:shadow-[#2C2416]/10 transition-all duration-500 group flex flex-col"
+                className={`overflow-hidden border-0 bg-[#FBF6E9] rounded-sm shadow-sm hover:shadow-xl hover:shadow-[#2C2416]/10 transition-all duration-500 group flex flex-col ${
+                  isUpcoming ? "opacity-90" : ""
+                }`}
               >
                 <div
                   className="relative aspect-[4/5] overflow-hidden"
@@ -438,13 +454,21 @@ export default async function Home() {
                   <img
                     src={p.image}
                     alt={`${p.name} — ${p.subtitle}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ${
+                      isUpcoming ? "grayscale-[20%]" : ""
+                    }`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2C2416]/40 via-transparent to-transparent" />
 
                   {p.tagline && (
                     <div className="absolute top-4 left-4">
-                      <Badge className="bg-[#F4ECD8]/90 text-[#2C2416] hover:bg-[#F4ECD8]/90 rounded-full px-3 text-[10px] tracking-[0.15em] uppercase backdrop-blur-sm">
+                      <Badge
+                        className={`rounded-full px-3 text-[10px] tracking-[0.15em] uppercase backdrop-blur-sm ${
+                          isUpcoming
+                            ? "bg-[#B8860B] text-[#2C2416] hover:bg-[#B8860B]"
+                            : "bg-[#F4ECD8]/90 text-[#2C2416] hover:bg-[#F4ECD8]/90"
+                        }`}
+                      >
                         {p.tagline}
                       </Badge>
                     </div>
@@ -478,17 +502,45 @@ export default async function Home() {
 
                   <Separator className="bg-[#2C2416]/10 mb-5" />
 
-                  <div className="flex items-end justify-between mt-auto">
-                    <div>
-                      <p className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/50">
-                        {p.volume}
-                      </p>
-                      <p className="font-[family-name:var(--font-playfair)] text-2xl text-[#2C2416] mt-1">
-                        ₹{(p.price / 100).toFixed(0)}
-                      </p>
+                  {isUpcoming ? (
+                    <div className="mt-auto">
+                      <div className="flex items-end justify-between mb-3">
+                        <div>
+                          <p className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/50">
+                            {p.volume}
+                          </p>
+                          <p className="font-[family-name:var(--font-playfair)] text-2xl text-[#2C2416]/60 mt-1 italic">
+                            Price TBA
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        asChild
+                        size="sm"
+                        className="w-full bg-[#2C2416] hover:bg-[#B8860B] text-[#F4ECD8] rounded-full px-4 py-2 text-[11px] tracking-[0.15em] uppercase"
+                      >
+                        <a
+                          href={WHATSAPP_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Notify Me When Launched
+                        </a>
+                      </Button>
                     </div>
-                    <AddToCartButton product={p} />
-                  </div>
+                  ) : (
+                    <div className="flex items-end justify-between mt-auto">
+                      <div>
+                        <p className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/50">
+                          {p.volume}
+                        </p>
+                        <p className="font-[family-name:var(--font-playfair)] text-2xl text-[#2C2416] mt-1">
+                          ₹{(p.price / 100).toFixed(0)}
+                        </p>
+                      </div>
+                      <AddToCartButton product={p} />
+                    </div>
+                  )}
                 </div>
               </Card>
             );
@@ -633,6 +685,15 @@ export default async function Home() {
                 Ancient luxury, handcrafted. All-natural, cruelty-free hair care
                 made in small batches, with intention.
               </p>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-[11px] tracking-[0.3em] uppercase text-[#7A8450] hover:text-[#F4ECD8] transition-colors"
+              >
+                <Instagram className="h-3.5 w-3.5" />
+                @yourhairourlab
+              </a>
             </div>
 
             <div>
@@ -702,6 +763,17 @@ export default async function Home() {
                     className="hover:text-[#F4ECD8] transition-colors"
                   >
                     hello@hairlab.one
+                  </a>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Instagram className="h-4 w-4" />
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#F4ECD8] transition-colors"
+                  >
+                    @yourhairourlab
                   </a>
                 </li>
               </ul>
