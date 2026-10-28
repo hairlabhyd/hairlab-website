@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GitHub Setup Guide</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f8fa; margin: 0; padding: 40px 20px; }
+  .step { max-width: 900px; margin: 0 auto 60px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .step-header { background: #2da44e; color: white; padding: 20px 30px; font-size: 22px; font-weight: 600; }
+  .step-sub { padding: 8px 30px; background: #f6f8fa; color: #57606a; font-size: 14px; border-bottom: 1px solid #d0d7de; }
+  .browser-bar { background: #eaecef; padding: 10px 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #d0d7de; }
+  .browser-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .url-bar { background: white; padding: 6px 14px; border-radius: 12px; font-size: 12px; color: #57606a; flex: 1; max-width: 600px; border: 1px solid #d0d7de; }
+  .github-ui { background: white; padding: 30px; }
+  .field-row { margin-bottom: 22px; position: relative; }
+  .field-label { font-weight: 600; font-size: 14px; color: #24292f; margin-bottom: 6px; display: block; }
+  .field-input { border: 1px solid #d0d7de; border-radius: 6px; padding: 8px 12px; font-size: 14px; width: 100%; max-width: 500px; background: #f6f8fa; position: relative; }
+  .field-input.filled { background: white; color: #24292f; }
+  .annotate { position: absolute; right: -200px; top: -5px; width: 180px; background: #fff8c5; border: 2px solid #d4a72c; border-radius: 6px; padding: 8px 12px; font-size: 12px; color: #57606a; }
+  .annotate::before { content: "👆"; position: absolute; left: -25px; top: 8px; font-size: 18px; }
+  .radio-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding: 6px 0; }
+  .radio-circle { width: 16px; height: 16px; border: 2px solid #d0d7de; border-radius: 50%; display: inline-block; }
+  .radio-circle.checked { border-color: #2da44e; background: radial-gradient(circle, #2da44e 40%, white 45%); }
+  .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .checkbox-box { width: 14px; height: 14px; border: 2px solid #d0d7de; border-radius: 3px; }
+  .checkbox-box.checked { background: #2da44e; border-color: #2da44e; }
+  .checkbox-box.checked::after { content: "✓"; color: white; font-size: 11px; display: block; text-align: center; line-height: 11px; }
+  .green-btn { background: #2da44e; color: white; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; display: inline-block; border: none; cursor: pointer; }
+  .warning { background: #fff8c5; border: 1px solid #d4a72c; padding: 10px 14px; border-radius: 6px; margin: 10px 0; font-size: 13px; color: #57606a; }
+  .highlighted-input { border: 3px solid #d4a72c; border-radius: 6px; padding: 8px 12px; font-size: 14px; display: inline-block; background: white; }
+  .scope-list { background: white; border: 1px solid #d0d7de; border-radius: 6px; padding: 15px; margin-top: 10px; }
+  h2.page-title { color: #24292f; font-size: 24px; margin: 0 0 5px 0; padding: 0; }
+  .repo-name-value { color: #24292f; font-weight: 500; }
+  .selected-circle { width: 16px; height: 16px; border: 2px solid #2da44e; border-radius: 50%; background: radial-gradient(circle, #2da44e 40%, white 45%); display: inline-block; vertical-align: middle; margin-right: 6px; }
+  .unselected-circle { width: 16px; height: 16px; border: 2px solid #d0d7de; border-radius: 50%; display: inline-block; vertical-align: middle; margin-right: 6px; }
+</style>
+</head>
+<body>
+
+<!-- STEP 1: Create Repository -->
+<div class="step">
+  <div class="step-header">📍 STEP 1: Create a New Repository</div>
+  <div class="step-sub">Open this URL: <strong>https://github.com/new</strong></div>
+  <div class="browser-bar">
+    <div class="browser-dot" style="background:#ff5f56"></div>
+    <div class="browser-dot" style="background:#ffbd2e"></div>
+    <div class="browser-dot" style="background:#27c93f"></div>
+    <div class="url-bar">🔒 github.com/new</div>
+  </div>
+  <div class="github-ui">
+    <h2 class="page-title">Create a new repository</h2>
+    <p style="color:#57606a;font-size:14px;margin-top:0;">A repository contains all project files, including the revision history.</p>
+
+    <div class="field-row">
+      <label class="field-label">Repository name *</label>
+      <div style="position:relative;display:inline-block;">
+        <input class="highlighted-input" value="hairlab-website" readonly>
+      </div>
+      <div style="font-size:11px;color:#57606a;margin-top:4px;">Great repository names are short and memorable.</div>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Description <span style="color:#57606a;font-weight:400;">(optional)</span></label>
+      <input class="highlighted-input" value="HAIR LAB. e-commerce website" readonly style="width:400px;">
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Visibility *</label>
+      <div class="radio-row"><span class="selected-circle"></span> <strong>Public</strong> — Anyone on the internet can see this repository. <span style="color:#2da44e;font-weight:600;">← PICK THIS ONE</span></div>
+      <div class="radio-row"><span class="unselected-circle"></span> Private — You choose who can see and commit to this repository.</div>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Initialize this repository with:</label>
+      <div class="checkbox-row"><span class="checkbox-box"></span> Add a README file</div>
+      <div class="checkbox-row"><span class="checkbox-box"></span> Add .gitignore</div>
+      <div class="checkbox-row"><span class="checkbox-box"></span> Choose a license</div>
+      <div style="color:#cf222e;font-weight:600;font-size:12px;margin-top:6px;">⚠️ DO NOT TICK ANY OF THESE — leave all 3 unchecked!</div>
+    </div>
+
+    <button class="green-btn">Create repository</button>
+    <div style="margin-top:14px;font-size:13px;color:#2da44e;font-weight:600;">👆 Click this green button at the bottom of the page</div>
+  </div>
+</div>
+
+<!-- STEP 2: Generate Token -->
+<div class="step">
+  <div class="step-header">📍 STEP 2: Generate a Personal Access Token</div>
+  <div class="step-sub">Open this URL: <strong>https://github.com/settings/tokens/new</strong></div>
+  <div class="browser-bar">
+    <div class="browser-dot" style="background:#ff5f56"></div>
+    <div class="browser-dot" style="background:#ffbd2e"></div>
+    <div class="browser-dot" style="background:#27c93f"></div>
+    <div class="url-bar">🔒 github.com/settings/tokens/new</div>
+  </div>
+  <div class="github-ui">
+    <h2 class="page-title">New personal access token (classic)</h2>
+
+    <div class="field-row">
+      <label class="field-label">Note *</label>
+      <input class="highlighted-input" value="hairlab-push" readonly>
+      <div style="font-size:11px;color:#57606a;margin-top:4px;">What's this token for? (just a label)</div>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Expiration *</label>
+      <input class="highlighted-input" value="7 days ▼" readonly>
+      <div style="font-size:11px;color:#57606a;margin-top:4px;">Pick "7 days" from the dropdown</div>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Select scopes *</label>
+      <div style="font-size:12px;color:#57606a;margin-bottom:10px;">Scopes define the access for personal tokens.</div>
+      <div class="scope-list">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span class="checkbox-box checked"></span>
+          <strong style="font-size:15px;color:#24292f;">repo</strong>
+          <span style="font-size:13px;color:#57606a;">— Full control of private repositories</span>
+        </div>
+        <div style="font-size:11px;color:#2da44e;font-weight:600;margin-left:22px;margin-bottom:12px;">↑ TICK ONLY THIS ONE (the first checkbox)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;opacity:0.4;">
+          <span class="checkbox-box"></span>
+          <span style="font-size:13px;">workflow</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;opacity:0.4;">
+          <span class="checkbox-box"></span>
+          <span style="font-size:13px;">write:packages</span>
+        </div>
+        <div style="font-size:11px;color:#cf222e;font-weight:600;margin-top:10px;">⚠️ Leave all other checkboxes UNCHECKED. Just "repo" is enough.</div>
+      </div>
+    </div>
+
+    <button class="green-btn">Generate token</button>
+    <div style="margin-top:14px;font-size:13px;color:#2da44e;font-weight:600;">👆 Click this green button at the bottom</div>
+
+    <div class="warning">
+      📋 <strong>After you click "Generate token":</strong><br>
+      You'll see a green box with your token (starts with <code>ghp_</code>).<br>
+      <strong>Copy it immediately</strong> — you won't be able to see it again.<br>
+      Paste it in our chat like:
+      <pre style="background:#f6f8fa;padding:10px;border-radius:4px;margin-top:8px;font-size:13px;">github token: ghp_xxxxxxxxxxxxxxx
+username: hairlabhyd</pre>
+    </div>
+  </div>
+</div>
+
+<!-- Recap -->
+<div class="step">
+  <div class="step-header">✅ QUICK RECAP</div>
+  <div class="github-ui">
+    <ol style="font-size:15px;line-height:1.8;color:#24292f;">
+      <li>Go to <strong>github.com/new</strong></li>
+      <li>Repository name: <code>hairlab-website</code></li>
+      <li>Description: <code>HAIR LAB. e-commerce website</code></li>
+      <li>Select <strong>Public</strong></li>
+      <li>Leave all 3 checkboxes UNCHECKED</li>
+      <li>Click green <strong>Create repository</strong> button</li>
+      <li>Then go to <strong>github.com/settings/tokens/new</strong></li>
+      <li>Note: <code>hairlab-push</code></li>
+      <li>Expiration: <strong>7 days</strong></li>
+      <li>Tick ONLY <code>repo</code> checkbox</li>
+      <li>Click green <strong>Generate token</strong> button</li>
+      <li>Copy the token (starts with <code>ghp_</code>)</li>
+      <li>Paste it in our chat with your username</li>
+    </ol>
+  </div>
+</div>
+
+</body>
+</html>
