@@ -23,6 +23,8 @@ import { AddToCartButton } from "@/components/add-to-cart-button";
 import { AdminModal } from "@/components/admin-modal";
 import { CopyrightTrigger } from "@/components/copyright-trigger";
 import { MobileMenu } from "@/components/mobile-menu";
+import { RitualQuiz } from "@/components/ritual-quiz";
+import { RitualChallenge } from "@/components/ritual-challenge";
 
 const INSTAGRAM_URL = "https://www.instagram.com/yourhairourlab/";
 const WHATSAPP_URL = "https://wa.me/919502194263";
@@ -32,23 +34,23 @@ const EMAIL = "hairlabhyd@gmail.com";
 const ourPromise = [
   {
     icon: Sparkles,
-    title: "Assured Quality",
-    body: "Every batch tested by hand. No fillers, no shortcuts — just botanicals, slow-infused.",
+    title: "Tested on us first",
+    body: "Every batch goes on Sruwa's scalp before it goes on yours. No fillers, no shortcuts.",
   },
   {
     icon: Truck,
-    title: "Fast & Free Delivery",
-    body: "Free delivery on orders above ₹800. Pan-India in 5–10 days. COD available.",
+    title: "Pan-India. Even to your nani's house.",
+    body: "Free delivery above ₹800. Lands at your door in 5–10 days. COD available.",
   },
   {
     icon: ShieldCheck,
-    title: "Secure Payments",
-    body: "256-bit encrypted checkout via Razorpay. UPI, cards, net banking, COD.",
+    title: "Razorpay-secured",
+    body: "256-bit encrypted checkout. UPI, cards, net banking, COD. Your money, safe.",
   },
   {
     icon: RefreshCw,
-    title: "Easy Returns",
-    body: "Not happy? Tell us within 7 days. We'll make it right.",
+    title: "Hated it? Tell us.",
+    body: "We'll fix it. Promise. No 7-day windows, no fine print. Just write to us.",
   },
 ];
 
@@ -381,6 +383,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* RITUAL QUIZ — viral interactive feature */}
+      <section className="bg-[#FBF6E9] py-20 sm:py-28 border-y border-[#2C2416]/8">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+          <RitualQuiz />
+        </div>
+      </section>
+
       {/* PRODUCTS */}
       <section id="shop" className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
@@ -555,6 +564,13 @@ export default function Home() {
               </p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* 30-NIGHT RITUAL CHALLENGE — viral interactive feature */}
+      <section className="bg-[#1A3D2A] py-20 sm:py-28">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+          <RitualChallenge />
         </div>
       </section>
 
