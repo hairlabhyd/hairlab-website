@@ -587,33 +587,35 @@ export default function Home() {
           <div className="grid sm:grid-cols-3 gap-6">
             <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 -rotate-1 hover:rotate-0 transition-transform duration-500">
               <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                &ldquo;I switched our base from coconut to sesame. My grandmother
-                used to say sesame remembers the scalp. She was right.&rdquo;
+                &ldquo;The brands I admired felt distant — luxury price tags,
+                celebrity faces, labs I couldn&apos;t see. I wanted the same
+                ritual, closer to home. Hand-blended, founder-led, honestly
+                priced.&rdquo;
               </p>
               <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                — On Mane
+                — On the why
               </p>
             </div>
 
             <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 rotate-1 hover:rotate-0 transition-transform duration-500">
               <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                &ldquo;Ojas is the one I tell everyone about. Mix with water, tea
-                decoction, your fav oil, curd &mdash; whatever suits you. There&apos;s
-                no wrong way to feed your hair.&rdquo;
+                &ldquo;Every bottle goes on my scalp before it goes on yours. If
+                it doesn&apos;t feel like ritual to me, it doesn&apos;t ship.
+                That&apos;s the only test I trust.&rdquo;
               </p>
               <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                — On Ojas
+                — On the products
               </p>
             </div>
 
             <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 -rotate-1 hover:rotate-0 transition-transform duration-500">
               <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                &ldquo;The night I almost gave up, I massaged Mane into my scalp
-                and slept. Woke up softer. Not the hair &mdash; me. That&apos;s
-                what ritual does.&rdquo;
+                &ldquo;HAIR LAB. isn&apos;t a lab in the corporate sense.
+                It&apos;s a kitchen in Hyderabad, a sister who runs social,
+                and a founder who answers every DM. Small, by design.&rdquo;
               </p>
               <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                — On ritual
+                — On the lab
               </p>
             </div>
           </div>
