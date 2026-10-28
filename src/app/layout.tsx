@@ -17,28 +17,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Hairlab — Ancient Luxury, Handcrafted",
+  title: "HAIR LAB. — Ancient Luxury, Handcrafted",
   description:
     "Handcrafted botanical hair care rooted in ancient Indian rituals. Cold-pressed oils, slow infusions, intentional formulas.",
   keywords: [
-    "Hairlab",
+    "HAIR LAB.",
     "handcrafted hair oil",
     "Ayurvedic hair care",
     "bhringraj oil",
     "botanical hair oil",
     "Indian hair care ritual",
   ],
-  authors: [{ name: "Hairlab" }],
+  authors: [{ name: "HAIR LAB." }],
   openGraph: {
-    title: "Hairlab — Ancient Luxury, Handcrafted",
+    title: "HAIR LAB. — Ancient Luxury, Handcrafted",
     description:
       "Handcrafted botanical hair care rooted in ancient Indian rituals.",
-    siteName: "Hairlab",
+    siteName: "HAIR LAB.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hairlab — Ancient Luxury, Handcrafted",
+    title: "HAIR LAB. — Ancient Luxury, Handcrafted",
     description:
       "Handcrafted botanical hair care rooted in ancient Indian rituals.",
   },

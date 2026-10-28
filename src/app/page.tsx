@@ -11,7 +11,6 @@ import {
   Star,
   ArrowRight,
   ShoppingBag,
-  Instagram,
   Mail,
   Phone,
   Truck,
@@ -22,8 +21,9 @@ import {
 import { CartDrawer } from "@/components/cart-drawer";
 import { CartButton } from "@/components/cart-button";
 import { AddToCartButton } from "@/components/add-to-cart-button";
+import { AdminModal } from "@/components/admin-modal";
+import { CopyrightTrigger } from "@/components/copyright-trigger";
 
-const INSTAGRAM_URL = "https://www.instagram.com/yourhairourlab/";
 const WHATSAPP_URL = "https://wa.me/919502194263";
 
 const rituals = [
@@ -89,6 +89,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F4ECD8]">
       <CartDrawer />
+      <AdminModal />
 
       {/* ANNOUNCEMENT BAR */}
       <div className="bg-[#2C2416] text-[#F4ECD8] text-center text-[11px] tracking-[0.25em] uppercase py-2.5 px-4">
@@ -114,19 +115,10 @@ export default async function Home() {
             href="#top"
             className="font-[family-name:var(--font-playfair)] text-2xl sm:text-3xl tracking-[0.15em] uppercase text-[#2C2416] mx-auto md:mx-0"
           >
-            Hairlab
+            Hair Lab.
           </a>
 
           <div className="flex items-center gap-3">
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:block text-[#2C2416]/70 hover:text-[#B8553C] transition-colors"
-              aria-label="Instagram"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
             <CartButton />
           </div>
         </nav>
@@ -147,7 +139,7 @@ export default async function Home() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10 bg-[#7A8450]" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A] font-medium">
-                Handcrafted by Sruwa
+                Handcrafted in small batches
               </span>
             </div>
 
@@ -204,7 +196,7 @@ export default async function Home() {
               { }
               <img
                 src="/products/resham-packaging.png"
-                alt="Hairlab handcrafted hair oil"
+                alt="HAIR LAB. handcrafted hair oil"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#2C2416]/30 via-transparent to-transparent" />
@@ -262,7 +254,7 @@ export default async function Home() {
             <div className="flex items-center gap-3 mb-5">
               <div className="h-px w-10 bg-[#7A8450]" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
-                The House of Hairlab
+                The House of HAIR LAB.
               </span>
             </div>
             <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
@@ -273,7 +265,7 @@ export default async function Home() {
             </h2>
             <div className="mt-8 space-y-5 text-[#2C2416]/75 leading-relaxed font-[family-name:var(--font-inter)]">
               <p>
-                Hairlab was born from a quiet frustration with the modern hair
+                HAIR LAB. was born from a quiet frustration with the modern hair
                 aisle — neon bottles, sixteen-syllable ingredients, promises
                 shouted in capital letters. We wanted the opposite. We wanted
                 the oil our grandmothers massaged into our scalps on Sunday
@@ -296,10 +288,7 @@ export default async function Home() {
                     Sruwa Kesiraju
                   </p>
                   <p className="text-xs text-[#2C2416]/60">
-                    Founder · Hairlab
-                  </p>
-                  <p className="text-xs text-[#5C6B3A] mt-0.5">
-                    Socials by Mukta · @yourhairourlab
+                    Founder · HAIR LAB.
                   </p>
                 </div>
               </div>
@@ -311,7 +300,7 @@ export default async function Home() {
               { }
               <img
                 src="/products/resham-packaging.png"
-                alt="Hairlab product"
+                alt="HAIR LAB. product"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -638,21 +627,12 @@ export default async function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             <div>
               <h3 className="font-[family-name:var(--font-playfair)] text-3xl tracking-[0.15em] uppercase">
-                Hairlab
+                Hair Lab.
               </h3>
               <p className="mt-4 text-sm text-[#F4ECD8]/60 leading-relaxed max-w-xs">
                 Ancient luxury, handcrafted. All-natural, cruelty-free hair care
                 made in small batches, with intention.
               </p>
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 text-[11px] tracking-[0.3em] uppercase text-[#7A8450] hover:text-[#F4ECD8] transition-colors"
-              >
-                <Instagram className="h-3.5 w-3.5" />
-                @yourhairourlab
-              </a>
             </div>
 
             <div>
@@ -724,17 +704,6 @@ export default async function Home() {
                     hello@hairlab.one
                   </a>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Instagram className="h-4 w-4" />
-                  <a
-                    href={INSTAGRAM_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[#F4ECD8] transition-colors"
-                  >
-                    @yourhairourlab
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
@@ -742,7 +711,9 @@ export default async function Home() {
           <Separator className="bg-[#F4ECD8]/10 my-10" />
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] tracking-[0.2em] uppercase text-[#F4ECD8]/40">
-            <p>© {new Date().getFullYear()} Hairlab · All rights reserved</p>
+            <CopyrightTrigger>
+              <span>© {new Date().getFullYear()} HAIR LAB. · All rights reserved</span>
+            </CopyrightTrigger>
             <div className="flex items-center gap-4">
               <span>UPI · Cards · COD</span>
               <span className="text-[#7A8450]">✦</span>

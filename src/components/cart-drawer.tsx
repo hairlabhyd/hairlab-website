@@ -136,7 +136,7 @@ export function CartDrawer() {
         key: orderData.key,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "Hairlab",
+        name: "HAIR LAB.",
         description: "Handcrafted hair care ritual",
         image: "/products/resham-packaging.png",
         order_id: orderData.razorpayOrderId,
