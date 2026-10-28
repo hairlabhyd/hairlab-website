@@ -49,7 +49,7 @@ export const products: Product[] = [
     name: "Neelam",
     subtitle: "Blue Bhring Oil",
     description:
-      "A botanical hair oil crafted with indigo and bringraj to nourish the hair and support a naturally dark, lustrous finish. Inspired by time-honoured plant-based hair rituals, Neelam brings together botanical ingredients in a considered blend for your haircare routine.",
+      "She sits dark in the bottle — indigo quiet, bhringraj patient. Massaged in, she warms to her work: a deep, slow nourishing, a return to the dark, lustrous hair your grandmother knew. Botanical, intentional, rooted in ritual — not in trend.",
     price: 21900,
     volume: "100 ml",
     image: "/products/neelam.jpg",
@@ -71,7 +71,7 @@ export const products: Product[] = [
     name: "Ojas",
     subtitle: "Power Mix Hair Mask",
     description:
-      "Handcrafted all-in-one power masks. Blend fresh, apply, repeat. A weekly ritual of hibiscus, fenugreek, and botanical herbs mixed fresh into a powder base — activated with water or your favourite oil.",
+      "A weekly ritual in powder form — hibiscus, fenugreek, amla, bhringraj, brahmi, sesame — slow-dried and hand-blended. Mix it fresh each time: with some water, tea decoction, your favourite oil, or curd (whatever suits you). Apply. Wait. Rinse. Hair that feels fed, not just coated.",
     price: 18900,
     volume: "100 g",
     image: "/products/ojas.jpg",
@@ -94,7 +94,7 @@ export const products: Product[] = [
     name: "Kāru",
     subtitle: "Neem Wood Comb",
     description:
-      "Hand-carved from a single piece of neem wood. Anti-bacterial by nature, gentle by design. The comb your grandmother used, made the way it was always meant to be made — no plastic, no lacquer, no compromise.",
+      "One piece of neem wood. Carved by hand, finished by patience. Anti-bacterial by nature, gentle by design — a comb that doesn't tug, doesn't snap, doesn't pretend. The kind of thing your grandmother used, and her grandmother before her. No plastic. No lacquer. No compromise.",
     price: 18900,
     volume: "1 piece",
     image: "/products/karu.jpg",

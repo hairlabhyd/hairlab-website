@@ -24,7 +24,6 @@ import { AdminModal } from "@/components/admin-modal";
 import { CopyrightTrigger } from "@/components/copyright-trigger";
 import { MobileMenu } from "@/components/mobile-menu";
 import { RitualQuiz } from "@/components/ritual-quiz";
-import { RitualChallenge } from "@/components/ritual-challenge";
 
 const INSTAGRAM_URL = "https://www.instagram.com/yourhairourlab/";
 const WHATSAPP_URL = "https://wa.me/919502194263";
@@ -567,10 +566,72 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 30-NIGHT RITUAL CHALLENGE — viral interactive feature */}
+      {/* FOUNDER'S VOICE — handwritten-style notes from Sruwa */}
       <section className="bg-[#1A3D2A] py-20 sm:py-28">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <RitualChallenge />
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-10 bg-[#B8860B]" />
+              <span className="text-[11px] tracking-[0.3em] uppercase text-[#B8860B]">
+                Letters from Sruwa
+              </span>
+              <div className="h-px w-10 bg-[#B8860B]" />
+            </div>
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#F4ECD8] leading-tight">
+              From the lab,
+              <br />
+              <span className="italic text-[#B8860B]">to you.</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-6">
+            <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 -rotate-1 hover:rotate-0 transition-transform duration-500">
+              <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
+                &ldquo;I switched our base from coconut to sesame. My grandmother
+                used to say sesame remembers the scalp. She was right.&rdquo;
+              </p>
+              <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+                — On Mane
+              </p>
+            </div>
+
+            <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 rotate-1 hover:rotate-0 transition-transform duration-500">
+              <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
+                &ldquo;Ojas is the one I tell everyone about. Mix with water, tea
+                decoction, your fav oil, curd &mdash; whatever suits you. There&apos;s
+                no wrong way to feed your hair.&rdquo;
+              </p>
+              <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+                — On Ojas
+              </p>
+            </div>
+
+            <div className="bg-[#F4ECD8] p-6 rounded-sm shadow-lg shadow-black/20 -rotate-1 hover:rotate-0 transition-transform duration-500">
+              <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
+                &ldquo;The night I almost gave up, I massaged Mane into my scalp
+                and slept. Woke up softer. Not the hair &mdash; me. That&apos;s
+                what ritual does.&rdquo;
+              </p>
+              <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+                — On ritual
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <p className="font-[family-name:var(--font-playfair)] italic text-lg text-[#F4ECD8]/80 max-w-md mx-auto leading-relaxed">
+              Hand-blended in Hyderabad. By one founder. For one ritual at a time.
+            </p>
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-[#B8860B] text-[#2C2416] flex items-center justify-center font-[family-name:var(--font-playfair)] italic text-sm">
+                S
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-medium text-[#F4ECD8]">Sruwa Kesiraju</p>
+                <p className="text-[11px] text-[#F4ECD8]/60">Founder · HAIR LAB.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
