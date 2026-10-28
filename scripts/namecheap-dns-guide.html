@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Namecheap DNS Setup Guide</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f8fa; margin: 0; padding: 40px 20px; }
+  .step { max-width: 950px; margin: 0 auto 50px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .step-header { background: #de3711; color: white; padding: 18px 30px; font-size: 20px; font-weight: 600; }
+  .step-header.vercel { background: #000; }
+  .step-header.namecheap { background: #de3711; }
+  .step-sub { padding: 10px 30px; background: #f6f8fa; color: #57606a; font-size: 14px; border-bottom: 1px solid #d0d7de; }
+  .ui { background: white; padding: 30px; }
+  .field-row { margin-bottom: 18px; padding: 14px; border: 2px solid #d4a72c; border-radius: 6px; background: #fff8c5; }
+  .field-label { font-weight: 600; font-size: 13px; color: #24292f; margin-bottom: 6px; display: block; }
+  .field-row code { background: white; padding: 6px 10px; border-radius: 4px; font-family: 'SF Mono', Consolas, monospace; font-size: 13px; color: #24292f; border: 1px solid #d0d7de; display: inline-block; }
+  .field-row .highlight { color: #de3711; font-weight: 700; }
+  .helper { font-size: 11px; color: #57606a; margin-top: 6px; }
+  .dns-table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+  .dns-table th, .dns-table td { padding: 10px 12px; text-align: left; border: 1px solid #eaeaea; font-size: 13px; }
+  .dns-table th { background: #f6f8fa; font-weight: 600; color: #24292f; }
+  .dns-table td code { background: #fff8c5; padding: 4px 8px; border-radius: 3px; }
+  .step-num { display: inline-block; width: 28px; height: 28px; background: #de3711; color: white; border-radius: 50%; text-align: center; line-height: 28px; margin-right: 8px; font-weight: 700; }
+  .nav-link { color: #de3711; text-decoration: underline; font-weight: 500; }
+  .btn-orange { background: #de3711; color: white; padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; display: inline-block; }
+  .warning { background: #fff8c5; border: 1px solid #d4a72c; padding: 12px 16px; border-radius: 6px; margin: 14px 0; font-size: 13px; color: #57606a; }
+  .success { background: #dcffe4; border: 1px solid #2da44e; padding: 12px 16px; border-radius: 6px; margin: 14px 0; font-size: 13px; color: #1a7f37; }
+</style>
+</head>
+<body>
+
+<div class="step">
+  <div class="step-header namecheap">📍 STEP 1: Open Namecheap DNS Settings</div>
+  <div class="ui">
+    <ol style="font-size:14px;line-height:1.9;color:#24292f;padding-left:20px;">
+      <li>Open <span class="nav-link">https://www.namecheap.com</span> and login</li>
+      <li>Hover over your username (top left) → click <strong>"Dashboard"</strong></li>
+      <li>Find <strong>hairlab.one</strong> in your domain list</li>
+      <li>Click <strong>"Manage"</strong> next to hairlab.one</li>
+      <li>Click the <strong>"Advanced DNS"</strong> tab (top of page)</li>
+    </ol>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header namecheap">📍 STEP 2: Add 2 DNS Records</div>
+  <div class="step-sub">In the "HOST RECORDS" section, add these 2 records</div>
+  <div class="ui">
+    
+    <h3 style="font-size:16px;color:#24292f;margin-top:0;">Record #1: A Record (for hairlab.one)</h3>
+    <table class="dns-table">
+      <tr><th>Type</th><th>Host</th><th>Value</th><th>TTL</th></tr>
+      <tr>
+        <td><code>A Record</code></td>
+        <td><code>@</code></td>
+        <td><code>76.76.21.21</code></td>
+        <td><code>Automatic</code></td>
+      </tr>
+    </table>
+    <div class="helper">👆 Click "Add New Record" → Type = A Record → Host = @ → Value = 76.76.21.21 → TTL = Automatic</div>
+
+    <h3 style="font-size:16px;color:#24292f;margin-top:24px;">Record #2: CNAME Record (for www.hairlab.one)</h3>
+    <table class="dns-table">
+      <tr><th>Type</th><th>Host</th><th>Value</th><th>TTL</th></tr>
+      <tr>
+        <td><code>CNAME Record</code></td>
+        <td><code>www</code></td>
+        <td><code>cname.vercel-dns.com</code></td>
+        <td><code>Automatic</code></td>
+      </tr>
+    </table>
+    <div class="helper">👆 Click "Add New Record" → Type = CNAME Record → Host = www → Value = cname.vercel-dns.com → TTL = Automatic</div>
+
+    <div class="warning">
+      ⚠️ If you see any old records (like a default "Parking Page" or "URL Redirect"), click the trash icon 🗑 next to them and DELETE them. Keep only the 2 records above.
+    </div>
+
+    <button class="btn-orange" style="margin-top:20px;">✓ Save All Changes</button>
+    <div class="helper">👆 Click the orange "Save All Changes" button at the bottom when done</div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header vercel">📍 STEP 3: Wait & Refresh Vercel</div>
+  <div class="ui">
+    <ol style="font-size:14px;line-height:1.9;color:#24292f;padding-left:20px;">
+      <li>Wait <strong>5-30 minutes</strong> for DNS to propagate</li>
+      <li>Go back to Vercel → <span class="nav-link">https://vercel.com/hair-lab/hairlab-website/settings/domains</span></li>
+      <li>Click the <strong>"Refresh"</strong> button next to hairlab.one</li>
+      <li>You should see a green checkmark ✅ "Valid Configuration"</li>
+    </ol>
+
+    <div class="success">
+      🎉 <strong>When you see green checkmarks on both hairlab.one AND www.hairlab.one:</strong>
+      <br><br>
+      Your website is now LIVE at <strong>https://hairlab.one</strong> 🎉
+      <br><br>
+      Visit it on your phone, send it to friends, share on Instagram. You're live!
+    </div>
+
+    <div class="warning">
+      ⏳ DNS can take 5-30 minutes to propagate. If it still says "Invalid Configuration" after 30 min, refresh the page. If still wrong after 1 hour, send me a screenshot.
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header" style="background:#2da44e;">✅ Quick Recap</div>
+  <div class="ui">
+    <ol style="font-size:15px;line-height:1.9;color:#24292f;padding-left:20px;">
+      <li>Namecheap → Dashboard → Manage hairlab.one → Advanced DNS tab</li>
+      <li>Delete any old records (Parking Page, URL Redirect, etc.)</li>
+      <li>Add A Record: Host=@, Value=76.76.21.21, TTL=Automatic</li>
+      <li>Add CNAME Record: Host=www, Value=cname.vercel-dns.com, TTL=Automatic</li>
+      <li>Click "Save All Changes"</li>
+      <li>Wait 5-30 minutes</li>
+      <li>Vercel → Domains → Refresh → green checkmark ✅</li>
+      <li>Visit <strong>hairlab.one</strong> → LIVE!</li>
+    </ol>
+  </div>
+</div>
+
+</body>
+</html>
