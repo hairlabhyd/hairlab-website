@@ -69,7 +69,7 @@ export const products: Product[] = [
     name: "Ojas",
     subtitle: "Power Mix Hair Mask",
     description:
-      "Handcrafted all-in-one power masks. Blend fresh, apply, repeat. A weekly ritual of hibiscus, fenugreek, and Ayurvedic herbs mixed fresh into a powder base — activated with water or yogurt when you're ready.",
+      "Handcrafted all-in-one power masks. Blend fresh, apply, repeat. A weekly ritual of hibiscus, fenugreek, and botanical herbs mixed fresh into a powder base — activated with water or your favourite oil.",
     price: 18900,
     volume: "100 g",
     image: "/products/ojas.jpg",

@@ -60,7 +60,7 @@ const favHerbs = [
   { name: "Hibiscus", note: "Softens, conditions, revives" },
   { name: "Fenugreek", note: "Protein, shine, strength" },
   { name: "Black Seed Oil", note: "Anti-inflammatory heritage" },
-  { name: "Sesame", note: "The Ayurvedic base, slow-infused" },
+  { name: "Sesame", note: "The heritage base, slow-infused" },
   { name: "Pumpkin Seed Oil", note: "Rich in zinc, for scalp health" },
   { name: "Curry Leaf", note: "South Indian heritage staple" },
 ];
@@ -68,8 +68,8 @@ const favHerbs = [
 const testimonials = [
   {
     quote:
-      "Three weeks with Neelam. My grandmother asked what I was doing differently. I told her: just the oil, every night — like she taught me.",
-    name: "Neelam R.",
+      "Neelam smells so good. 4.5/5.",
+    name: "Jahnvi",
     place: "Hyderabad, Telangana",
   },
   {
@@ -81,12 +81,12 @@ const testimonials = [
   {
     quote:
       "The Kāru comb is the most underrated product on the site. I use it morning and night — neem wood feels different on the scalp. No static, no snags.",
-    name: "Mukta S.",
+    name: "Mukta K.",
     place: "Hyderabad, Telangana",
   },
   {
     quote:
-      "Ojas powder mask felt dry and chalky the first time. Then Sruwa told me to mix a few drops of Mane oil into the paste before applying. Game-changer. Soft, conditioned hair after one use.",
+      "I mixed it with Mane oil and tea decoction. The best. I also mixed curd once. That's it.",
     name: "Lakshmi P.",
     place: "Hyderabad, Telangana",
   },
@@ -299,10 +299,9 @@ export default function Home() {
               </span>
             </div>
             <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
-              Hair has a memory.
+              Roots run deep.
               <br />
-              We&apos;d rather it remember
-              <span className="italic text-[#B8553C]"> care.</span>
+              <span className="italic text-[#B8553C]">Rituals run deeper.</span>
             </h2>
             <div className="mt-8 space-y-5 text-[#2C2416]/75 leading-relaxed font-[family-name:var(--font-inter)]">
               <p>
