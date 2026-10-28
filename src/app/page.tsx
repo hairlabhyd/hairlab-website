@@ -38,7 +38,7 @@ const ourPromise = [
   },
   {
     icon: Truck,
-    title: "Pan-India. Even to your nani's house.",
+    title: "Pan-India. Even to the smallest town.",
     body: "Free delivery above ₹800. Lands at your door in 5–10 days. COD available.",
   },
   {
@@ -56,7 +56,7 @@ const ourPromise = [
 const favHerbs = [
   { name: "Aparajita", note: "Butterfly pea — for shine" },
   { name: "Bhringraj", note: "The king of hair herbs" },
-  { name: "Amla", note: "Vitamin C-rich, cold-pressed" },
+  { name: "Amla", note: "Vitamin C-rich, hand-extracted" },
   { name: "Brahmi", note: "Calms the scalp, soothes the mind" },
   { name: "Hibiscus", note: "Softens, conditions, revives" },
   { name: "Fenugreek", note: "Protein, shine, strength" },
@@ -204,7 +204,7 @@ export default function Home() {
 
             <p className="mt-8 text-[#2C2416]/75 text-base sm:text-lg leading-relaxed max-w-md font-[family-name:var(--font-inter)]">
               Plant-derived, cruelty-free hair care rooted in Indian ritual.
-              Cold-pressed botanicals, slow infusions, hand-blended formulas —
+              Botanical oils, slow infusions, hand-blended formulas —
               made in small batches, with intention.
             </p>
 
@@ -281,9 +281,7 @@ export default function Home() {
         <div className="flex items-center gap-12 animate-[marquee_30s_linear_infinite] whitespace-nowrap text-[11px] tracking-[0.3em] uppercase">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="flex items-center gap-12">
-              <span>Cold pressed</span>
-              <span className="text-[#7A8450]">✦</span>
-              <span>Hand blended</span>
+              <span>Hand-blended</span>
               <span className="text-[#7A8450]">✦</span>
               <span>Small batch</span>
               <span className="text-[#7A8450]">✦</span>
@@ -317,17 +315,18 @@ export default function Home() {
             </h2>
             <div className="mt-8 space-y-5 text-[#2C2416]/75 leading-relaxed font-[family-name:var(--font-inter)]">
               <p>
-                HAIR LAB. began as a love letter to the rituals our
-                grandmothers knew by heart — the Sunday evening scalp massage,
-                the slow infusion of bhringraj in sesame, the patience of
-                waiting for herbs to give themselves to the oil. We wanted to
-                honor that wisdom, not replace it.
+                HAIR LAB. began as a love letter to the rituals we grew up with
+                — the Sunday evening scalp massage, the slow infusion of
+                bhringraj in sesame, the patience of waiting for herbs to give
+                themselves to the oil. We wanted to honor that wisdom, not
+                replace it.
               </p>
               <p>
-                Each batch is hand-blended in small quantities. We cold-press
-                our bases, slow-infuse our herbs over days, and bottle them
-                with intention — a quiet inheritance passed forward, one
-                ritual at a time.
+                Each batch is hand-blended in small quantities. We love
+                coconut, but we also love sesame in winters especially — so we
+                use both, depending on the season and the ritual. Slow-infused
+                over days, bottled with intention. A quiet inheritance passed
+                forward, one ritual at a time.
               </p>
               <p className="font-[family-name:var(--font-playfair)] italic text-xl text-[#7A8450]">
                 Heritage, hand-blended. Ritual, restored.
@@ -540,8 +539,8 @@ export default function Home() {
             Our favourite herbs.
           </h2>
           <p className="mt-6 text-[#2C2416]/70 leading-relaxed">
-            Sourced from farms across South India — slow-infused in cold-pressed
-            bases, the way it has always been done.
+            Sourced from farms across South India — slow-infused in
+            botanical oils, the way it has always been done.
           </p>
         </div>
 

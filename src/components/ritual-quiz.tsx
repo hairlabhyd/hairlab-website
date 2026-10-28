@@ -17,11 +17,11 @@ const questions: Question[] = [
       { text: "A slow scalp massage, before the world wakes up", archetype: "mane" },
       { text: "Something to bring back the dark", archetype: "neelam" },
       { text: "A paste, mixed fresh, weekly ritual", archetype: "ojas" },
-      { text: "A comb that remembers my grandmother", archetype: "karu" },
+      { text: "A comb that remembers home", archetype: "karu" },
     ],
   },
   {
-    question: "Your grandmother's hair secret was…",
+    question: "The hair secret you grew up around was…",
     options: [
       { text: "Bhringraj in sesame, slow-infused for days", archetype: "neelam" },
       { text: "Coconut oil with hibiscus, every Sunday", archetype: "mane" },

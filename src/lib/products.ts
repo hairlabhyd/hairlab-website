@@ -49,7 +49,7 @@ export const products: Product[] = [
     name: "Neelam",
     subtitle: "Blue Bhring Oil",
     description:
-      "She sits dark in the bottle — indigo quiet, bhringraj patient. Massaged in, she warms to her work: a deep, slow nourishing, a return to the dark, lustrous hair your grandmother knew. Botanical, intentional, rooted in ritual — not in trend.",
+      "She sits dark in the bottle — indigo quiet, bhringraj patient. Massaged in, she warms to her work: a deep, slow nourishing, a return to the dark, lustrous hair that feels like your own. Botanical, intentional, rooted in ritual — not in trend.",
     price: 21900,
     volume: "100 ml",
     image: "/products/neelam.jpg",
@@ -94,7 +94,7 @@ export const products: Product[] = [
     name: "Kāru",
     subtitle: "Neem Wood Comb",
     description:
-      "One piece of neem wood. Carved by hand, finished by patience. Anti-bacterial by nature, gentle by design — a comb that doesn't tug, doesn't snap, doesn't pretend. The kind of thing your grandmother used, and her grandmother before her. No plastic. No lacquer. No compromise.",
+      "One piece of neem wood. Carved by hand, finished by patience. Anti-bacterial by nature, gentle by design — a comb that doesn't tug, doesn't snap, doesn't pretend. The kind of thing you remember from a South Indian home. No plastic. No lacquer. No compromise.",
     price: 18900,
     volume: "1 piece",
     image: "/products/karu.jpg",
