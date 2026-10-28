@@ -53,7 +53,7 @@ const ourPromise = [
 ];
 
 const favHerbs = [
-  { name: "Aparajita", note: "Butterfly pea — for natural shine" },
+  { name: "Aparajita", note: "Butterfly pea — for shine" },
   { name: "Bhringraj", note: "The king of hair herbs" },
   { name: "Amla", note: "Vitamin C-rich, cold-pressed" },
   { name: "Brahmi", note: "Calms the scalp, soothes the mind" },
@@ -191,7 +191,7 @@ export default function Home() {
             </h1>
 
             <p className="mt-8 text-[#2C2416]/75 text-base sm:text-lg leading-relaxed max-w-md font-[family-name:var(--font-inter)]">
-              All-natural, cruelty-free hair care rooted in Indian ritual.
+              Plant-derived, cruelty-free hair care rooted in Indian ritual.
               Cold-pressed botanicals, slow infusions, hand-blended formulas —
               made in small batches, with intention.
             </p>
@@ -216,7 +216,7 @@ export default function Home() {
 
             <div className="mt-14 grid grid-cols-3 gap-6 max-w-md">
               {[
-                { icon: Leaf, label: "Botanical" },
+                { icon: Leaf, label: "Plant-derived" },
                 { icon: ShieldCheck, label: "Cruelty-free" },
                 { icon: Truck, label: "Pan-India" },
               ].map((t) => (
@@ -256,9 +256,9 @@ export default function Home() {
             </div>
 
             <div className="hidden sm:block absolute -top-4 -right-4 w-24 h-24 rounded-full bg-[#7A8450] text-[#F4ECD8] flex items-center justify-center text-center font-[family-name:var(--font-playfair)] italic text-xs leading-tight p-3 rotate-12 shadow-xl">
-              All
+              Plant
               <br />
-              natural
+              derived
             </div>
           </div>
         </div>
@@ -639,7 +639,7 @@ export default function Home() {
                 className="h-12 sm:h-14 w-auto object-contain mb-4"
               />
               <p className="text-sm text-[#F4ECD8]/60 leading-relaxed max-w-xs">
-                Ancient luxury, handcrafted. All-natural, cruelty-free hair care
+                Ancient luxury, handcrafted. Plant-derived, cruelty-free hair care
                 made in small batches, with intention.
               </p>
               <a
