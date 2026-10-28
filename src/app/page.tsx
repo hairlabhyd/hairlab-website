@@ -245,9 +245,11 @@ export default function Home() {
               <span className="text-[#7A8450]">✦</span>
               <span>Small batch</span>
               <span className="text-[#7A8450]">✦</span>
-              <span>No silicones</span>
+              <span>Botanical</span>
               <span className="text-[#7A8450]">✦</span>
               <span>Cruelty-free</span>
+              <span className="text-[#7A8450]">✦</span>
+              <span>Heritage formula</span>
               <span className="text-[#7A8450]">✦</span>
               <span>Made with intention</span>
               <span className="text-[#7A8450]">✦</span>
@@ -274,19 +276,20 @@ export default function Home() {
             </h2>
             <div className="mt-8 space-y-5 text-[#2C2416]/75 leading-relaxed font-[family-name:var(--font-inter)]">
               <p>
-                HAIR LAB. was born from a quiet frustration with the modern hair
-                aisle — neon bottles, sixteen-syllable ingredients, promises
-                shouted in capital letters. We wanted the opposite. We wanted
-                the oil our grandmothers massaged into our scalps on Sunday
-                evenings, made with the patience it deserves.
+                HAIR LAB. began as a love letter to the rituals our
+                grandmothers knew by heart — the Sunday evening scalp
+                massage, the slow infusion of bhringraj in sesame, the
+                patience of waiting for herbs to give themselves to the
+                oil. We wanted to honor that wisdom, not replace it.
               </p>
               <p>
-                Each batch is hand-blended in small quantities. We cold-press
-                our bases, slow-infuse our herbs over days — not minutes — and
-                bottle them in glass that you can return, refill, or keep.
+                Each batch is hand-blended in small quantities. We
+                cold-press our bases, slow-infuse our herbs over days,
+                and bottle them with intention — a quiet inheritance
+                passed forward, one ritual at a time.
               </p>
               <p className="font-[family-name:var(--font-playfair)] italic text-xl text-[#7A8450]">
-                No shortcuts. No noise. Just the ritual, restored.
+                Heritage, hand-blended. Ritual, restored.
               </p>
               <div className="flex items-center gap-3 pt-4">
                 <div className="h-10 w-10 rounded-full bg-[#7A8450] text-[#F4ECD8] flex items-center justify-center font-[family-name:var(--font-playfair)] italic text-sm">
