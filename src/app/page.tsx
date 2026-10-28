@@ -95,7 +95,7 @@ export default async function Home() {
 
       {/* ANNOUNCEMENT BAR */}
       <div className="bg-[#2C2416] text-[#F4ECD8] text-center text-[11px] tracking-[0.25em] uppercase py-2.5 px-4">
-        Handcrafted in small batches · Free shipping above ₹599 · Pan-India COD
+        Handcrafted in small batches · Free delivery above ₹800 · Delivered in 5–10 days
       </div>
 
       {/* NAV */}
@@ -150,7 +150,7 @@ export default async function Home() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10 bg-[#7A8450]" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A] font-medium">
-                Handcrafted in small batches
+                By Sruwa Kesiraju · Hyderabad
               </span>
             </div>
 
@@ -747,8 +747,8 @@ export default async function Home() {
                 Reach Us
               </h4>
               <ul className="space-y-3 text-sm text-[#F4ECD8]/70">
-                <li className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
+                <li className="flex items-start gap-2">
+                  <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <a
                     href="tel:+919502194263"
                     className="hover:text-[#F4ECD8] transition-colors"
@@ -756,8 +756,8 @@ export default async function Home() {
                     +91 95021 94263
                   </a>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
+                <li className="flex items-start gap-2">
+                  <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <a
                     href="mailto:hello@hairlab.one"
                     className="hover:text-[#F4ECD8] transition-colors"
@@ -765,8 +765,8 @@ export default async function Home() {
                     hello@hairlab.one
                   </a>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Instagram className="h-4 w-4" />
+                <li className="flex items-start gap-2">
+                  <Instagram className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <a
                     href={INSTAGRAM_URL}
                     target="_blank"
@@ -775,6 +775,11 @@ export default async function Home() {
                   >
                     @yourhairourlab
                   </a>
+                </li>
+                <li className="text-xs text-[#F4ECD8]/50 leading-relaxed pt-2">
+                  Hyderabad, Telangana 500029
+                  <br />
+                  India
                 </li>
               </ul>
             </div>

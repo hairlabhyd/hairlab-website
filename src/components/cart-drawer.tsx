@@ -20,7 +20,7 @@ function formatPrice(paise: number) {
   return `₹${(paise / 100).toFixed(0)}`;
 }
 
-const SHIPPING_FREE_THRESHOLD = 59900; // ₹599
+const SHIPPING_FREE_THRESHOLD = 80000; // ₹800 (matches SmartBiz policy)
 const SHIPPING_FEE = 4900; // ₹49
 
 export function CartDrawer() {
