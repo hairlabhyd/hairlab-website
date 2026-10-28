@@ -24,7 +24,7 @@ export const products: Product[] = [
     name: "Mane",
     subtitle: "Hair Oil",
     description:
-      "Handcrafted scalp and hair oil, made with intention. Massage in, repeat. A featherweight daily oil for softness without weight — cold-pressed coconut base woven with hibiscus, black seed, and fenugreek.",
+      "On the bottle, she looks dark and quiet — almost black. But warm a few drops between your palms and watch her turn: a deep, breathing red, stained the colour of mandaram. Fourteen botanicals — Amla, Bhringraj, Castor, Hibiscus, Methi, Moringa, Rosemary, Flaxseed and her quiet sisters — slow-infused into a base that remembers Sunday evenings. Massage in. Sleep. Rinse by morning light.",
     price: 28900,
     volume: "100 ml",
     image: "/products/mane.jpg",
@@ -33,12 +33,14 @@ export const products: Product[] = [
     accentFrom: "#7A8450",
     accentTo: "#5C6B3A",
     ingredients: [
-      "Hibiscus",
-      "Black Seed Oil",
-      "Fenugreek",
-      "Sesame",
       "Amla",
-      "Curry Leaf",
+      "Bhringraj",
+      "Castor Oil",
+      "Hibiscus",
+      "Methi",
+      "Moringa",
+      "Rosemary",
+      "Flaxseed",
     ],
   },
   {
