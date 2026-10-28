@@ -425,7 +425,7 @@ export function CartDrawer() {
                   value={form.customerName}
                   onChange={(e) => setForm({ ...form, customerName: e.target.value })}
                   className="bg-[#FBF6E9] border-[#2C2416]/15 mt-1"
-                  placeholder="Mukta K."
+                  placeholder="Sruwa K."
                 />
               </div>
 

@@ -147,7 +147,7 @@ export default async function Home() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10 bg-[#7A8450]" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A] font-medium">
-                Handcrafted by Mukta
+                Handcrafted by Sruwa
               </span>
             </div>
 
@@ -289,14 +289,17 @@ export default async function Home() {
               </p>
               <div className="flex items-center gap-3 pt-4">
                 <div className="h-10 w-10 rounded-full bg-[#7A8450] text-[#F4ECD8] flex items-center justify-center font-[family-name:var(--font-playfair)] italic text-sm">
-                  M
+                  S
                 </div>
                 <div>
                   <p className="text-sm font-medium text-[#2C2416]">
-                    Mukta Kesiraju
+                    Sruwa Kesiraju
                   </p>
                   <p className="text-xs text-[#2C2416]/60">
-                    Founder · @yourhairourlab
+                    Founder · Hairlab
+                  </p>
+                  <p className="text-xs text-[#5C6B3A] mt-0.5">
+                    Socials by Mukta · @yourhairourlab
                   </p>
                 </div>
               </div>
