@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { IntroAnimation } from "@/components/intro-animation";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${inter.variable} antialiased bg-[#F4ECD8] text-[#2C2416]`}
       >
+        <IntroAnimation />
         {children}
         <Toaster
           position="top-center"
