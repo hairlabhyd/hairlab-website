@@ -703,14 +703,14 @@ export function CartDrawer() {
                       <strong>Safe packaging</strong> — Bottles wrapped, sealed, protected for the journey.
                     </li>
                     <li>
-                      <strong>Hand-packed</strong> — Every order packed by us, not a warehouse robot.
+                      <strong>Hand-packed</strong> — Every order packed by us, by hand.
                     </li>
                     <li>
-                      <strong>Transit protection</strong> — Lost or damaged in transit? We replace it.
+                      <strong>Transit protection</strong> — If anything goes wrong in transit, we make it right.
                     </li>
                   </ol>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed pt-2 border-t border-[#2C2416]/10">
-                    We don&apos;t make money on shipping. We just don&apos;t want to lose money on it.
+                    The ₹59 covers our actual costs. Nothing more.
                   </p>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed">
                     Spend ₹799 or more → shipping is on us. Our way of saying thank you for trusting us with a bigger order.
@@ -760,27 +760,27 @@ export function CartDrawer() {
                 </div>
                 <div className="p-6 space-y-4">
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                    COD costs us extra. So it costs you extra. Here&apos;s the honest breakdown:
+                    COD has real costs on our side. We pass them on, no markup. Here&apos;s the breakdown:
                   </p>
                   <ol className="text-sm text-[#2C2416]/85 space-y-2 ml-4 list-decimal">
                     <li>
-                      <strong>Cash collection fee</strong> — Couriers charge us to handle cash on your behalf.
+                      <strong>Cash collection</strong> — Couriers charge us to handle and transport cash.
                     </li>
                     <li>
-                      <strong>7-14 day wait</strong> — Money takes that long to reach us. Cash flow waits.
+                      <strong>Settlement time</strong> — Money reaches us in 7-14 days, not instantly.
                     </li>
                     <li>
-                      <strong>Failed deliveries</strong> — When COD orders bounce, we lose product + shipping.
+                      <strong>Operational handling</strong> — COD orders need extra processing at every step.
                     </li>
                     <li>
-                      <strong>Returns handling</strong> — COD returns are 3x more common than prepaid.
+                      <strong>Returns flow</strong> — COD returns involve additional coordination.
                     </li>
                   </ol>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed pt-2 border-t border-[#2C2416]/10">
-                    We don&apos;t make money on the ₹30. We just don&apos;t lose money on it.
+                    The ₹30 covers our actual cost. Nothing more.
                   </p>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed">
-                    Pay online → skip the ₹30. We pass the saving to you, not the cost.
+                    Pay online → skip the ₹30 entirely.
                   </p>
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
                     Either way, your order ships the same day. Made with intention.
