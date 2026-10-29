@@ -20,7 +20,7 @@ function formatPrice(paise: number) {
   return `₹${(paise / 100).toFixed(0)}`;
 }
 
-const SHIPPING_FREE_THRESHOLD = 69900; // ₹699
+const SHIPPING_FREE_THRESHOLD = 79900; // ₹799
 const SHIPPING_FEE = 5900; // ₹59 (mandatory shipping)
 const COD_FEE = 3000; // ₹30 extra (only on COD)
 
@@ -713,7 +713,7 @@ export function CartDrawer() {
                     We don&apos;t make money on shipping. We just don&apos;t want to lose money on it.
                   </p>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed">
-                    Spend ₹699 or more → shipping is on us. Our way of saying thank you for trusting us with a bigger order.
+                    Spend ₹799 or more → shipping is on us. Our way of saying thank you for trusting us with a bigger order.
                   </p>
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
                     Either way, your order ships the same day. Made with intention.
@@ -721,8 +721,8 @@ export function CartDrawer() {
                 </div>
                 <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between items-center">
                   <div className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/60">
-                    <p>Below ₹699: ₹59</p>
-                    <p className="mt-1">₹699+: FREE</p>
+                    <p>Below ₹799: ₹59</p>
+                    <p className="mt-1">₹799+: FREE</p>
                   </div>
                   <Button
                     onClick={() => setShowShippingInfo(false)}
@@ -788,7 +788,7 @@ export function CartDrawer() {
                 </div>
                 <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between items-center">
                   <div className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/60">
-                    <p>Online: ₹59 shipping (or free ₹699+)</p>
+                    <p>Online: ₹59 shipping (or free ₹799+)</p>
                     <p className="mt-1">COD: ₹59 shipping + ₹30 extra</p>
                   </div>
                   <Button

@@ -42,7 +42,7 @@ function getRazorpay() {
 // COD fee (₹30 extra for COD orders)
 const COD_FEE = 3000;
 // Free shipping threshold
-const SHIPPING_FREE_THRESHOLD = 69900; // ₹699
+const SHIPPING_FREE_THRESHOLD = 79900; // ₹799
 const SHIPPING_FEE = 5900; // ₹59 (mandatory shipping)
 
 export async function POST(req: NextRequest) {

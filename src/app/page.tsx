@@ -40,7 +40,7 @@ const ourPromise = [
   {
     icon: Truck,
     title: "Pan-India. Even to the smallest town.",
-    body: "Free delivery above ₹699. Lands at your door in 5–10 days. COD available.",
+    body: "Free delivery above ₹799. Lands at your door in 5–10 days. COD available.",
   },
   {
     icon: ShieldCheck,
