@@ -21,7 +21,7 @@ const walkingProducts: WalkingProduct[] = [
   {
     id: "mane",
     name: "Mane",
-    image: "/products/mane.jpg",
+    image: "/products/mane-cutout.png",
     accentFrom: "#7A8450",
     accentTo: "#5C6B3A",
     delay: 0,
@@ -31,7 +31,7 @@ const walkingProducts: WalkingProduct[] = [
   {
     id: "neelam",
     name: "Neelam",
-    image: "/products/neelam.jpg",
+    image: "/products/neelam-cutout.png",
     accentFrom: "#3A4D5C",
     accentTo: "#1F2E3A",
     delay: 1.5,
@@ -41,7 +41,7 @@ const walkingProducts: WalkingProduct[] = [
   {
     id: "ojas",
     name: "Ojas",
-    image: "/products/ojas.jpg",
+    image: "/products/ojas-cutout.png",
     accentFrom: "#B8860B",
     accentTo: "#8C6708",
     delay: 3,
@@ -51,7 +51,7 @@ const walkingProducts: WalkingProduct[] = [
   {
     id: "karu",
     name: "Kāru",
-    image: "/products/karu.jpg",
+    image: "/products/karu-cutout.png",
     accentFrom: "#8C6F4A",
     accentTo: "#5C4A2F",
     delay: 4.5,
@@ -138,9 +138,8 @@ export function IntroAnimation() {
           >
             {/* Product bottle */}
             <div
-              className="relative w-14 h-20 rounded-sm overflow-hidden shadow-2xl cursor-pointer hover:scale-110 transition-transform"
+              className="relative w-14 h-20 shadow-2xl cursor-pointer hover:scale-110 transition-transform object-contain"
               style={{
-                background: `linear-gradient(135deg, ${product.accentFrom}, ${product.accentTo})`,
                 animation: `bobUp 0.5s ease-in-out infinite`,
               }}
             >
