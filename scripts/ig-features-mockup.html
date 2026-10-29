@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>IG Features Mockup</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f8fa; margin: 0; padding: 40px 20px; }
+  .feature { max-width: 1100px; margin: 0 auto 60px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .feature-header { background: #E1306C; color: white; padding: 20px 30px; font-size: 22px; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+  .feature-sub { padding: 10px 30px; background: #f6f8fa; color: #57606a; font-size: 14px; border-bottom: 1px solid #d0d7de; }
+  .mockup-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 30px; }
+  .mockup { background: #f6f8fa; border-radius: 8px; overflow: hidden; border: 1px solid #eaeaea; }
+  .phone-frame { background: #1A3D2A; padding: 12px; border-radius: 32px; max-width: 320px; margin: 20px auto; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .phone-screen { background: #F4ECD8; border-radius: 24px; overflow: hidden; aspect-ratio: 9/16; display: flex; flex-direction: column; }
+  .ig-story { background: linear-gradient(180deg, #1A3D2A 0%, #1A3D2A 50%, #2C2416 50%, #2C2416 100%); padding: 20px; aspect-ratio: 9/16; max-width: 280px; margin: 20px auto; border-radius: 16px; color: white; position: relative; }
+  .ig-quote-card { background: linear-gradient(135deg, #1A3D2A 0%, #2C2416 100%); padding: 30px; aspect-ratio: 1; max-width: 320px; margin: 20px auto; border-radius: 8px; color: white; position: relative; display: flex; flex-direction: column; }
+  .ig-fact-card { background: #FBF6E9; padding: 30px; aspect-ratio: 1; max-width: 320px; margin: 20px auto; border-radius: 8px; color: #2C2416; position: relative; display: flex; flex-direction: column; }
+  .label { text-align: center; padding: 10px; font-size: 12px; color: #57606a; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+  .archetype-name { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-style: italic; text-align: center; margin: 20px 0 12px; }
+  .archetype-desc { font-size: 13px; line-height: 1.6; text-align: center; opacity: 0.9; }
+  .share-btn { background: #E1306C; color: white; padding: 12px; border-radius: 24px; text-align: center; font-size: 12px; font-weight: 600; margin: 20px 10px 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .logo-mini { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; letter-spacing: 0.15em; text-align: center; padding-top: 20px; }
+  .ig-handle { position: absolute; bottom: 20px; left: 20px; right: 20px; text-align: center; font-size: 11px; opacity: 0.7; letter-spacing: 0.1em; text-transform: uppercase; }
+  .quote-mark { font-family: 'Playfair Display', Georgia, serif; font-size: 60px; line-height: 1; opacity: 0.3; }
+  .quote-text { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; line-height: 1.5; flex: 1; display: flex; align-items: center; text-align: center; padding: 0 10px; }
+  .fact-category { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8860B; margin-bottom: 16px; }
+  .fact-text { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; line-height: 1.5; color: #2C2416; flex: 1; }
+  .gold-accent { color: #B8860B; }
+  .plant-derived-badge { display: inline-block; background: #7A8450; color: white; padding: 4px 12px; border-radius: 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 12px; align-self: center; }
+  .download-btn { background: #1A3D2A; color: #F4ECD8; padding: 8px; border-radius: 16px; text-align: center; font-size: 11px; font-weight: 500; margin: 12px 10px 0; text-transform: uppercase; letter-spacing: 0.1em; }
+  .purple-dot { width: 8px; height: 8px; background: #E1306C; border-radius: 50%; display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- FEATURE 1: Share to Instagram Story -->
+<div class="feature">
+  <div class="feature-header">
+    <span class="purple-dot"></span>
+    Feature 1: Share to Instagram Story
+  </div>
+  <div class="feature-sub">Customer takes quiz → gets result → taps "Share to IG Story" → branded image opens in Instagram with caption ready</div>
+  <div class="mockup-row">
+    <div class="mockup">
+      <div class="label">On your website (quiz result)</div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div style="background: #1A3D2A; color: #F4ECD8; padding: 20px; text-align: center;">
+            <p style="font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8860B; margin: 0 0 8px;">You are</p>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; margin: 0;">The Resham Ritual Keeper</h3>
+          </div>
+          <div style="padding: 20px; flex: 1;">
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; color: #2C2416; line-height: 1.6; text-align: center;">
+              "Sunday evenings are yours. Two minutes, scalp to ends. Slow, intentional, patient."
+            </p>
+            <p style="font-size: 11px; color: #2C2416; opacity: 0.7; text-align: center; margin-top: 12px;">
+              Your ritual product: <strong>Mane</strong>
+            </p>
+          </div>
+          <div style="padding: 16px;">
+            <div class="share-btn">
+              📷 Share to Instagram Story
+            </div>
+            <div style="font-size: 10px; color: #57606a; text-align: center; margin-top: 8px;">
+              Tag <strong>@yourhairourlab</strong> in your story
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <div class="label">Opens in Instagram Story (auto-filled)</div>
+      <div class="ig-story">
+        <div style="text-align: center; padding-top: 30px;">
+          <div style="width: 50px; height: 50px; background: #B8860B; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: #2C2416;">HL</div>
+          <p style="font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8860B; margin: 0 0 8px;">I am</p>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; margin: 0 0 12px; font-style: italic;">The Resham<br/>Ritual Keeper</h3>
+          <p style="font-size: 11px; opacity: 0.9; line-height: 1.6; padding: 0 20px;">
+            Sunday evenings are mine. Two minutes, scalp to ends. Slow, intentional, patient.
+          </p>
+          <div style="background: rgba(184,134,11,0.3); padding: 6px 14px; border-radius: 12px; font-size: 10px; margin-top: 16px; display: inline-block;">
+            Shop Mane at hairlab.one
+          </div>
+        </div>
+        <div class="ig-handle">@yourhairourlab · hairlab.one</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURE 2: Branded Quote Cards -->
+<div class="feature">
+  <div class="feature-header">
+    <span class="purple-dot"></span>
+    Feature 2: Branded Quote Cards (downloadable)
+  </div>
+  <div class="feature-sub">Customer downloads a square 1080x1080 image with their quiz archetype + HAIR LAB. branding → posts to their IG feed → their followers see it</div>
+  <div class="mockup-row">
+    <div class="mockup">
+      <div class="label">Resham Archetype Card (dark)</div>
+      <div class="ig-quote-card">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div style="width: 60px; height: 60px; background: #B8860B; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-style: italic; font-size: 22px; color: #2C2416;">R</div>
+        </div>
+        <div style="font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8860B; text-align: center; margin-bottom: 8px;">I am</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 26px; font-style: italic; text-align: center; margin-bottom: 12px;">The Resham<br/>Ritual Keeper</div>
+        <div style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; text-align: center; opacity: 0.85; line-height: 1.5; padding: 0 10px;">
+          "Sunday evenings are mine. Two minutes, scalp to ends. Slow, intentional, patient."
+        </div>
+        <div class="plant-derived-badge">Plant-derived · Hand-blended</div>
+        <div class="ig-handle">@yourhairourlab · hairlab.one</div>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <div class="label">Neelam Archetype Card (dark blue)</div>
+      <div class="ig-quote-card" style="background: linear-gradient(135deg, #3A4D5C 0%, #1F2E3A 100%);">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div style="width: 60px; height: 60px; background: #5C6B7A; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-style: italic; font-size: 22px; color: white;">N</div>
+        </div>
+        <div style="font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8860B; text-align: center; margin-bottom: 8px;">I am</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 26px; font-style: italic; text-align: center; margin-bottom: 12px;">The Neelam<br/>Ritual Keeper</div>
+        <div style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; text-align: center; opacity: 0.85; line-height: 1.5; padding: 0 10px;">
+          "I lean toward the dark. Indigo, bhringraj, depth. Hair that remembers it has roots."
+        </div>
+        <div class="plant-derived-badge" style="background: #5C6B7A;">Plant-derived · Hand-blended</div>
+        <div class="ig-handle">@yourhairourlab · hairlab.one</div>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 0 30px 20px; text-align: center;">
+    <div class="download-btn" style="max-width: 300px; margin: 0 auto;">
+      ⬇ Download my branded card
+    </div>
+    <p style="font-size: 11px; color: #57606a; margin-top: 8px;">
+      Square 1080×1080 · Ready to post on Instagram feed
+    </p>
+  </div>
+</div>
+
+<!-- FEATURE 3: Did You Know IG Cards -->
+<div class="feature">
+  <div class="feature-header">
+    <span class="purple-dot"></span>
+    Feature 3: Did You Know → IG-ready Cards (for YOU to post)
+  </div>
+  <div class="feature-sub">Each weekly fact auto-formats as an IG-ready square image. You tap "Download for IG" → ready to post. Solves "what do I post?" forever.</div>
+  <div class="mockup-row">
+    <div class="mockup">
+      <div class="label">Fact Card #1 — History</div>
+      <div class="ig-fact-card">
+        <div class="fact-category">✦ Did You Know · History</div>
+        <div class="fact-text">
+          The word "shampoo" comes from the Hindi <em>champo</em>, meaning to massage or press.
+        </div>
+        <div style="margin-top: auto; text-align: center;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 14px; color: #1A3D2A; letter-spacing: 0.15em;">HAIR LAB.</div>
+          <div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #5C6B3A; margin-top: 4px;">@yourhairourlab</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <div class="label">Fact Card #2 — Science</div>
+      <div class="ig-fact-card" style="background: linear-gradient(135deg, #1A3D2A 0%, #2C2416 100%); color: #F4ECD8;">
+        <div class="fact-category" style="color: #B8860B;">✦ Did You Know · Science</div>
+        <div class="fact-text" style="color: #F4ECD8;">
+          Hair porosity matters more than hair type. It tells you how your hair takes in moisture — and how long it holds.
+        </div>
+        <div style="margin-top: auto; text-align: center;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 14px; color: #B8860B; letter-spacing: 0.15em;">HAIR LAB.</div>
+          <div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8860B; margin-top: 4px;">@yourhairourlab</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 0 30px 20px; text-align: center;">
+    <div class="download-btn" style="max-width: 300px; margin: 0 auto;">
+      ⬇ Download for Instagram
+    </div>
+    <p style="font-size: 11px; color: #57606a; margin-top: 8px;">
+      200+ facts ready · Square 1080×1080 · Auto-formatted weekly
+    </p>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="feature">
+  <div class="feature-header" style="background: #2da44e;">
+    ✅ Summary: Why these 3 features?
+  </div>
+  <div style="padding: 30px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+      <div style="text-align: center;">
+        <div style="font-size: 32px; margin-bottom: 8px;">📷</div>
+        <h4 style="margin: 0 0 8px; color: #1A3D2A; font-size: 14px;">Share to IG Story</h4>
+        <p style="font-size: 12px; color: #57606a; margin: 0;">
+          One tap → branded image in customer's IG story<br/>
+          ~150 new eyes per share
+        </p>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 32px; margin-bottom: 8px;">🎨</div>
+        <h4 style="margin: 0 0 8px; color: #1A3D2A; font-size: 14px;">Quote Cards</h4>
+        <p style="font-size: 12px; color: #57606a; margin: 0;">
+          Downloadable branded cards<br/>
+          Customer posts to feed → free marketing
+        </p>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 32px; margin-bottom: 8px;">💡</div>
+        <h4 style="margin: 0 0 8px; color: #1A3D2A; font-size: 14px;">Did You Know Cards</h4>
+        <p style="font-size: 12px; color: #57606a; margin: 0;">
+          200+ ready-to-post fact cards<br/>
+          Solves "what do I post?" forever
+        </p>
+      </div>
+    </div>
+    <div style="margin-top: 24px; padding: 16px; background: #fff8c5; border: 1px solid #d4a72c; border-radius: 6px; font-size: 13px; color: #57606a; text-align: center;">
+      <strong>Cost: ₹0</strong> · <strong>Time: ~1 hour to build all 3</strong> · <strong>Maintenance: 0</strong> (auto-formatted)
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
