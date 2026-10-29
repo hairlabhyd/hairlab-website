@@ -691,24 +691,30 @@ export function CartDrawer() {
                 </div>
                 <div className="p-6 space-y-4">
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                    Look, we get it. Trusting a new brand online is hard. COD is your way of saying &ldquo;I&apos;ll believe it when I see it.&rdquo;
+                    We pass on actual costs. No markup. Here&apos;s what COD really costs us:
+                  </p>
+                  <ol className="text-sm text-[#2C2416]/85 space-y-2 ml-4 list-decimal">
+                    <li>
+                      <strong>Courier fees</strong> — Cash collection costs the courier extra. We pass that on.
+                    </li>
+                    <li>
+                      <strong>Cash delay</strong> — Money takes 7-14 days to reach us. Cash flow waits.
+                    </li>
+                    <li>
+                      <strong>Failed deliveries</strong> — When packages bounce back, we lose product + shipping.
+                    </li>
+                    <li>
+                      <strong>Returns handling</strong> — COD returns are 3x more common than prepaid ones.
+                    </li>
+                  </ol>
+                  <p className="text-sm text-[#2C2416]/75 leading-relaxed pt-2 border-t border-[#2C2416]/10">
+                    We don&apos;t make money on the ₹29. We just don&apos;t lose money on it.
                   </p>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed">
-                    But COD has real costs we pay:
-                  </p>
-                  <ul className="text-sm text-[#2C2416]/75 space-y-1 ml-4 list-disc">
-                    <li>Courier charges us extra to collect cash</li>
-                    <li>Money takes 7-14 days to come back to us</li>
-                    <li>Failed deliveries hurt small brands like ours</li>
-                  </ul>
-                  <p className="text-sm text-[#2C2416]/75 leading-relaxed">
-                    So we add ₹29 extra on COD orders — just to break even. We don&apos;t make money on this. Promise.
-                  </p>
-                  <p className="text-sm text-[#2C2416]/75 leading-relaxed">
-                    If you trust us enough to pay online, we save ₹29 — and pass that saving to you. That&apos;s it.
+                    Pay online → save ₹29. We pass the saving to you, not the cost.
                   </p>
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
-                    Either way, we&apos;ll deliver. Made with intention. Always.
+                    Either way, your order ships the same day. Made with intention. Always.
                   </p>
                 </div>
                 <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between">
