@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { WhatsAppShare } from "@/components/whatsapp-share";
+import { WalkingProducts } from "@/components/walking-products";
 import {
   Leaf,
   Star,
@@ -139,6 +140,7 @@ export default function Home() {
       <CartDrawer />
       <AdminModal />
       <DidYouKnowPopup />
+      <WalkingProducts />
 
       {/* GREEN WALL — announcement bar + nav as one continuous dark green wall */}
       <div className="sticky top-0 z-40 bg-[#1A3D2A] text-[#F4ECD8] shadow-lg shadow-[#1A3D2A]/20">
