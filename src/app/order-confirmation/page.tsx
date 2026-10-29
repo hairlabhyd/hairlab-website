@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,7 @@ interface OrderInfo {
   items: { name: string; quantity: number; price: number }[];
 }
 
-export default function OrderConfirmationPage() {
+function OrderConfirmationContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("id");
   const [order, setOrder] = useState<OrderInfo | null>(null);
@@ -202,5 +203,24 @@ export default function OrderConfirmationPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function OrderConfirmationPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#F4ECD8] flex items-center justify-center">
+          <div className="text-center">
+            <Package className="h-12 w-12 text-[#7A8450] mx-auto mb-4 animate-pulse" strokeWidth={1.4} />
+            <p className="font-[family-name:var(--font-playfair)] text-xl text-[#2C2416]">
+              Loading your order...
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <OrderConfirmationContent />
+    </Suspense>
   );
 }
