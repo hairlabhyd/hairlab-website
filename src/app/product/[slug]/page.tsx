@@ -33,18 +33,18 @@ interface Product {
   ingredients: string[];
 }
 
-// Usage guides per product (indirect ingredient mentions)
-const usageGuides: Record<string, { steps: string[]; ingredientsNote: string }> = {
+// Usage guides per product (Sruwa's real instructions)
+const usageGuides: Record<string, { steps: string[]; note: string }> = {
   mane: {
     steps: [
       "Warm 2-3 drops between your palms.",
       "Press into your scalp — not the lengths. Scalp first, always.",
-      "Massage in slow circles for 2 minutes. Not more. Ritual lives in restraint.",
-      "Sleep with it on. The actives work while you dream.",
-      "Next morning: rinse with a mild cleanser, warm water, gentle hands.",
+      "Massage in slow circles for 2 minutes.",
+      "Leave overnight, or for a minimum of 2 hours.",
+      "Rinse with a mild cleanser, warm water, gentle hands.",
     ],
-    ingredientsNote:
-      "Powered by 14 botanicals — including bhringraj, amla, hibiscus, methi, and rosemary. Slow-infused into a base that remembers Sunday evenings.",
+    note:
+      "Powered by botanicals like bhringraj, brahmi, amla, and hibiscus. Slow-infused into a base that remembers Sunday evenings.",
   },
   neelam: {
     steps: [
@@ -54,19 +54,22 @@ const usageGuides: Record<string, { steps: string[]; ingredientsNote: string }> 
       "Leave overnight for deep nourishment.",
       "Rinse next morning with a mild cleanser.",
     ],
-    ingredientsNote:
-      "Crafted with indigo and bhringraj — botanicals traditionally used to support dark, lustrous hair. Combined with amla, brahmi, and sesame.",
+    note:
+      "Indigo and bhringraj, infused carefully. Traditionally used to help prevent premature greying and support naturally dark, lustrous hair.",
   },
   ojas: {
     steps: [
-      "Take 1-2 tablespoons of Ojas powder in a bowl.",
-      "Mix with water, tea decoction, your favourite oil, or curd (whatever suits you).",
-      "Stir into a smooth paste — not too runny, not too thick.",
-      "Apply to clean, damp hair — lengths and ends.",
-      "Wait 20-30 minutes. Rinse with water. No shampoo needed.",
+      "Take the powder — the amount depends on your hair length.",
+      "The night before: soak it in an iron kadai overnight.",
+      "Add water, tea decoction — as much as needed. You can also add curd if that suits you.",
+      "For a brown tint, you can also add coffee. But it's always nice to add tea.",
+      "20 minutes before applying: mix your favourite oil into the paste.",
+      "Apply to your hair in sections.",
+      "Leave for 45 minutes to one hour.",
+      "Wash with your favourite shampoo.",
     ],
-    ingredientsNote:
-      "A blend of hibiscus, fenugreek, amla, bhringraj, brahmi, and sesame — slow-dried and hand-blended. Mix fresh each time.",
+    note:
+      "A blend of botanicals — slow-dried and hand-blended. Mix fresh each time. The ritual is yours to make.",
   },
   karu: {
     steps: [
@@ -76,7 +79,7 @@ const usageGuides: Record<string, { steps: string[]; ingredientsNote: string }> 
       "Use morning and night for best results.",
       "Clean weekly with a dry cloth. No water needed.",
     ],
-    ingredientsNote:
+    note:
       "Hand-carved from a single piece of neem wood. Anti-bacterial by nature, no plastic, no lacquer.",
   },
 };
@@ -264,6 +267,9 @@ export default function ProductDetailPage() {
                       </li>
                     ))}
                   </ol>
+                  <p className="mt-5 pt-4 border-t border-[#2C2416]/10 font-[family-name:var(--font-playfair)] italic text-sm text-[#2C2416]/70 leading-relaxed">
+                    {usage.note}
+                  </p>
                 </div>
               )}
             </div>
