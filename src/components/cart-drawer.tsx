@@ -926,7 +926,7 @@ export function CartDrawer() {
                     Spend ₹799 or more → shipping is on us. Our way of saying thank you for trusting us with a bigger order.
                   </p>
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
-                    Either way, your order ships the same day. Made with intention.
+                    Either way, we&apos;ll make sure your order reaches you safely. Made with intention.
                   </p>
                 </div>
                 <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between items-center">
@@ -977,9 +977,6 @@ export function CartDrawer() {
                       <strong>Cash collection</strong> — Couriers charge us to handle and transport cash.
                     </li>
                     <li>
-                      <strong>Settlement time</strong> — Money reaches us in 7-14 days, not instantly.
-                    </li>
-                    <li>
                       <strong>Operational handling</strong> — COD orders need extra processing at every step.
                     </li>
                     <li>
@@ -993,7 +990,7 @@ export function CartDrawer() {
                     Pay online → skip the ₹30 entirely.
                   </p>
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
-                    Either way, your order ships the same day. Made with intention.
+                    Either way, we&apos;ll make sure your order reaches you safely. Made with intention.
                   </p>
                 </div>
                 <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between items-center">
