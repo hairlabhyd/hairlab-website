@@ -11,6 +11,7 @@ const CheckoutSchema = z.object({
   shippingCity: z.string().min(2),
   shippingPincode: z.string().min(6),
   shippingState: z.string().min(2),
+  paymentMethod: z.enum(["online", "cod"]).default("online"),
   items: z.array(
     z.object({
       id: z.string(),
@@ -25,11 +26,24 @@ const CheckoutSchema = z.object({
 function getRazorpay() {
   const key_id = process.env.RAZORPAY_KEY_ID;
   const key_secret = process.env.RAZORPAY_KEY_SECRET;
-  if (!key_id || !key_secret || key_id.includes("YOUR_") || key_id.includes("rzp_test_YOUR")) {
+  if (!key_id || !key_secret) {
+    return null;
+  }
+  if (
+    key_id.includes("YOUR_") ||
+    key_id.includes("rzp_test_YOUR") ||
+    key_secret.includes("YOUR_")
+  ) {
     return null;
   }
   return new Razorpay({ key_id, key_secret });
 }
+
+// COD fee (₹49 extra for COD orders)
+const COD_FEE = 4900;
+// Free shipping threshold
+const SHIPPING_FREE_THRESHOLD = 59900; // ₹599
+const SHIPPING_FEE = 3000; // ₹30
 
 export async function POST(req: NextRequest) {
   try {
@@ -43,17 +57,26 @@ export async function POST(req: NextRequest) {
     }
 
     const data = parsed.data;
-    const amountInPaise = data.items.reduce(
+    const itemsTotal = data.items.reduce(
       (sum, i) => sum + i.price * i.quantity,
       0
     );
 
-    if (amountInPaise < 100) {
+    if (itemsTotal < 100) {
       return NextResponse.json(
         { error: "Order amount too low" },
         { status: 400 }
       );
     }
+
+    // Calculate shipping
+    const shipping =
+      itemsTotal >= SHIPPING_FREE_THRESHOLD ? 0 : SHIPPING_FEE;
+
+    // Add COD fee if payment method is COD
+    const codFee = data.paymentMethod === "cod" ? COD_FEE : 0;
+
+    const totalAmount = itemsTotal + shipping + codFee;
 
     // Create order in memory
     const order = createOrder({
@@ -72,47 +95,85 @@ export async function POST(req: NextRequest) {
       })),
     });
 
+    // COD orders don't need Razorpay — they're paid on delivery
+    if (data.paymentMethod === "cod") {
+      return NextResponse.json({
+        orderId: order.id,
+        razorpayOrderId: null,
+        amount: totalAmount,
+        itemsTotal,
+        shipping,
+        codFee,
+        currency: "INR",
+        cod: true,
+        key: null,
+      });
+    }
+
+    // Online payment — try Razorpay
     const razorpay = getRazorpay();
     if (!razorpay) {
-      console.warn("⚠️ Razorpay keys not set. Running in DEMO mode.");
+      console.warn("⚠️ Razorpay keys not set or invalid. Running in DEMO mode.");
       return NextResponse.json({
         orderId: order.id,
         razorpayOrderId: `demo_${order.id}`,
-        amount: amountInPaise,
+        amount: totalAmount,
+        itemsTotal,
+        shipping,
+        codFee,
         currency: "INR",
         demo: true,
         key: "demo_mode",
       });
     }
 
-    const razorpayOrder = await razorpay.orders.create({
-      amount: amountInPaise,
-      currency: "INR",
-      receipt: order.id,
-      notes: {
-        customerName: data.customerName,
-        customerEmail: data.customerEmail,
-        customerPhone: data.customerPhone,
-      },
-    });
-
-    updateOrder(order.id, { razorpayOrderId: razorpayOrder.id });
+    let razorpayOrder;
+    try {
+      razorpayOrder = await razorpay.orders.create({
+        amount: totalAmount,
+        currency: "INR",
+        receipt: order.id,
+        notes: {
+          customerName: data.customerName,
+          customerEmail: data.customerEmail,
+          customerPhone: data.customerPhone,
+          paymentMethod: data.paymentMethod,
+        },
+      });
+    } catch (rpError: any) {
+      console.error("❌ Razorpay API error:", JSON.stringify(rpError, null, 2));
+      const errMsg =
+        rpError?.error?.description ||
+        rpError?.message ||
+        "Razorpay API call failed";
+      return NextResponse.json(
+        {
+          error: "Payment gateway error: " + errMsg,
+          details: rpError?.error || rpError,
+        },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json({
       orderId: order.id,
       razorpayOrderId: razorpayOrder.id,
-      amount: amountInPaise,
+      amount: totalAmount,
+      itemsTotal,
+      shipping,
+      codFee,
       currency: "INR",
       key: process.env.RAZORPAY_KEY_ID,
     });
-  } catch (e) {
+  } catch (e: any) {
     console.error("❌ /api/checkout/create-order error:", e);
     return NextResponse.json(
-      { error: "Could not create order: " + (e as Error).message },
+      {
+        error: "Could not create order",
+        message: e?.message || String(e),
+        stack: process.env.NODE_ENV === "development" ? e?.stack : undefined,
+      },
       { status: 500 }
     );
   }
 }
-
-// Need to import updateOrder
-import { updateOrder } from "@/lib/orders";
