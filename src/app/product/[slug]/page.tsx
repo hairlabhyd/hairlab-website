@@ -87,7 +87,7 @@ export default function ProductDetailPage() {
   const slug = params.slug as string;
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"description" | "usage" | "ingredients">("description");
+  const [activeTab, setActiveTab] = useState<"description" | "usage">("description");
   const addItem = useCart((s) => s.addItem);
 
   useEffect(() => {
@@ -235,16 +235,6 @@ export default function ProductDetailPage() {
               >
                 Usage Guide
               </button>
-              <button
-                onClick={() => setActiveTab("ingredients")}
-                className={`px-4 py-2 text-[11px] tracking-[0.15em] uppercase border-b-2 transition-colors ${
-                  activeTab === "ingredients"
-                    ? "border-[#1A3D2A] text-[#1A3D2A]"
-                    : "border-transparent text-[#2C2416]/50 hover:text-[#2C2416]"
-                }`}
-              >
-                Ingredients
-              </button>
             </div>
 
             {/* Tab Content */}
@@ -274,24 +264,6 @@ export default function ProductDetailPage() {
                       </li>
                     ))}
                   </ol>
-                </div>
-              )}
-
-              {activeTab === "ingredients" && (
-                <div className="space-y-4">
-                  <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                    {usage.ingredientsNote}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {product.ingredients.map((ing) => (
-                      <span
-                        key={ing}
-                        className="text-[10px] tracking-[0.1em] uppercase px-2.5 py-1 rounded-full bg-[#7A8450]/10 text-[#5C6B3A] border border-[#7A8450]/20"
-                      >
-                        {ing}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               )}
             </div>

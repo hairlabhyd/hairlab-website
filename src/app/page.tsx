@@ -524,6 +524,19 @@ export default function Home() {
             );
           })}
         </div>
+
+        {/* Quick WhatsApp Share (moved up from bottom) */}
+        <div className="mt-10 flex flex-col items-center gap-2">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-[#2C2416]/50">
+            Know someone who'd love HAIR LAB.?
+          </p>
+          <WhatsAppShare
+            text="Hey! Found this hand-blended hair oil brand — HAIR LAB. Ancient luxury, handcrafted. Check it out:"
+            label="Share on WhatsApp"
+            variant="outline"
+            size="sm"
+          />
+        </div>
       </section>
 
       {/* OUR PROMISE */}
