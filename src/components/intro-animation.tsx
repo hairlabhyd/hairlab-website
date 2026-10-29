@@ -50,12 +50,40 @@ export function IntroAnimation() {
 
   // Use a separate effect for the fade out timer (allowed — it's an external timer, not state sync)
   const [started, setStarted] = useState(false);
+  const [audioPlayed, setAudioPlayed] = useState(false);
+
   if (shouldShow && !started) {
     setStarted(true);
-    // Start fade out after 1.8 seconds
+    // Start fade out after 2.5 seconds (gives voice time to play)
     setTimeout(() => {
       setFadeOut(true);
-    }, 1800);
+    }, 2500);
+  }
+
+  // Play welcome voice on first user interaction (browsers block autoplay)
+  if (shouldShow && started && !audioPlayed && typeof window !== "undefined") {
+    setAudioPlayed(true);
+    // Try to play audio — browsers require user interaction
+    // We attempt immediately, and also listen for first click
+    const playAudio = () => {
+      try {
+        const audio = new Audio("/welcome-voice.wav");
+        audio.volume = 0.6;
+        audio.play().catch(() => {
+          // Autoplay blocked — listen for first interaction
+          const playOnce = () => {
+            audio.play().catch(() => {});
+            document.removeEventListener("click", playOnce);
+            document.removeEventListener("touchstart", playOnce);
+            document.removeEventListener("keydown", playOnce);
+          };
+          document.addEventListener("click", playOnce);
+          document.addEventListener("touchstart", playOnce);
+          document.addEventListener("keydown", playOnce);
+        });
+      } catch {}
+    };
+    playAudio();
   }
 
   if (!shouldShow && !fadeOut) return null;

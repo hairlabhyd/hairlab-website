@@ -33,39 +33,39 @@ interface Product {
   ingredients: string[];
 }
 
-// Usage guides per product (Sruwa's real instructions)
+// Usage guides per product (Sruwa's real instructions — polished English)
 const usageGuides: Record<string, { steps: string[]; note: string }> = {
   mane: {
     steps: [
-      "Warm 2-3 drops between your palms.",
+      "Warm 2-3 drops of oil between your palms.",
       "Press into your scalp — not the lengths. Scalp first, always.",
-      "Massage in slow circles for 2 minutes.",
-      "Leave overnight, or for a minimum of 2 hours.",
-      "Rinse with a mild cleanser, warm water, gentle hands.",
+      "Massage in slow, circular motions for two minutes.",
+      "Leave overnight, or for a minimum of two hours, before washing.",
+      "Rinse with a mild cleanser and warm water.",
     ],
     note:
-      "Powered by botanicals like bhringraj, brahmi, amla, and hibiscus. Slow-infused into a base that remembers Sunday evenings.",
+      "Powered by botanicals like bhringraj, brahmi, amla, and hibiscus — slow-infused into a base that remembers Sunday evenings.",
   },
   neelam: {
     steps: [
-      "Warm 2-3 drops between your palms.",
-      "Part your hair in sections. Apply to scalp first.",
-      "Massage gently — focus on the crown and temples.",
+      "Warm 2-3 drops of oil between your palms.",
+      "Part your hair in sections and apply to the scalp first.",
+      "Massage gently, focusing on the crown and temples.",
       "Leave overnight for deep nourishment.",
-      "Rinse next morning with a mild cleanser.",
+      "Rinse the next morning with a mild cleanser.",
     ],
     note:
-      "Indigo and bhringraj, infused carefully. Traditionally used to help prevent premature greying and support naturally dark, lustrous hair.",
+      "Crafted with indigo and bhringraj — botanicals traditionally used to help prevent premature greying and support naturally dark, lustrous hair.",
   },
   ojas: {
     steps: [
       "Take the powder — the amount depends on your hair length.",
-      "The night before: soak it in an iron kadai overnight.",
-      "Add water, tea decoction — as much as needed. You can also add curd if that suits you.",
-      "For a brown tint, you can also add coffee. But it's always nice to add tea.",
-      "20 minutes before applying: mix your favourite oil into the paste.",
-      "Apply to your hair in sections.",
-      "Leave for 45 minutes to one hour.",
+      "The night before: soak the powder in an iron kadai overnight.",
+      "Add water or tea decoction — as much as needed to form a paste. You can also add curd if it suits your hair.",
+      "For a brown tint, you can add coffee. But it's always nice to add tea.",
+      "Twenty minutes before applying: mix your favourite oil into the paste.",
+      "Apply to your hair in sections, covering the lengths and ends.",
+      "Leave it on for forty-five minutes to one hour.",
       "Wash with your favourite shampoo.",
     ],
     note:
