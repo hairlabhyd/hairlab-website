@@ -24,6 +24,10 @@ export interface Order {
   shippingPincode: string;
   shippingState: string;
   amount: number;
+  itemsTotal: number;
+  shipping: number;
+  codFee: number;
+  paymentMethod: "online" | "cod";
   currency: string;
   status: "CREATED" | "PAID" | "FAILED";
   createdAt: string;
@@ -44,9 +48,10 @@ export function createOrder(data: {
   shippingPincode: string;
   shippingState: string;
   items: OrderItem[];
+  paymentMethod?: "online" | "cod";
 }): Order {
   const id = `order_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-  const amount = data.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const itemsTotal = data.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
   const order: Order = {
     id,
@@ -60,7 +65,11 @@ export function createOrder(data: {
     shippingCity: data.shippingCity,
     shippingPincode: data.shippingPincode,
     shippingState: data.shippingState,
-    amount,
+    amount: itemsTotal,
+    itemsTotal,
+    shipping: 0,
+    codFee: 0,
+    paymentMethod: data.paymentMethod || "online",
     currency: "INR",
     status: "CREATED",
     createdAt: new Date().toISOString(),
@@ -68,7 +77,7 @@ export function createOrder(data: {
   };
 
   orders.set(id, order);
-  console.log(`📦 Order created: ${id} for ${data.customerName} - ₹${(amount / 100).toFixed(0)}`);
+  console.log(`📦 Order created: ${id} for ${data.customerName} - ₹${(itemsTotal / 100).toFixed(0)}`);
   return order;
 }
 

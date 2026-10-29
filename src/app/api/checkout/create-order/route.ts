@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Razorpay from "razorpay";
-import { createOrder } from "@/lib/orders";
+import { createOrder, updateOrder } from "@/lib/orders";
 import { z } from "zod";
 
 const CheckoutSchema = z.object({
@@ -93,6 +93,14 @@ export async function POST(req: NextRequest) {
         price: i.price,
         quantity: i.quantity,
       })),
+      paymentMethod: data.paymentMethod,
+    });
+
+    // Update order with totals
+    updateOrder(order.id, {
+      amount: totalAmount,
+      shipping,
+      codFee,
     });
 
     // COD orders don't need Razorpay — they're paid on delivery

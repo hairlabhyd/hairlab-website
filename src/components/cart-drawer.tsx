@@ -20,8 +20,9 @@ function formatPrice(paise: number) {
   return `₹${(paise / 100).toFixed(0)}`;
 }
 
-const SHIPPING_FREE_THRESHOLD = 80000; // ₹800 (matches SmartBiz policy)
-const SHIPPING_FEE = 4900; // ₹49
+const SHIPPING_FREE_THRESHOLD = 59900; // ₹599
+const SHIPPING_FEE = 3000; // ₹30 (actual cost, no markup)
+const COD_FEE = 5900; // ₹59 (₹30 shipping + ₹29 COD handling)
 
 export function CartDrawer() {
   const {
@@ -37,6 +38,8 @@ export function CartDrawer() {
 
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
+  const [showShippingInfo, setShowShippingInfo] = useState(false);
   const [form, setForm] = useState({
     customerName: "",
     customerEmail: "",
@@ -48,11 +51,19 @@ export function CartDrawer() {
   });
 
   const subtotal = getSubtotal();
-  const shipping =
-    subtotal >= SHIPPING_FREE_THRESHOLD || subtotal === 0
-      ? 0
-      : SHIPPING_FEE;
-  const total = subtotal + shipping;
+  const isFreeShipping = subtotal >= SHIPPING_FREE_THRESHOLD || subtotal === 0;
+
+  // Online: ₹30 or free (above ₹599)
+  // COD: ₹59 always (₹30 shipping + ₹29 COD handling, even on free shipping above ₹599)
+  const shipping = isFreeShipping ? 0 : SHIPPING_FEE;
+  const codFee = paymentMethod === "cod" ? (isFreeShipping ? 2900 : COD_FEE) : 0;
+  // If COD + free shipping: only ₹29 COD handling fee
+  // If COD + not free: ₹30 shipping + ₹29 COD = ₹59
+  const totalCodFee = paymentMethod === "cod"
+    ? (isFreeShipping ? 2900 : COD_FEE)
+    : 0;
+
+  const total = subtotal + (paymentMethod === "cod" ? totalCodFee : shipping);
   const totalItems = getTotalItems();
   const remainingForFree = SHIPPING_FREE_THRESHOLD - subtotal;
 
@@ -88,15 +99,64 @@ export function CartDrawer() {
       const createRes = await fetch("/api/checkout/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, items }),
+        body: JSON.stringify({ ...form, items, paymentMethod }),
       });
 
       if (!createRes.ok) {
-        const err = await createRes.json();
-        throw new Error(err.error || "Failed to create order");
+        let errMsg = "Failed to create order";
+        try {
+          const err = await createRes.json();
+          errMsg = err.error || errMsg;
+          if (err.message) errMsg += ` (${err.message})`;
+          if (err.details) {
+            console.error("Order creation error details:", err.details);
+          }
+        } catch (parseErr) {
+          errMsg = "Server returned non-JSON response (status " + createRes.status + ")";
+        }
+        throw new Error(errMsg);
       }
 
-      const orderData = await createRes.json();
+      let orderData;
+      try {
+        orderData = await createRes.json();
+      } catch (parseErr) {
+        throw new Error("Invalid response from server. Please try again.");
+      }
+
+      // COD order — no Razorpay payment needed
+      if (orderData.cod) {
+        const verifyRes = await fetch("/api/checkout/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId: orderData.orderId,
+            razorpayOrderId: null,
+            razorpayPaymentId: null,
+            razorpaySignature: null,
+            paymentMethod: "cod",
+          }),
+        });
+
+        if (verifyRes.ok) {
+          toast.success("Order placed! Pay ₹" + (orderData.amount / 100).toFixed(0) + " when it arrives. 📦");
+          clear();
+          closeCart();
+          setCheckoutOpen(false);
+          setForm({
+            customerName: "",
+            customerEmail: "",
+            customerPhone: "",
+            shippingAddress: "",
+            shippingCity: "",
+            shippingPincode: "",
+            shippingState: "",
+          });
+        } else {
+          toast.error("Could not confirm order. Please contact us.");
+        }
+        return;
+      }
 
       // Demo mode (no Razorpay keys set)
       if (orderData.demo) {
@@ -108,11 +168,12 @@ export function CartDrawer() {
             razorpayOrderId: orderData.razorpayOrderId,
             razorpayPaymentId: `demo_pay_${Date.now()}`,
             razorpaySignature: "demo_signature",
+            paymentMethod: "online",
           }),
         });
 
         if (verifyRes.ok) {
-          toast.success("Demo order placed! Add Razorpay keys to .env for live payments.");
+          toast.success("Demo order placed! Add Razorpay keys to env vars for live payments.");
           clear();
           closeCart();
           setCheckoutOpen(false);
@@ -138,7 +199,7 @@ export function CartDrawer() {
         currency: orderData.currency,
         name: "HAIR LAB.",
         description: "Handcrafted hair care ritual",
-        image: "/products/resham-packaging.png",
+        image: "/hairlab-logo-green.png",
         order_id: orderData.razorpayOrderId,
         prefill: {
           name: form.customerName,
@@ -152,7 +213,7 @@ export function CartDrawer() {
           shipping_state: form.shippingState,
         },
         theme: {
-          color: "#B8553C",
+          color: "#1A3D2A",
         },
         handler: async function (response: any) {
           try {
@@ -164,11 +225,11 @@ export function CartDrawer() {
                 razorpayOrderId: response.razorpay_order_id,
                 razorpayPaymentId: response.razorpay_payment_id,
                 razorpaySignature: response.razorpay_signature,
+                paymentMethod: "online",
               }),
             });
 
             if (verifyRes.ok) {
-              const result = await verifyRes.json();
               toast.success("Payment successful! Your ritual begins tonight. 🍃");
               clear();
               closeCart();
@@ -512,6 +573,68 @@ export function CartDrawer() {
               </div>
             </div>
 
+            {/* Payment Method Selection */}
+            <div className="pt-2 border-t border-[#2C2416]/10">
+              <div className="flex items-center justify-between mb-3 pt-2">
+                <Label className="text-[11px] tracking-[0.2em] uppercase text-[#2C2416]/70">
+                  Payment Method
+                </Label>
+                <button
+                  type="button"
+                  onClick={() => setShowShippingInfo(true)}
+                  className="text-[10px] tracking-[0.15em] uppercase text-[#B8553C] hover:text-[#8C3A24] underline underline-offset-4"
+                >
+                  Why COD costs more?
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("online")}
+                  className={`p-3 rounded-sm border-2 text-left transition-all ${
+                    paymentMethod === "online"
+                      ? "border-[#1A3D2A] bg-[#1A3D2A]/5"
+                      : "border-[#2C2416]/10 bg-[#FBF6E9]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-[#2C2416]">Online</span>
+                    <span className="text-[10px] text-[#5C6B3A]">
+                      {isFreeShipping ? "FREE ship" : "+₹30"}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-[#2C2416]/60 mt-1">UPI · Card · Net Banking</p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("cod")}
+                  className={`p-3 rounded-sm border-2 text-left transition-all ${
+                    paymentMethod === "cod"
+                      ? "border-[#1A3D2A] bg-[#1A3D2A]/5"
+                      : "border-[#2C2416]/10 bg-[#FBF6E9]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-[#2C2416]">COD</span>
+                    <span className="text-[10px] text-[#B8553C]">
+                      {isFreeShipping ? "+₹29" : "+₹59"}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-[#2C2416]/60 mt-1">Pay when it arrives</p>
+                </button>
+              </div>
+
+              {paymentMethod === "cod" && (
+                <p className="text-[10px] text-[#2C2416]/50 mt-2 leading-relaxed italic">
+                  COD includes a small handling fee — courier charges us extra to collect cash.
+                  Pay online to save ₹29.
+                </p>
+              )}
+            </div>
+
+            {/* Order Summary */}
             <div className="pt-3 border-t border-[#2C2416]/10 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-[#2C2416]/70">Subtotal</span>
@@ -520,12 +643,22 @@ export function CartDrawer() {
               <div className="flex justify-between text-sm">
                 <span className="text-[#2C2416]/70">Shipping</span>
                 <span className="font-medium">
-                  {shipping === 0 ? "FREE" : formatPrice(shipping)}
+                  {paymentMethod === "cod" ? (
+                    isFreeShipping ? "FREE (COD ₹29 fee)" : formatPrice(3000)
+                  ) : (
+                    shipping === 0 ? "FREE" : formatPrice(shipping)
+                  )}
                 </span>
               </div>
+              {paymentMethod === "cod" && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-[#2C2416]/70">COD handling</span>
+                  <span className="font-medium">{formatPrice(2900)}</span>
+                </div>
+              )}
               <div className="flex justify-between items-end pt-1">
                 <span className="text-[11px] tracking-[0.2em] uppercase text-[#2C2416]/60">
-                  Pay now
+                  {paymentMethod === "cod" ? "Pay on delivery" : "Pay now"}
                 </span>
                 <span className="font-[family-name:var(--font-playfair)] text-2xl text-[#2C2416]">
                   {formatPrice(total)}
@@ -534,26 +667,94 @@ export function CartDrawer() {
             </div>
           </div>
 
+          {/* Shipping Info Popup */}
+          {showShippingInfo && (
+            <div
+              className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-[#2C2416]/60 backdrop-blur-sm"
+              onClick={() => setShowShippingInfo(false)}
+            >
+              <div
+                className="bg-[#F4ECD8] max-w-md w-full rounded-sm shadow-2xl border border-[#B8860B]/30 overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="bg-[#1A3D2A] text-[#F4ECD8] px-5 py-4 flex items-center justify-between">
+                  <span className="text-[11px] tracking-[0.3em] uppercase font-medium">
+                    Honest shipping policy
+                  </span>
+                  <button
+                    onClick={() => setShowShippingInfo(false)}
+                    className="text-[#F4ECD8]/60 hover:text-[#F4ECD8] p-1"
+                    aria-label="Close"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="p-6 space-y-4">
+                  <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
+                    Look, we get it. Trusting a new brand online is hard. COD is your way of saying &ldquo;I&apos;ll believe it when I see it.&rdquo;
+                  </p>
+                  <p className="text-sm text-[#2C2416]/75 leading-relaxed">
+                    But COD has real costs we pay:
+                  </p>
+                  <ul className="text-sm text-[#2C2416]/75 space-y-1 ml-4 list-disc">
+                    <li>Courier charges us extra to collect cash</li>
+                    <li>Money takes 7-14 days to come back to us</li>
+                    <li>Failed deliveries hurt small brands like ours</li>
+                  </ul>
+                  <p className="text-sm text-[#2C2416]/75 leading-relaxed">
+                    So we add ₹29 extra on COD orders — just to break even. We don&apos;t make money on this. Promise.
+                  </p>
+                  <p className="text-sm text-[#2C2416]/75 leading-relaxed">
+                    If you trust us enough to pay online, we save ₹29 — and pass that saving to you. That&apos;s it.
+                  </p>
+                  <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
+                    Either way, we&apos;ll deliver. Made with intention. Always.
+                  </p>
+                </div>
+                <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between">
+                  <div className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/60">
+                    <p>Online: ₹30 (or free above ₹599)</p>
+                    <p className="mt-1">COD: ₹59 (₹30 + ₹29 handling)</p>
+                  </div>
+                  <Button
+                    onClick={() => setShowShippingInfo(false)}
+                    size="sm"
+                    className="bg-[#1A3D2A] hover:bg-[#0F2A1C] text-[#F4ECD8] rounded-full px-4 text-[10px] tracking-[0.2em] uppercase"
+                  >
+                    Got it
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="border-t border-[#2C2416]/10 px-5 py-4 bg-[#FBF6E9]">
             <Button
               onClick={handlePayment}
               disabled={processing}
-              className="w-full bg-[#B8553C] hover:bg-[#8C3A24] text-[#F4ECD8] rounded-full py-6 text-[12px] tracking-[0.2em] uppercase"
+              className="w-full bg-[#1A3D2A] hover:bg-[#0F2A1C] text-[#F4ECD8] rounded-full py-6 text-[12px] tracking-[0.2em] uppercase"
             >
               {processing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Processing...
                 </>
+              ) : paymentMethod === "cod" ? (
+                <>
+                  <ShoppingBag className="mr-2 h-4 w-4" />
+                  Place Order · {formatPrice(total)} COD
+                </>
               ) : (
                 <>
                   <Lock className="mr-2 h-4 w-4" />
-                  Pay {formatPrice(total)}
+                  Pay {formatPrice(total)} Online
                 </>
               )}
             </Button>
             <p className="text-[10px] text-center text-[#2C2416]/50 mt-2">
-              🔒 256-bit encrypted · UPI · Cards · Net Banking · COD
+              {paymentMethod === "cod"
+                ? "📦 Pay when delivered · 5-10 day delivery"
+                : "🔒 256-bit encrypted · UPI · Cards · Net Banking"}
             </p>
           </div>
         </SheetContent>
