@@ -20,9 +20,9 @@ function formatPrice(paise: number) {
   return `₹${(paise / 100).toFixed(0)}`;
 }
 
-const SHIPPING_FREE_THRESHOLD = 59900; // ₹599
-const SHIPPING_FEE = 3000; // ₹30 (actual cost, no markup)
-const COD_FEE = 5900; // ₹59 (₹30 shipping + ₹29 COD handling)
+const SHIPPING_FREE_THRESHOLD = 69900; // ₹699
+const SHIPPING_FEE = 5900; // ₹59 (mandatory shipping)
+const COD_FEE = 3000; // ₹30 extra (only on COD)
 
 export function CartDrawer() {
   const {
@@ -40,6 +40,7 @@ export function CartDrawer() {
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
   const [showShippingInfo, setShowShippingInfo] = useState(false);
+  const [showCodInfo, setShowCodInfo] = useState(false);
   const [form, setForm] = useState({
     customerName: "",
     customerEmail: "",
@@ -53,17 +54,12 @@ export function CartDrawer() {
   const subtotal = getSubtotal();
   const isFreeShipping = subtotal >= SHIPPING_FREE_THRESHOLD || subtotal === 0;
 
-  // Online: ₹30 or free (above ₹599)
-  // COD: ₹59 always (₹30 shipping + ₹29 COD handling, even on free shipping above ₹599)
+  // ₹59 shipping (mandatory) — or FREE above ₹699
   const shipping = isFreeShipping ? 0 : SHIPPING_FEE;
-  const codFee = paymentMethod === "cod" ? (isFreeShipping ? 2900 : COD_FEE) : 0;
-  // If COD + free shipping: only ₹29 COD handling fee
-  // If COD + not free: ₹30 shipping + ₹29 COD = ₹59
-  const totalCodFee = paymentMethod === "cod"
-    ? (isFreeShipping ? 2900 : COD_FEE)
-    : 0;
+  // +₹30 extra only if COD
+  const codFee = paymentMethod === "cod" ? COD_FEE : 0;
 
-  const total = subtotal + (paymentMethod === "cod" ? totalCodFee : shipping);
+  const total = subtotal + shipping + codFee;
   const totalItems = getTotalItems();
   const remainingForFree = SHIPPING_FREE_THRESHOLD - subtotal;
 
@@ -579,13 +575,6 @@ export function CartDrawer() {
                 <Label className="text-[11px] tracking-[0.2em] uppercase text-[#2C2416]/70">
                   Payment Method
                 </Label>
-                <button
-                  type="button"
-                  onClick={() => setShowShippingInfo(true)}
-                  className="text-[10px] tracking-[0.15em] uppercase text-[#B8553C] hover:text-[#8C3A24] underline underline-offset-4"
-                >
-                  Why COD costs more?
-                </button>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
@@ -601,7 +590,7 @@ export function CartDrawer() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-medium text-[#2C2416]">Online</span>
                     <span className="text-[10px] text-[#5C6B3A]">
-                      {isFreeShipping ? "FREE ship" : "+₹30"}
+                      {isFreeShipping ? "FREE ship" : "₹59 ship"}
                     </span>
                   </div>
                   <p className="text-[10px] text-[#2C2416]/60 mt-1">UPI · Card · Net Banking</p>
@@ -619,7 +608,7 @@ export function CartDrawer() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-medium text-[#2C2416]">COD</span>
                     <span className="text-[10px] text-[#B8553C]">
-                      {isFreeShipping ? "+₹29" : "+₹59"}
+                      +₹30 extra
                     </span>
                   </div>
                   <p className="text-[10px] text-[#2C2416]/60 mt-1">Pay when it arrives</p>
@@ -628,8 +617,7 @@ export function CartDrawer() {
 
               {paymentMethod === "cod" && (
                 <p className="text-[10px] text-[#2C2416]/50 mt-2 leading-relaxed italic">
-                  COD includes a small handling fee — courier charges us extra to collect cash.
-                  Pay online to save ₹29.
+                  COD adds ₹30 to your shipping cost. Tap &ldquo;why ₹30?&rdquo; in the summary to see why.
                 </p>
               )}
             </div>
@@ -640,20 +628,34 @@ export function CartDrawer() {
                 <span className="text-[#2C2416]/70">Subtotal</span>
                 <span className="font-medium">{formatPrice(subtotal)}</span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-[#2C2416]/70">Shipping</span>
+              <div className="flex justify-between text-sm items-center">
+                <span className="text-[#2C2416]/70 flex items-center gap-2">
+                  Shipping
+                  <button
+                    type="button"
+                    onClick={() => setShowShippingInfo(true)}
+                    className="text-[10px] tracking-[0.1em] uppercase text-[#B8553C] hover:text-[#8C3A24] underline underline-offset-2"
+                  >
+                    why ₹59?
+                  </button>
+                </span>
                 <span className="font-medium">
-                  {paymentMethod === "cod" ? (
-                    isFreeShipping ? "FREE (COD ₹29 fee)" : formatPrice(3000)
-                  ) : (
-                    shipping === 0 ? "FREE" : formatPrice(shipping)
-                  )}
+                  {shipping === 0 ? "FREE" : formatPrice(shipping)}
                 </span>
               </div>
               {paymentMethod === "cod" && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#2C2416]/70">COD handling</span>
-                  <span className="font-medium">{formatPrice(2900)}</span>
+                <div className="flex justify-between text-sm items-center">
+                  <span className="text-[#2C2416]/70 flex items-center gap-2">
+                    COD extra
+                    <button
+                      type="button"
+                      onClick={() => setShowCodInfo(true)}
+                      className="text-[10px] tracking-[0.1em] uppercase text-[#B8553C] hover:text-[#8C3A24] underline underline-offset-2"
+                    >
+                      why ₹30?
+                    </button>
+                  </span>
+                  <span className="font-medium">{formatPrice(codFee)}</span>
                 </div>
               )}
               <div className="flex justify-between items-end pt-1">
@@ -667,7 +669,7 @@ export function CartDrawer() {
             </div>
           </div>
 
-          {/* Shipping Info Popup */}
+          {/* Shipping Info Popup (Why ₹59?) */}
           {showShippingInfo && (
             <div
               className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-[#2C2416]/60 backdrop-blur-sm"
@@ -679,7 +681,7 @@ export function CartDrawer() {
               >
                 <div className="bg-[#1A3D2A] text-[#F4ECD8] px-5 py-4 flex items-center justify-between">
                   <span className="text-[11px] tracking-[0.3em] uppercase font-medium">
-                    Honest shipping policy
+                    Why ₹59 shipping?
                   </span>
                   <button
                     onClick={() => setShowShippingInfo(false)}
@@ -691,39 +693,106 @@ export function CartDrawer() {
                 </div>
                 <div className="p-6 space-y-4">
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
-                    We pass on actual costs. No markup. Here&apos;s what COD really costs us:
+                    Shipping bottles across India costs real money. We pass on what we pay — no markup, no hidden profit.
                   </p>
                   <ol className="text-sm text-[#2C2416]/85 space-y-2 ml-4 list-decimal">
                     <li>
-                      <strong>Courier fees</strong> — Cash collection costs the courier extra. We pass that on.
+                      <strong>Courier charges</strong> — Actual rate the courier quotes us. Same for everyone.
                     </li>
                     <li>
-                      <strong>Cash delay</strong> — Money takes 7-14 days to reach us. Cash flow waits.
+                      <strong>Safe packaging</strong> — Bottles wrapped, sealed, protected for the journey.
                     </li>
                     <li>
-                      <strong>Failed deliveries</strong> — When packages bounce back, we lose product + shipping.
+                      <strong>Hand-packed</strong> — Every order packed by us, not a warehouse robot.
                     </li>
                     <li>
-                      <strong>Returns handling</strong> — COD returns are 3x more common than prepaid ones.
+                      <strong>Transit protection</strong> — Lost or damaged in transit? We replace it.
                     </li>
                   </ol>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed pt-2 border-t border-[#2C2416]/10">
-                    We don&apos;t make money on the ₹29. We just don&apos;t lose money on it.
+                    We don&apos;t make money on shipping. We just don&apos;t want to lose money on it.
                   </p>
                   <p className="text-sm text-[#2C2416]/75 leading-relaxed">
-                    Pay online → save ₹29. We pass the saving to you, not the cost.
+                    Spend ₹699 or more → shipping is on us. Our way of saying thank you for trusting us with a bigger order.
                   </p>
                   <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
-                    Either way, your order ships the same day. Made with intention. Always.
+                    Either way, your order ships the same day. Made with intention.
                   </p>
                 </div>
-                <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between">
+                <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between items-center">
                   <div className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/60">
-                    <p>Online: ₹30 (or free above ₹599)</p>
-                    <p className="mt-1">COD: ₹59 (₹30 + ₹29 handling)</p>
+                    <p>Below ₹699: ₹59</p>
+                    <p className="mt-1">₹699+: FREE</p>
                   </div>
                   <Button
                     onClick={() => setShowShippingInfo(false)}
+                    size="sm"
+                    className="bg-[#1A3D2A] hover:bg-[#0F2A1C] text-[#F4ECD8] rounded-full px-4 text-[10px] tracking-[0.2em] uppercase"
+                  >
+                    Got it
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* COD Info Popup (Why ₹30 extra?) */}
+          {showCodInfo && (
+            <div
+              className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-[#2C2416]/60 backdrop-blur-sm"
+              onClick={() => setShowCodInfo(false)}
+            >
+              <div
+                className="bg-[#F4ECD8] max-w-md w-full rounded-sm shadow-2xl border border-[#B8860B]/30 overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="bg-[#1A3D2A] text-[#F4ECD8] px-5 py-4 flex items-center justify-between">
+                  <span className="text-[11px] tracking-[0.3em] uppercase font-medium">
+                    Why ₹30 extra for COD?
+                  </span>
+                  <button
+                    onClick={() => setShowCodInfo(false)}
+                    className="text-[#F4ECD8]/60 hover:text-[#F4ECD8] p-1"
+                    aria-label="Close"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="p-6 space-y-4">
+                  <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#2C2416]/85 leading-relaxed">
+                    COD costs us extra. So it costs you extra. Here&apos;s the honest breakdown:
+                  </p>
+                  <ol className="text-sm text-[#2C2416]/85 space-y-2 ml-4 list-decimal">
+                    <li>
+                      <strong>Cash collection fee</strong> — Couriers charge us to handle cash on your behalf.
+                    </li>
+                    <li>
+                      <strong>7-14 day wait</strong> — Money takes that long to reach us. Cash flow waits.
+                    </li>
+                    <li>
+                      <strong>Failed deliveries</strong> — When COD orders bounce, we lose product + shipping.
+                    </li>
+                    <li>
+                      <strong>Returns handling</strong> — COD returns are 3x more common than prepaid.
+                    </li>
+                  </ol>
+                  <p className="text-sm text-[#2C2416]/75 leading-relaxed pt-2 border-t border-[#2C2416]/10">
+                    We don&apos;t make money on the ₹30. We just don&apos;t lose money on it.
+                  </p>
+                  <p className="text-sm text-[#2C2416]/75 leading-relaxed">
+                    Pay online → skip the ₹30. We pass the saving to you, not the cost.
+                  </p>
+                  <p className="font-[family-name:var(--font-playfair)] italic text-base text-[#7A8450] pt-2 border-t border-[#2C2416]/10">
+                    Either way, your order ships the same day. Made with intention.
+                  </p>
+                </div>
+                <div className="px-6 py-4 bg-[#FBF6E9] border-t border-[#2C2416]/8 flex justify-between items-center">
+                  <div className="text-[10px] tracking-[0.2em] uppercase text-[#2C2416]/60">
+                    <p>Online: ₹59 shipping (or free ₹699+)</p>
+                    <p className="mt-1">COD: ₹59 shipping + ₹30 extra</p>
+                  </div>
+                  <Button
+                    onClick={() => setShowCodInfo(false)}
                     size="sm"
                     className="bg-[#1A3D2A] hover:bg-[#0F2A1C] text-[#F4ECD8] rounded-full px-4 text-[10px] tracking-[0.2em] uppercase"
                   >

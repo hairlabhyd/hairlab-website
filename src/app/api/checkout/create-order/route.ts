@@ -39,11 +39,11 @@ function getRazorpay() {
   return new Razorpay({ key_id, key_secret });
 }
 
-// COD fee (₹49 extra for COD orders)
-const COD_FEE = 4900;
+// COD fee (₹30 extra for COD orders)
+const COD_FEE = 3000;
 // Free shipping threshold
-const SHIPPING_FREE_THRESHOLD = 59900; // ₹599
-const SHIPPING_FEE = 3000; // ₹30
+const SHIPPING_FREE_THRESHOLD = 69900; // ₹699
+const SHIPPING_FEE = 5900; // ₹59 (mandatory shipping)
 
 export async function POST(req: NextRequest) {
   try {
