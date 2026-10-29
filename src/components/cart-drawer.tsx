@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -41,6 +42,12 @@ export function CartDrawer() {
   const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
   const [showShippingInfo, setShowShippingInfo] = useState(false);
   const [showCodInfo, setShowCodInfo] = useState(false);
+  const [otpStep, setOtpStep] = useState<"idle" | "sent" | "verified">("idle");
+  const [otpCode, setOtpCode] = useState("");
+  const [otpSending, setOtpSending] = useState(false);
+  const [otpVerifying, setOtpVerifying] = useState(false);
+  const [otpResendTimer, setOtpResendTimer] = useState(0);
+  const router = useRouter();
   const [form, setForm] = useState({
     customerName: "",
     customerEmail: "",
@@ -62,6 +69,90 @@ export function CartDrawer() {
   const total = subtotal + shipping + codFee;
   const totalItems = getTotalItems();
   const remainingForFree = SHIPPING_FREE_THRESHOLD - subtotal;
+
+  // OTP resend timer (60 seconds)
+  useEffect(() => {
+    if (otpResendTimer > 0) {
+      const timer = setTimeout(() => setOtpResendTimer(otpResendTimer - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [otpResendTimer]);
+
+  // Reset OTP when email changes
+  useEffect(() => {
+    if (otpStep !== "idle" && form.customerEmail) {
+      setOtpStep("idle");
+      setOtpCode("");
+    }
+     
+  }, [form.customerEmail]);
+
+  async function sendOtp() {
+    if (!form.customerEmail) {
+      toast.error("Please enter your email first");
+      return;
+    }
+    if (!form.customerName) {
+      toast.error("Please enter your name first");
+      return;
+    }
+
+    setOtpSending(true);
+    try {
+      const res = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.customerEmail,
+          name: form.customerName,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Could not send OTP");
+      }
+
+      setOtpStep("sent");
+      setOtpResendTimer(60);
+      toast.success("OTP sent to your email 🍃");
+    } catch (e: any) {
+      toast.error(e.message || "Could not send OTP");
+    } finally {
+      setOtpSending(false);
+    }
+  }
+
+  async function verifyOtp() {
+    if (!otpCode || otpCode.length !== 6) {
+      toast.error("Enter the 6-digit code");
+      return;
+    }
+
+    setOtpVerifying(true);
+    try {
+      const res = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.customerEmail,
+          code: otpCode,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Verification failed");
+      }
+
+      setOtpStep("verified");
+      toast.success("Email verified! You can place your order now.");
+    } catch (e: any) {
+      toast.error(e.message || "Verification failed");
+    } finally {
+      setOtpVerifying(false);
+    }
+  }
 
   function startCheckout() {
     if (items.length === 0) {
@@ -86,6 +177,10 @@ export function CartDrawer() {
     }
     if (form.customerPhone.replace(/\D/g, "").length < 10) {
       toast.error("Please enter a valid 10-digit phone number");
+      return;
+    }
+    if (otpStep !== "verified") {
+      toast.error("Please verify your email first (OTP)");
       return;
     }
 
@@ -135,7 +230,8 @@ export function CartDrawer() {
         });
 
         if (verifyRes.ok) {
-          toast.success("Order placed! Pay ₹" + (orderData.amount / 100).toFixed(0) + " when it arrives. 📦");
+          toast.success("Order placed! Redirecting to confirmation...");
+          const orderId = orderData.orderId;
           clear();
           closeCart();
           setCheckoutOpen(false);
@@ -148,6 +244,10 @@ export function CartDrawer() {
             shippingPincode: "",
             shippingState: "",
           });
+          setOtpStep("idle");
+          setOtpCode("");
+          // Redirect to confirmation page
+          router.push(`/order-confirmation?id=${orderId}`);
         } else {
           toast.error("Could not confirm order. Please contact us.");
         }
@@ -169,7 +269,8 @@ export function CartDrawer() {
         });
 
         if (verifyRes.ok) {
-          toast.success("Demo order placed! Add Razorpay keys to env vars for live payments.");
+          toast.success("Order placed! Redirecting to confirmation...");
+          const orderId = orderData.orderId;
           clear();
           closeCart();
           setCheckoutOpen(false);
@@ -182,6 +283,9 @@ export function CartDrawer() {
             shippingPincode: "",
             shippingState: "",
           });
+          setOtpStep("idle");
+          setOtpCode("");
+          router.push(`/order-confirmation?id=${orderId}`);
         }
         return;
       }
@@ -226,7 +330,8 @@ export function CartDrawer() {
             });
 
             if (verifyRes.ok) {
-              toast.success("Payment successful! Your ritual begins tonight. 🍃");
+              toast.success("Payment successful! Redirecting to confirmation...");
+              const orderId = orderData.orderId;
               clear();
               closeCart();
               setCheckoutOpen(false);
@@ -239,6 +344,9 @@ export function CartDrawer() {
                 shippingPincode: "",
                 shippingState: "",
               });
+              setOtpStep("idle");
+              setOtpCode("");
+              router.push(`/order-confirmation?id=${orderId}`);
             } else {
               toast.error("Payment verification failed. Please contact us.");
             }
@@ -569,6 +677,108 @@ export function CartDrawer() {
               </div>
             </div>
 
+            {/* OTP Verification Section */}
+            <div className="pt-2 border-t border-[#2C2416]/10">
+              <div className="pt-3">
+                <div className="flex items-center justify-between mb-3">
+                  <Label className="text-[11px] tracking-[0.2em] uppercase text-[#2C2416]/70 flex items-center gap-2">
+                    {otpStep === "verified" ? (
+                      <span className="text-[#5C6B3A]">✓ Email verified</span>
+                    ) : (
+                      <>Verify email</>
+                    )}
+                  </Label>
+                  {otpStep === "verified" && (
+                    <span className="text-[10px] tracking-[0.15em] uppercase text-[#5C6B3A]">
+                      You can place your order
+                    </span>
+                  )}
+                </div>
+
+                {otpStep === "idle" && (
+                  <Button
+                    type="button"
+                    onClick={sendOtp}
+                    disabled={otpSending || !form.customerEmail || !form.customerName}
+                    variant="outline"
+                    className="w-full bg-[#FBF6E9] border-[#2C2416]/20 text-[#2C2416] hover:bg-[#2C2416]/5 rounded-full py-4 text-[11px] tracking-[0.2em] uppercase disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {otpSending ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending OTP...
+                      </>
+                    ) : (
+                      <>
+                        <Lock className="mr-2 h-4 w-4" />
+                        Send OTP to email
+                      </>
+                    )}
+                  </Button>
+                )}
+
+                {otpStep === "sent" && (
+                  <div className="space-y-3">
+                    <p className="text-[11px] text-[#2C2416]/60 leading-relaxed">
+                      We sent a 6-digit code to <strong>{form.customerEmail}</strong>.
+                      Check your inbox (and spam folder).
+                    </p>
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={6}
+                        value={otpCode}
+                        onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
+                        className="bg-[#FBF6E9] border-[#2C2416]/15 flex-1 text-center text-lg tracking-[0.4em] font-mono"
+                        placeholder="000000"
+                        autoFocus
+                      />
+                      <Button
+                        type="button"
+                        onClick={verifyOtp}
+                        disabled={otpVerifying || otpCode.length !== 6}
+                        className="bg-[#1A3D2A] hover:bg-[#0F2A1C] text-[#F4ECD8] rounded-full px-5 text-[11px] tracking-[0.15em] uppercase disabled:opacity-50"
+                      >
+                        {otpVerifying ? <Loader2 className="h-4 w-4 animate-spin" /> : "Verify"}
+                      </Button>
+                    </div>
+                    <div className="flex items-center justify-between text-[10px]">
+                      <button
+                        type="button"
+                        onClick={sendOtp}
+                        disabled={otpResendTimer > 0 || otpSending}
+                        className="text-[#B8553C] hover:text-[#8C3A24] underline underline-offset-2 disabled:opacity-40 disabled:no-underline"
+                      >
+                        {otpResendTimer > 0
+                          ? `Resend in ${otpResendTimer}s`
+                          : "Resend OTP"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOtpStep("idle");
+                          setOtpCode("");
+                        }}
+                        className="text-[#2C2416]/50 hover:text-[#2C2416]"
+                      >
+                        Change email
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {otpStep === "verified" && (
+                  <div className="bg-[#7A8450]/10 border border-[#7A8450]/30 rounded-sm p-3 flex items-center gap-2">
+                    <span className="text-[#5C6B3A] text-sm">✓</span>
+                    <p className="text-xs text-[#2C2416]/70">
+                      Email verified. Proceed to payment below.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Payment Method Selection */}
             <div className="pt-2 border-t border-[#2C2416]/10">
               <div className="flex items-center justify-between mb-3 pt-2">
@@ -806,13 +1016,22 @@ export function CartDrawer() {
           <div className="border-t border-[#2C2416]/10 px-5 py-4 bg-[#FBF6E9]">
             <Button
               onClick={handlePayment}
-              disabled={processing}
-              className="w-full bg-[#1A3D2A] hover:bg-[#0F2A1C] text-[#F4ECD8] rounded-full py-6 text-[12px] tracking-[0.2em] uppercase"
+              disabled={processing || otpStep !== "verified"}
+              className={`w-full rounded-full py-6 text-[12px] tracking-[0.2em] uppercase transition-all ${
+                otpStep === "verified"
+                  ? "bg-[#1A3D2A] hover:bg-[#0F2A1C] text-[#F4ECD8]"
+                  : "bg-[#2C2416]/20 text-[#2C2416]/40 cursor-not-allowed"
+              }`}
             >
               {processing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Processing...
+                </>
+              ) : otpStep !== "verified" ? (
+                <>
+                  <Lock className="mr-2 h-4 w-4" />
+                  Verify email to continue
                 </>
               ) : paymentMethod === "cod" ? (
                 <>
@@ -827,7 +1046,9 @@ export function CartDrawer() {
               )}
             </Button>
             <p className="text-[10px] text-center text-[#2C2416]/50 mt-2">
-              {paymentMethod === "cod"
+              {otpStep !== "verified"
+                ? "🔒 Verify your email first to place the order"
+                : paymentMethod === "cod"
                 ? "📦 Pay when delivered · 5-10 day delivery"
                 : "🔒 256-bit encrypted · UPI · Cards · Net Banking"}
             </p>
