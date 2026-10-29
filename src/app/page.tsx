@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { WhatsAppShare } from "@/components/whatsapp-share";
 import {
   Leaf,
   Star,
@@ -101,8 +102,40 @@ const testimonials = [
 export default function Home() {
   const products = [...allProducts].sort((a, b) => b.price - a.price);
 
+  // Product structured data for SEO (JSON-LD)
+  const productStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Product",
+        name: `${p.name} — ${p.subtitle}`,
+        description: p.description,
+        brand: {
+          "@type": "Brand",
+          name: "HAIR LAB.",
+        },
+        offers: {
+          "@type": "Offer",
+          price: (p.price / 100).toFixed(0),
+          priceCurrency: "INR",
+          availability: "https://schema.org/InStock",
+          url: "https://hairlab.one#shop",
+        },
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#F4ECD8]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productStructuredData),
+        }}
+      />
       <CartDrawer />
       <AdminModal />
       <DidYouKnowPopup />
@@ -731,6 +764,22 @@ export default function Home() {
               <Phone className="h-4 w-4" />
               +91 95021 94263
             </a>
+          </div>
+
+          {/* WhatsApp Share */}
+          <div className="mt-8 pt-8 border-t border-[#F4ECD8]/10">
+            <p className="text-[11px] tracking-[0.3em] uppercase text-[#F4ECD8]/60 mb-3">
+              Know someone who'd love HAIR LAB.?
+            </p>
+            <div className="flex justify-center">
+              <WhatsAppShare
+                text="Hey! Found this hand-blended hair oil brand — HAIR LAB. Ancient luxury, handcrafted. Check it out:"
+                label="Share on WhatsApp"
+                variant="outline"
+                size="sm"
+                className="border-[#F4ECD8]/30 text-[#F4ECD8] hover:bg-[#F4ECD8]/10"
+              />
+            </div>
           </div>
         </div>
       </section>
