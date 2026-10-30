@@ -2,18 +2,22 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>HAIR LAB. Reel</title>
+<title>HAIR LAB. Reel — 9:16</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #000; overflow: hidden; font-family: Georgia, serif; }
+  body { background: #000; overflow: hidden; font-family: 'Georgia', serif; }
   
-  .reel-container {
-    width: 100vw;
-    height: 100vh;
+  /* 9:16 container — centered on screen */
+  .reel-frame {
+    width: 405px; /* 9:16 ratio at 720px height */
+    height: 720px;
+    margin: 0 auto;
     position: relative;
     overflow: hidden;
+    background: #1A3D2A;
   }
   
+  /* Scenes */
   .scene {
     position: absolute;
     inset: 0;
@@ -22,57 +26,297 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
+    padding: 30px;
   }
   
   .scene.active { opacity: 1; }
   
-  /* Scene 1: Black → "It's been a year..." */
-  .scene-1 { background: #000; color: #F4ECD8; }
-  .scene-1 h1 { font-size: 28px; text-align: center; padding: 0 40px; line-height: 1.5; opacity: 0; animation: fadeIn 2s ease 0.5s forwards; }
+  /* Scene 1: Browser URL bar */
+  .s1 { background: #1a1a1a; }
+  .s1 .url-bar {
+    background: #333;
+    border-radius: 20px;
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .s1 .lock { font-size: 12px; opacity: 0.5; }
+  .s1 .url-text {
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #F4ECD8;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .s1 .typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    background: #B8860B;
+    animation: blink 0.8s infinite;
+  }
+  .s1 .hint {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
   
-  /* Scene 2: Green curtain → logo */
-  .scene-2 { background: #1A3D2A; color: #F4ECD8; }
-  .scene-2 .logo { font-size: 36px; letter-spacing: 0.15em; font-weight: 700; opacity: 0; animation: fadeIn 1.5s ease 0.5s forwards; }
-  .scene-2 .tagline { font-size: 12px; letter-spacing: 0.3em; color: #B8860B; margin-top: 12px; text-transform: uppercase; opacity: 0; animation: fadeIn 1.5s ease 1.5s forwards; }
+  /* Scene 2: Curtain */
+  .s2 { background: #1A3D2A; }
+  .s2 .logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #7A8450;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F4ECD8;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 700;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInScale 1s ease 0.3s forwards;
+  }
+  .s2 .brand {
+    font-size: 32px;
+    letter-spacing: 0.15em;
+    color: #F4ECD8;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 1s forwards;
+  }
+  .s2 .tag {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #B8860B;
+    text-transform: uppercase;
+    margin-top: 10px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 1.5s forwards;
+  }
+  .s2 .click-btn {
+    margin-top: 30px;
+    padding: 10px 24px;
+    border: 1px solid rgba(184, 134, 11, 0.4);
+    border-radius: 25px;
+    color: #F4ECD8;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 2s forwards;
+  }
   
   /* Scene 3: Products */
-  .scene-3 { background: #F4ECD8; }
-  .scene-3 .title { font-size: 22px; color: #2C2416; margin-bottom: 20px; opacity: 0; animation: fadeIn 1s ease 0.3s forwards; }
-  .scene-3 .products { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-  .scene-3 .product { display: flex; align-items: center; gap: 12px; opacity: 0; }
-  .scene-3 .product:nth-child(1) { animation: slideIn 0.8s ease 0.8s forwards; }
-  .scene-3 .product:nth-child(2) { animation: slideIn 0.8s ease 1.3s forwards; }
-  .scene-3 .product:nth-child(3) { animation: slideIn 0.8s ease 1.8s forwards; }
-  .scene-3 .product:nth-child(4) { animation: slideIn 0.8s ease 2.3s forwards; }
-  .scene-3 .bottle { width: 50px; height: 70px; border-radius: 4px; }
-  .scene-3 .pname { font-size: 16px; color: #2C2416; }
-  .scene-3 .pprice { font-size: 14px; color: #B8553C; }
+  .s3 { background: #F4ECD8; justify-content: flex-start; padding-top: 60px; }
+  .s3 .title {
+    font-size: 20px;
+    color: #2C2416;
+    margin-bottom: 25px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.3s forwards;
+  }
+  .s3 .products { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 280px; }
+  .s3 .product {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+  }
+  .s3 .product:nth-child(1) { animation: slideInRight 0.6s ease 0.6s forwards; }
+  .s3 .product:nth-child(2) { animation: slideInRight 0.6s ease 1.0s forwards; }
+  .s3 .product:nth-child(3) { animation: slideInRight 0.6s ease 1.4s forwards; }
+  .s3 .product:nth-child(4) { animation: slideInRight 0.6s ease 1.8s forwards; }
+  .s3 .bottle { width: 45px; height: 60px; border-radius: 4px; flex-shrink: 0; }
+  .s3 .pname { font-size: 15px; color: #2C2416; font-family: sans-serif; }
+  .s3 .pprice { font-size: 14px; color: #B8553C; font-family: sans-serif; }
   
-  /* Scene 4: Games */
-  .scene-4 { background: #1A3D2A; color: #F4ECD8; }
-  .scene-4 .title { font-size: 20px; color: #B8860B; margin-bottom: 20px; opacity: 0; animation: fadeIn 1s ease 0.3s forwards; text-transform: uppercase; letter-spacing: 0.15em; }
-  .scene-4 .games { display: flex; flex-direction: column; gap: 16px; align-items: center; }
-  .scene-4 .game { font-size: 18px; opacity: 0; }
-  .scene-4 .game:nth-child(1) { animation: fadeIn 0.8s ease 1s forwards; }
-  .scene-4 .game:nth-child(2) { animation: fadeIn 0.8s ease 1.5s forwards; }
-  .scene-4 .game:nth-child(3) { animation: fadeIn 0.8s ease 2s forwards; }
-  .scene-4 .emoji { font-size: 28px; margin-right: 8px; }
-  
-  /* Scene 5: Final */
-  .scene-5 { background: #1A3D2A; color: #F4ECD8; }
-  .scene-5 .url { font-size: 32px; color: #B8860B; opacity: 0; animation: fadeIn 2s ease 0.5s forwards; letter-spacing: 0.05em; }
-  .scene-5 .tag { font-size: 14px; color: #F4ECD8; margin-top: 16px; opacity: 0; animation: fadeIn 2s ease 1.5s forwards; letter-spacing: 0.2em; text-transform: uppercase; }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Scene 4: Herb Hunter */
+  .s4 { background: #1A3D2A; }
+  .s4 .game-title {
+    font-size: 22px;
+    color: #B8860B;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.3s forwards;
+  }
+  .s4 .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-width: 280px;
+  }
+  .s4 .card {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    opacity: 0;
+  }
+  .s4 .card:nth-child(1) { animation: flipCard 0.4s ease 0.6s forwards; background: #FBF6E9; border: 2px solid #1A3D2A; }
+  .s4 .card:nth-child(2) { animation: flipCard 0.4s ease 0.8s forwards; background: #1A3D2A; border: 2px solid transparent; }
+  .s4 .card:nth-child(3) { animation: flipCard 0.4s ease 1.0s forwards; background: #1A3D2A; border: 2px solid transparent; }
+  .s4 .card:nth-child(4) { animation: flipCard 0.4s ease 1.2s forwards; background: #FBF6E9; border: 2px solid #1A3D2A; }
+  .s4 .match-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #F4ECD8;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 1.5s forwards;
+  }
+  .s4 .fact {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #B8860B;
+    text-align: center;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 1.8s forwards;
   }
   
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
+  /* Scene 5: Spot the Ingredient */
+  .s5 { background: #F4ECD8; }
+  .s5 .game-title {
+    font-size: 20px;
+    color: #2C2416;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.3s forwards;
   }
+  .s5 .board {
+    width: 240px;
+    height: 240px;
+    background: #1A3D2A;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .s5 .emoji {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.3;
+  }
+  .s5 .target {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.8;
+    animation: popIn 0.3s ease 1.5s forwards;
+    opacity: 0;
+  }
+  .s5 .found-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #7A8450;
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 2s forwards;
+  }
+  
+  /* Scene 6: Ritual Timer */
+  .s6 { background: #1A3D2A; }
+  .s6 .timer-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid #7A8450;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.3s forwards;
+  }
+  .s6 .timer-text {
+    font-size: 32px;
+    color: #F4ECD8;
+    font-family: sans-serif;
+  }
+  .s6 .timer-label {
+    font-size: 9px;
+    color: #7A8450;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .s6 .step-text {
+    font-size: 14px;
+    color: #F4ECD8;
+    font-style: italic;
+    text-align: center;
+    max-width: 250px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 1s forwards;
+  }
+  
+  /* Scene 7: Referral */
+  .s7 { background: #F4ECD8; }
+  .s7 .title {
+    font-size: 20px;
+    color: #2C2416;
+    margin-bottom: 15px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.3s forwards;
+  }
+  .s7 .card {
+    background: #1A3D2A;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.6s forwards;
+  }
+  .s7 .give { font-size: 16px; color: #B8860B; margin-bottom: 8px; }
+  .s7 .get { font-size: 14px; color: #F4ECD8; }
+  
+  /* Scene 8: Final URL */
+  .s8 { background: #1A3D2A; }
+  .s8 .url {
+    font-size: 28px;
+    color: #B8860B;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.5s forwards;
+  }
+  .s8 .tag {
+    font-size: 11px;
+    color: #F4ECD8;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 12px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+  .s8 .heart {
+    margin-top: 20px;
+    font-size: 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.8s forwards;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeInScale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+  @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes flipCard { from { opacity: 0; transform: rotateY(90deg); } to { opacity: 1; transform: rotateY(0); } }
+  @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 0.8; transform: scale(1); } }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
   
   /* Controls */
   .controls {
@@ -85,12 +329,12 @@
     gap: 10px;
   }
   .ctrl-btn {
-    background: rgba(26, 61, 42, 0.8);
+    background: rgba(26, 61, 42, 0.9);
     color: #F4ECD8;
-    border: 1px solid rgba(244, 236, 216, 0.3);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 12px;
+    border: 1px solid rgba(184, 134, 11, 0.3);
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-size: 13px;
     cursor: pointer;
     font-family: sans-serif;
   }
@@ -98,67 +342,101 @@
 </head>
 <body>
 
-<div class="reel-container">
-  <!-- Scene 1: It's been a year -->
-  <div class="scene scene-1 active" id="s1">
-    <h1>It's been almost a year<br>since HAIR LAB. began.</h1>
+<div class="reel-frame">
+  <!-- Scene 1: Type URL -->
+  <div class="scene s1 active" id="scene1">
+    <div class="url-bar">
+      <span class="lock">🔒</span>
+      <span class="url-text" id="urlText"></span><span class="typing-cursor" id="cursor"></span>
+    </div>
+    <div class="hint">Type the URL</div>
   </div>
   
-  <!-- Scene 2: Green curtain + logo -->
-  <div class="scene scene-2" id="s2">
-    <div class="logo">HAIR LAB.</div>
-    <div class="tagline">Ancient Luxury, Handcrafted</div>
+  <!-- Scene 2: Curtain -->
+  <div class="scene s2" id="scene2">
+    <div class="logo">HL</div>
+    <div class="brand">HAIR LAB.</div>
+    <div class="tag">Ancient Luxury, Handcrafted</div>
+    <div class="click-btn">Click to Shop</div>
   </div>
   
   <!-- Scene 3: Products -->
-  <div class="scene scene-3" id="s3">
+  <div class="scene s3" id="scene3">
     <div class="title">Hand-blended rituals</div>
     <div class="products">
       <div class="product">
         <div class="bottle" style="background: linear-gradient(135deg, #7A8450, #5C6B3A);"></div>
-        <div>
-          <div class="pname">Mane — Hair Oil</div>
-          <div class="pprice">₹289</div>
-        </div>
+        <div><div class="pname">Mane — Hair Oil</div><div class="pprice">₹289</div></div>
       </div>
       <div class="product">
         <div class="bottle" style="background: linear-gradient(135deg, #3A4D5C, #1F2E3A);"></div>
-        <div>
-          <div class="pname">Neelam — Blue Bhring Oil</div>
-          <div class="pprice">₹219</div>
-        </div>
+        <div><div class="pname">Neelam — Blue Bhring Oil</div><div class="pprice">₹219</div></div>
       </div>
       <div class="product">
         <div class="bottle" style="background: linear-gradient(135deg, #B8860B, #8C6708);"></div>
-        <div>
-          <div class="pname">Ojas — Power Mix Mask</div>
-          <div class="pprice">₹189</div>
-        </div>
+        <div><div class="pname">Ojas — Power Mix Mask</div><div class="pprice">₹189</div></div>
       </div>
       <div class="product">
         <div class="bottle" style="background: linear-gradient(135deg, #8C6F4A, #5C4A2F);"></div>
-        <div>
-          <div class="pname">Kāru — Neem Wood Comb</div>
-          <div class="pprice">₹189</div>
-        </div>
+        <div><div class="pname">Kāru — Neem Wood Comb</div><div class="pprice">₹189</div></div>
       </div>
     </div>
   </div>
   
-  <!-- Scene 4: Games -->
-  <div class="scene scene-4" id="s4">
-    <div class="title">Explore</div>
-    <div class="games">
-      <div class="game"><span class="emoji">🌿</span> Herb Hunter (10 levels)</div>
-      <div class="game"><span class="emoji">🔍</span> Spot the Ingredient (15 levels)</div>
-      <div class="game"><span class="emoji">🕐</span> Ritual Timer</div>
+  <!-- Scene 4: Herb Hunter -->
+  <div class="scene s4" id="scene4">
+    <div class="game-title">🌿 Herb Hunter</div>
+    <div class="cards-grid">
+      <div class="card">🌿</div>
+      <div class="card"></div>
+      <div class="card"></div>
+      <div class="card">🌿</div>
+      <div class="card"></div>
+      <div class="card">🌺</div>
+      <div class="card">🌺</div>
+      <div class="card"></div>
+    </div>
+    <div class="match-text">✓ Match found!</div>
+    <div class="fact">Bhringraj — the king of hair herbs</div>
+  </div>
+  
+  <!-- Scene 5: Spot the Ingredient -->
+  <div class="scene s5" id="scene5">
+    <div class="game-title">🔍 Spot the Ingredient</div>
+    <div class="board" id="board5">
+      <div class="emoji" style="left:10%;top:15%;">🍃</div>
+      <div class="emoji" style="left:60%;top:20%;">🌿</div>
+      <div class="emoji" style="left:30%;top:50%;">🌱</div>
+      <div class="emoji" style="left:75%;top:60%;">🍃</div>
+      <div class="emoji" style="left:20%;top:75%;">🌿</div>
+      <div class="target" style="left:50%;top:35%;">🌺</div>
+    </div>
+    <div class="found-text">Found Hibiscus! 🌺</div>
+  </div>
+  
+  <!-- Scene 6: Ritual Timer -->
+  <div class="scene s6" id="scene6">
+    <div class="timer-circle">
+      <div class="timer-text" id="timerNum">2:00</div>
+      <div class="timer-label">Massaging</div>
+    </div>
+    <div class="step-text">"Press into your scalp — not the lengths. Scalp first, always."</div>
+  </div>
+  
+  <!-- Scene 7: Referral -->
+  <div class="scene s7" id="scene7">
+    <div class="title">🎁 Share & Earn</div>
+    <div class="card">
+      <div class="give">Give 10% off</div>
+      <div class="get">Get ₹50 back</div>
     </div>
   </div>
   
-  <!-- Scene 5: URL -->
-  <div class="scene scene-5" id="s5">
+  <!-- Scene 8: Final -->
+  <div class="scene s8" id="scene8">
     <div class="url">hairlab.one</div>
     <div class="tag">Ancient Luxury, Handcrafted</div>
+    <div class="heart">🤍</div>
   </div>
 </div>
 
@@ -167,35 +445,99 @@
 </div>
 
 <script>
-const scenes = ['s1', 's2', 's3', 's4', 's5'];
-const durations = [3000, 3500, 4500, 3500, 3000]; // ms per scene
-let currentScene = 0;
+const scenes = ['scene1', 'scene2', 'scene3', 'scene4', 'scene5', 'scene6', 'scene7', 'scene8'];
+const durations = [3000, 3500, 4000, 4000, 3500, 3500, 3000, 3500];
+let current = 0;
 let playing = false;
 
 function showScene(idx) {
   scenes.forEach((id, i) => {
     const el = document.getElementById(id);
-    if (el) {
-      el.classList.toggle('active', i === idx);
-    }
+    if (el) el.classList.toggle('active', i === idx);
   });
+}
+
+// Type URL animation
+function typeUrl() {
+  const url = 'hairlab.one';
+  const el = document.getElementById('urlText');
+  el.textContent = '';
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < url.length) {
+      el.textContent += url[i];
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, 120);
+}
+
+// Timer countdown
+function runTimer() {
+  let seconds = 120;
+  const el = document.getElementById('timerNum');
+  const interval = setInterval(() => {
+    seconds--;
+    if (seconds <= 0) {
+      clearInterval(interval);
+      return;
+    }
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    el.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+  }, 1000);
 }
 
 async function playReel() {
   if (playing) return;
   playing = true;
   
-  for (let i = 0; i < scenes.length; i++) {
-    showScene(i);
-    await new Promise(resolve => setTimeout(resolve, durations[i]));
-  }
+  // Scene 1: Type URL
+  showScene(0);
+  typeUrl();
+  await wait(3000);
   
-  // Loop back to start
+  // Scene 2: Curtain
+  showScene(1);
+  await wait(3500);
+  
+  // Scene 3: Products
+  showScene(2);
+  await wait(4000);
+  
+  // Scene 4: Herb Hunter
+  showScene(3);
+  await wait(4000);
+  
+  // Scene 5: Spot the Ingredient
+  showScene(4);
+  await wait(3500);
+  
+  // Scene 6: Ritual Timer
+  showScene(5);
+  runTimer();
+  await wait(3500);
+  
+  // Scene 7: Referral
+  showScene(6);
+  await wait(3000);
+  
+  // Scene 8: Final
+  showScene(7);
+  await wait(3500);
+  
+  // Loop
   showScene(0);
   playing = false;
+  setTimeout(playReel, 500);
 }
 
-// Auto-play on load
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Auto-start after 1 second
 setTimeout(playReel, 1000);
 </script>
 
