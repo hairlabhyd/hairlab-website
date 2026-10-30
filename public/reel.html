@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>HAIR LAB. Reel</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; overflow: hidden; font-family: Georgia, serif; }
+  
+  .reel-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  .scene.active { opacity: 1; }
+  
+  /* Scene 1: Black → "It's been a year..." */
+  .scene-1 { background: #000; color: #F4ECD8; }
+  .scene-1 h1 { font-size: 28px; text-align: center; padding: 0 40px; line-height: 1.5; opacity: 0; animation: fadeIn 2s ease 0.5s forwards; }
+  
+  /* Scene 2: Green curtain → logo */
+  .scene-2 { background: #1A3D2A; color: #F4ECD8; }
+  .scene-2 .logo { font-size: 36px; letter-spacing: 0.15em; font-weight: 700; opacity: 0; animation: fadeIn 1.5s ease 0.5s forwards; }
+  .scene-2 .tagline { font-size: 12px; letter-spacing: 0.3em; color: #B8860B; margin-top: 12px; text-transform: uppercase; opacity: 0; animation: fadeIn 1.5s ease 1.5s forwards; }
+  
+  /* Scene 3: Products */
+  .scene-3 { background: #F4ECD8; }
+  .scene-3 .title { font-size: 22px; color: #2C2416; margin-bottom: 20px; opacity: 0; animation: fadeIn 1s ease 0.3s forwards; }
+  .scene-3 .products { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .scene-3 .product { display: flex; align-items: center; gap: 12px; opacity: 0; }
+  .scene-3 .product:nth-child(1) { animation: slideIn 0.8s ease 0.8s forwards; }
+  .scene-3 .product:nth-child(2) { animation: slideIn 0.8s ease 1.3s forwards; }
+  .scene-3 .product:nth-child(3) { animation: slideIn 0.8s ease 1.8s forwards; }
+  .scene-3 .product:nth-child(4) { animation: slideIn 0.8s ease 2.3s forwards; }
+  .scene-3 .bottle { width: 50px; height: 70px; border-radius: 4px; }
+  .scene-3 .pname { font-size: 16px; color: #2C2416; }
+  .scene-3 .pprice { font-size: 14px; color: #B8553C; }
+  
+  /* Scene 4: Games */
+  .scene-4 { background: #1A3D2A; color: #F4ECD8; }
+  .scene-4 .title { font-size: 20px; color: #B8860B; margin-bottom: 20px; opacity: 0; animation: fadeIn 1s ease 0.3s forwards; text-transform: uppercase; letter-spacing: 0.15em; }
+  .scene-4 .games { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+  .scene-4 .game { font-size: 18px; opacity: 0; }
+  .scene-4 .game:nth-child(1) { animation: fadeIn 0.8s ease 1s forwards; }
+  .scene-4 .game:nth-child(2) { animation: fadeIn 0.8s ease 1.5s forwards; }
+  .scene-4 .game:nth-child(3) { animation: fadeIn 0.8s ease 2s forwards; }
+  .scene-4 .emoji { font-size: 28px; margin-right: 8px; }
+  
+  /* Scene 5: Final */
+  .scene-5 { background: #1A3D2A; color: #F4ECD8; }
+  .scene-5 .url { font-size: 32px; color: #B8860B; opacity: 0; animation: fadeIn 2s ease 0.5s forwards; letter-spacing: 0.05em; }
+  .scene-5 .tag { font-size: 14px; color: #F4ECD8; margin-top: 16px; opacity: 0; animation: fadeIn 2s ease 1.5s forwards; letter-spacing: 0.2em; text-transform: uppercase; }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  /* Controls */
+  .controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    gap: 10px;
+  }
+  .ctrl-btn {
+    background: rgba(26, 61, 42, 0.8);
+    color: #F4ECD8;
+    border: 1px solid rgba(244, 236, 216, 0.3);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="reel-container">
+  <!-- Scene 1: It's been a year -->
+  <div class="scene scene-1 active" id="s1">
+    <h1>It's been almost a year<br>since HAIR LAB. began.</h1>
+  </div>
+  
+  <!-- Scene 2: Green curtain + logo -->
+  <div class="scene scene-2" id="s2">
+    <div class="logo">HAIR LAB.</div>
+    <div class="tagline">Ancient Luxury, Handcrafted</div>
+  </div>
+  
+  <!-- Scene 3: Products -->
+  <div class="scene scene-3" id="s3">
+    <div class="title">Hand-blended rituals</div>
+    <div class="products">
+      <div class="product">
+        <div class="bottle" style="background: linear-gradient(135deg, #7A8450, #5C6B3A);"></div>
+        <div>
+          <div class="pname">Mane — Hair Oil</div>
+          <div class="pprice">₹289</div>
+        </div>
+      </div>
+      <div class="product">
+        <div class="bottle" style="background: linear-gradient(135deg, #3A4D5C, #1F2E3A);"></div>
+        <div>
+          <div class="pname">Neelam — Blue Bhring Oil</div>
+          <div class="pprice">₹219</div>
+        </div>
+      </div>
+      <div class="product">
+        <div class="bottle" style="background: linear-gradient(135deg, #B8860B, #8C6708);"></div>
+        <div>
+          <div class="pname">Ojas — Power Mix Mask</div>
+          <div class="pprice">₹189</div>
+        </div>
+      </div>
+      <div class="product">
+        <div class="bottle" style="background: linear-gradient(135deg, #8C6F4A, #5C4A2F);"></div>
+        <div>
+          <div class="pname">Kāru — Neem Wood Comb</div>
+          <div class="pprice">₹189</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scene 4: Games -->
+  <div class="scene scene-4" id="s4">
+    <div class="title">Explore</div>
+    <div class="games">
+      <div class="game"><span class="emoji">🌿</span> Herb Hunter (10 levels)</div>
+      <div class="game"><span class="emoji">🔍</span> Spot the Ingredient (15 levels)</div>
+      <div class="game"><span class="emoji">🕐</span> Ritual Timer</div>
+    </div>
+  </div>
+  
+  <!-- Scene 5: URL -->
+  <div class="scene scene-5" id="s5">
+    <div class="url">hairlab.one</div>
+    <div class="tag">Ancient Luxury, Handcrafted</div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" onclick="playReel()">▶ Play Reel</button>
+</div>
+
+<script>
+const scenes = ['s1', 's2', 's3', 's4', 's5'];
+const durations = [3000, 3500, 4500, 3500, 3000]; // ms per scene
+let currentScene = 0;
+let playing = false;
+
+function showScene(idx) {
+  scenes.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.toggle('active', i === idx);
+    }
+  });
+}
+
+async function playReel() {
+  if (playing) return;
+  playing = true;
+  
+  for (let i = 0; i < scenes.length; i++) {
+    showScene(i);
+    await new Promise(resolve => setTimeout(resolve, durations[i]));
+  }
+  
+  // Loop back to start
+  showScene(0);
+  playing = false;
+}
+
+// Auto-play on load
+setTimeout(playReel, 1000);
+</script>
+
+</body>
+</html>
