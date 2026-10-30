@@ -6,6 +6,7 @@ import { WhatsAppShare } from "@/components/whatsapp-share";
 import { RitualTimer } from "@/components/ritual-timer";
 import { HerbHunter } from "@/components/herb-hunter";
 import { SpotIngredient } from "@/components/spot-ingredient";
+import { ReferralSystem } from "@/components/referral-system";
 import {
   Leaf,
   Star,
@@ -814,6 +815,29 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* REFERRAL SYSTEM — share with friends */}
+      <section id="referral" className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="h-px w-10 bg-[#7A8450]" />
+            <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+              Share the Ritual
+            </span>
+            <div className="h-px w-10 bg-[#7A8450]" />
+          </div>
+          <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
+            Give 10% off.
+            <br />
+            <span className="italic text-[#B8553C]">Get ₹50 back.</span>
+          </h2>
+          <p className="mt-4 text-[#2C2416]/70 leading-relaxed">
+            Share HAIR LAB. with a friend. They get 10% off their first order.
+            You get ₹50 credit when they buy. Everyone wins.
+          </p>
+        </div>
+        <ReferralSystem />
       </section>
 
       {/* CTA STRIP */}
