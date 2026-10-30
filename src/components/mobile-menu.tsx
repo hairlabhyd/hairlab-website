@@ -8,7 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Menu, X, BookOpen, ShoppingBag, Phone, Mail, Instagram, Heart, Leaf, Truck, ShieldCheck, RefreshCw, Sparkles } from "lucide-react";
+import { Menu, X, BookOpen, ShoppingBag, Phone, Mail, Instagram, Heart, Leaf, Truck, ShieldCheck, RefreshCw, Sparkles, Timer, Gamepad2, Search } from "lucide-react";
 
 const SUBSTACK_URL = "https://yourhairourlab.substack.com/?utm_campaign=profile_chips";
 const INSTAGRAM_URL = "https://www.instagram.com/yourhairourlab/";
@@ -22,6 +22,9 @@ export function MobileMenu() {
     { label: "Our Story", href: "#story", icon: Heart },
     { label: "Our Promise", href: "#promise", icon: ShieldCheck },
     { label: "Our Fav Herbs", href: "#herbs", icon: Leaf },
+    { label: "Ritual Timer", href: "#timer", icon: Timer },
+    { label: "Herb Hunter", href: "#herb-hunter", icon: Gamepad2 },
+    { label: "Spot the Ingredient", href: "#spot-ingredient", icon: Search },
     { label: "Letters We Keep", href: "#testimonials", icon: Sparkles },
     { label: "Read Our Substack", href: SUBSTACK_URL, icon: BookOpen, external: true },
   ];

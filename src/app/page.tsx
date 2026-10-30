@@ -3,6 +3,9 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { WhatsAppShare } from "@/components/whatsapp-share";
+import { RitualTimer } from "@/components/ritual-timer";
+import { HerbHunter } from "@/components/herb-hunter";
+import { SpotIngredient } from "@/components/spot-ingredient";
 import {
   Leaf,
   Star,
@@ -687,6 +690,73 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* RITUAL TIMER — guided hair oiling timer */}
+      <section id="timer" className="bg-[#FBF6E9] py-20 sm:py-28 border-y border-[#2C2416]/8">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-10 bg-[#7A8450]" />
+              <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+                Guided Ritual
+              </span>
+              <div className="h-px w-10 bg-[#7A8450]" />
+            </div>
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
+              Your ritual,
+              <br />
+              <span className="italic text-[#B8553C]">timed &amp; guided.</span>
+            </h2>
+            <p className="mt-4 text-[#2C2416]/70 leading-relaxed">
+              Set your timer. We&apos;ll guide you through the massage — step by step,
+              breath by breath. Like a meditation app, but for your scalp.
+            </p>
+          </div>
+          <RitualTimer />
+        </div>
+      </section>
+
+      {/* HERB HUNTER — Memory Match Game */}
+      <section id="herb-hunter" className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="h-px w-10 bg-[#7A8450]" />
+            <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+              Game · Memory Match
+            </span>
+            <div className="h-px w-10 bg-[#7A8450]" />
+          </div>
+          <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
+            Herb Hunter.
+          </h2>
+          <p className="mt-6 text-[#2C2416]/70 leading-relaxed">
+            Match the herb pairs. Learn their secrets. 10 levels — from Seedling to Botanist.
+          </p>
+        </div>
+        <HerbHunter />
+      </section>
+
+      {/* SPOT THE INGREDIENT — Hidden Object Game */}
+      <section id="spot-ingredient" className="bg-[#FBF6E9] py-20 sm:py-28 border-y border-[#2C2416]/8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-10 bg-[#7A8450]" />
+              <span className="text-[11px] tracking-[0.3em] uppercase text-[#5C6B3A]">
+                Game · Hidden Object
+              </span>
+              <div className="h-px w-10 bg-[#7A8450]" />
+            </div>
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl text-[#2C2416] leading-tight">
+              Spot the Ingredient.
+            </h2>
+            <p className="mt-6 text-[#2C2416]/70 leading-relaxed">
+              Find the hidden ingredients among the leaves. 15 levels — from Searcher to Master.
+            </p>
+          </div>
+          <SpotIngredient />
         </div>
       </section>
 
