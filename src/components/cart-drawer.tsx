@@ -301,16 +301,8 @@ export function CartDrawer() {
     setProcessing(true);
 
     try {
-      // FASTEST PATH: Razorpay instance already pre-initialized → just open() (SYNCHRONOUS, no lag)
-      if (razorpayInstance.current) {
-        console.log("⚡ Using pre-initialized Razorpay — instant open");
-        razorpayInstance.current.open();
-        return;
-      }
-
-      // Use pre-created order if available
       let orderData = preCreatedOrder;
-      
+
       if (!orderData) {
         const createRes = await fetch("/api/checkout/create-order", {
           method: "POST",
@@ -337,7 +329,7 @@ export function CartDrawer() {
         }
       }
 
-      // COD order — no Razorpay payment needed
+      // COD order
       if (orderData.cod) {
         const verifyRes = await fetch("/api/checkout/verify", {
           method: "POST",
@@ -352,23 +344,14 @@ export function CartDrawer() {
         });
 
         if (verifyRes.ok) {
-          toast.success("Order placed! Redirecting to confirmation...");
+          toast.success("Order placed! Redirecting...");
           const orderId = orderData.orderId;
           clear();
           closeCart();
           setCheckoutOpen(false);
-          setForm({
-            customerName: "",
-            customerEmail: "",
-            customerPhone: "",
-            shippingAddress: "",
-            shippingCity: "",
-            shippingPincode: "",
-            shippingState: "",
-          });
+          setForm({ customerName: "", customerEmail: "", customerPhone: "", shippingAddress: "", shippingCity: "", shippingPincode: "", shippingState: "" });
           setOtpStep("idle");
           setOtpCode("");
-          // Redirect to confirmation page
           router.push(`/order-confirmation?id=${orderId}`);
         } else {
           toast.error("Could not confirm order. Please contact us.");
@@ -376,7 +359,7 @@ export function CartDrawer() {
         return;
       }
 
-      // Demo mode (no Razorpay keys set)
+      // Demo mode
       if (orderData.demo) {
         const verifyRes = await fetch("/api/checkout/verify", {
           method: "POST",
@@ -391,20 +374,12 @@ export function CartDrawer() {
         });
 
         if (verifyRes.ok) {
-          toast.success("Order placed! Redirecting to confirmation...");
+          toast.success("Order placed! Redirecting...");
           const orderId = orderData.orderId;
           clear();
           closeCart();
           setCheckoutOpen(false);
-          setForm({
-            customerName: "",
-            customerEmail: "",
-            customerPhone: "",
-            shippingAddress: "",
-            shippingCity: "",
-            shippingPincode: "",
-            shippingState: "",
-          });
+          setForm({ customerName: "", customerEmail: "", customerPhone: "", shippingAddress: "", shippingCity: "", shippingPincode: "", shippingState: "" });
           setOtpStep("idle");
           setOtpCode("");
           router.push(`/order-confirmation?id=${orderId}`);
@@ -412,86 +387,14 @@ export function CartDrawer() {
         return;
       }
 
-      // Real Razorpay flow — use redirect mode (no popup, full page)
-      // This avoids ALL mobile popup blocking + Quick Buy issues
-      await loadRazorpayScript();
-
-      const rzp = new (window as any).Razorpay({
-        key: orderData.key,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: "HAIR LAB.",
-        description: "Handcrafted hair care ritual",
-        image: "/hairlab-logo-green.png",
-        order_id: orderData.razorpayOrderId,
-        prefill: {
-          name: form.customerName,
-          email: form.customerEmail,
-          contact: form.customerPhone,
-        },
-        notes: {
-          shipping_address: form.shippingAddress,
-          shipping_city: form.shippingCity,
-          shipping_pincode: form.shippingPincode,
-          shipping_state: form.shippingState,
-        },
-        theme: { color: "#1A3D2A" },
-        // Force redirect mode — opens full payment page (no popup, no Quick Buy)
-        redirect: true,
-        callback_url: `https://www.hairlab.one/api/checkout/verify?order_id=${orderData.orderId}&razorpay_order_id=${orderData.razorpayOrderId}`,
-        handler: async function (response: any) {
-          try {
-            const verifyRes = await fetch("/api/checkout/verify", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                orderId: orderData.orderId,
-                razorpayOrderId: response.razorpay_order_id,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpaySignature: response.razorpay_signature,
-                paymentMethod: "online",
-              }),
-            });
-
-            if (verifyRes.ok) {
-              toast.success("Payment successful! Redirecting to confirmation...");
-              const orderId = orderData.orderId;
-              clear();
-              closeCart();
-              setCheckoutOpen(false);
-              setForm({
-                customerName: "",
-                customerEmail: "",
-                customerPhone: "",
-                shippingAddress: "",
-                shippingCity: "",
-                shippingPincode: "",
-                shippingState: "",
-              });
-              setOtpStep("idle");
-              setOtpCode("");
-              router.push(`/order-confirmation?id=${orderId}`);
-            } else {
-              toast.error("Payment verification failed. Please contact us.");
-            }
-          } catch (e) {
-            toast.error("Verification error. Please contact us.");
-          }
-        },
-        modal: {
-          ondismiss: function () {
-            toast.info("Payment popup closed. Your cart is saved.");
-          },
-        },
-      });
-
-      rzp.on("payment.failed", function (resp: any) {
-        toast.error(
-          `Payment failed: ${resp.error.description || "Unknown error"}`
-        );
-      });
-
-      rzp.open();
+      // REAL Razorpay — direct URL redirect (no SDK, no popup, no Quick Buy)
+      // Razorpay's hosted checkout page — works on ALL devices
+      const callbackUrl = `https://www.hairlab.one/api/checkout/verify?order_id=${orderData.orderId}`;
+      const cancelUrl = `https://www.hairlab.one?payment=cancelled`;
+      const checkoutUrl = `https://api.razorpay.com/v1/checkout/embedded?order_id=${orderData.razorpayOrderId}&key_id=${orderData.key}&amount=${orderData.amount}&currency=INR&name=HAIR+LAB.&description=Handcrafted+hair+care+ritual&prefill[name]=${encodeURIComponent(form.customerName)}&prefill[email]=${encodeURIComponent(form.customerEmail)}&prefill[contact]=${form.customerPhone}&theme[color]=%231A3D2A&callback_url=${encodeURIComponent(callbackUrl)}&cancel_url=${encodeURIComponent(cancelUrl)}`;
+      
+      window.location.href = checkoutUrl;
+      return;
     } catch (e: any) {
       console.error(e);
       toast.error(e.message || "Something went wrong");
