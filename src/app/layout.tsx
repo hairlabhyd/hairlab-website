@@ -134,6 +134,7 @@ export default function RootLayout({
             __html: JSON.stringify(structuredData),
           }}
         />
+        <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
       </head>
       <body
         className={`${playfair.variable} ${inter.variable} antialiased bg-[#F4ECD8] text-[#2C2416]`}

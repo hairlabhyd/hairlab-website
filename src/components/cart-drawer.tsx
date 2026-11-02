@@ -384,9 +384,23 @@ export function CartDrawer() {
       }
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error("Could not load Razorpay"));
-      document.body.appendChild(script);
+      script.async = true;
+      script.onload = () => {
+        if ((window as any).Razorpay) {
+          resolve();
+        } else {
+          reject(new Error("Razorpay loaded but not available"));
+        }
+      };
+      script.onerror = () => reject(new Error("Could not load Razorpay. Check your internet connection."));
+      document.head.appendChild(script);
+      
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        if (!(window as any).Razorpay) {
+          reject(new Error("Razorpay script timed out. Please try again."));
+        }
+      }, 10000);
     });
   }
 
