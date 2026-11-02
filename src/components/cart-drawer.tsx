@@ -210,6 +210,25 @@ export function CartDrawer() {
                 shipping_state: form.shippingState,
               },
               theme: { color: "#1A3D2A" },
+              config: {
+                display: {
+                  blocks: {
+                    banks: {
+                      name: "Pay using UPI, Card, or Net Banking",
+                      instruments: [
+                        { method: "upi" },
+                        { method: "card" },
+                        { method: "netbanking" },
+                        { method: "wallet" },
+                      ],
+                    },
+                  },
+                  sequence: ["block.banks"],
+                  preferences: {
+                    show_default_blocks: false,
+                  },
+                },
+              },
               handler: async function (response: any) {
                 try {
                   const verifyRes = await fetch("/api/checkout/verify", {
@@ -432,8 +451,25 @@ export function CartDrawer() {
           shipping_pincode: form.shippingPincode,
           shipping_state: form.shippingState,
         },
-        theme: {
-          color: "#1A3D2A",
+        theme: { color: "#1A3D2A" },
+        config: {
+          display: {
+            blocks: {
+              banks: {
+                name: "Pay using UPI, Card, or Net Banking",
+                instruments: [
+                  { method: "upi" },
+                  { method: "card" },
+                  { method: "netbanking" },
+                  { method: "wallet" },
+                ],
+              },
+            },
+            sequence: ["block.banks"],
+            preferences: {
+              show_default_blocks: false,
+            },
+          },
         },
         handler: async function (response: any) {
           try {
