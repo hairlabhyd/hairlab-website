@@ -210,25 +210,8 @@ export function CartDrawer() {
                 shipping_state: form.shippingState,
               },
               theme: { color: "#1A3D2A" },
-              config: {
-                display: {
-                  blocks: {
-                    banks: {
-                      name: "Pay using UPI, Card, or Net Banking",
-                      instruments: [
-                        { method: "upi" },
-                        { method: "card" },
-                        { method: "netbanking" },
-                        { method: "wallet" },
-                      ],
-                    },
-                  },
-                  sequence: ["block.banks"],
-                  preferences: {
-                    show_default_blocks: false,
-                  },
-                },
-              },
+              redirect: true,
+              callback_url: `https://www.hairlab.one/api/checkout/verify?order_id=${data.orderId}&razorpay_order_id=${data.razorpayOrderId}`,
               handler: async function (response: any) {
                 try {
                   const verifyRes = await fetch("/api/checkout/verify", {
@@ -429,7 +412,8 @@ export function CartDrawer() {
         return;
       }
 
-      // Real Razorpay flow
+      // Real Razorpay flow — use redirect mode (no popup, full page)
+      // This avoids ALL mobile popup blocking + Quick Buy issues
       await loadRazorpayScript();
 
       const rzp = new (window as any).Razorpay({
@@ -452,25 +436,9 @@ export function CartDrawer() {
           shipping_state: form.shippingState,
         },
         theme: { color: "#1A3D2A" },
-        config: {
-          display: {
-            blocks: {
-              banks: {
-                name: "Pay using UPI, Card, or Net Banking",
-                instruments: [
-                  { method: "upi" },
-                  { method: "card" },
-                  { method: "netbanking" },
-                  { method: "wallet" },
-                ],
-              },
-            },
-            sequence: ["block.banks"],
-            preferences: {
-              show_default_blocks: false,
-            },
-          },
-        },
+        // Force redirect mode — opens full payment page (no popup, no Quick Buy)
+        redirect: true,
+        callback_url: `https://www.hairlab.one/api/checkout/verify?order_id=${orderData.orderId}&razorpay_order_id=${orderData.razorpayOrderId}`,
         handler: async function (response: any) {
           try {
             const verifyRes = await fetch("/api/checkout/verify", {
