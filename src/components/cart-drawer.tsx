@@ -46,6 +46,7 @@ export function CartDrawer() {
   const [otpCode, setOtpCode] = useState("");
   const [otpSending, setOtpSending] = useState(false);
   const [otpVerifying, setOtpVerifying] = useState(false);
+  const [preCreatedOrder, setPreCreatedOrder] = useState<any>(null);
   const [otpResendTimer, setOtpResendTimer] = useState(0);
   const router = useRouter();
   const [form, setForm] = useState({
@@ -83,9 +84,21 @@ export function CartDrawer() {
     if (otpStep !== "idle" && form.customerEmail) {
       setOtpStep("idle");
       setOtpCode("");
+      setPreCreatedOrder(null);
     }
      
   }, [form.customerEmail]);
+
+  // Pre-create order when switching to online payment (if OTP verified)
+  useEffect(() => {
+    if (paymentMethod === "online" && otpStep === "verified" && !preCreatedOrder && form.customerName && form.customerEmail) {
+      preCreateOrder();
+    }
+    if (paymentMethod === "cod") {
+      setPreCreatedOrder(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentMethod, otpStep]);
 
   async function sendOtp() {
     if (!form.customerEmail) {
@@ -147,10 +160,33 @@ export function CartDrawer() {
 
       setOtpStep("verified");
       toast.success("Email verified! You can place your order now.");
+      
+      // Pre-create order in background (fixes mobile popup blocking)
+      if (paymentMethod === "online") {
+        preCreateOrder();
+      }
     } catch (e: any) {
       toast.error(e.message || "Verification failed");
     } finally {
       setOtpVerifying(false);
+    }
+  }
+
+  // Pre-create order when OTP verified — so Razorpay popup opens instantly on Pay click
+  async function preCreateOrder() {
+    try {
+      const res = await fetch("/api/checkout/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, items, paymentMethod }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPreCreatedOrder(data);
+        console.log("✓ Order pre-created:", data.orderId);
+      }
+    } catch (e) {
+      console.error("Pre-create order failed:", e);
     }
   }
 
@@ -187,32 +223,34 @@ export function CartDrawer() {
     setProcessing(true);
 
     try {
-      const createRes = await fetch("/api/checkout/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, items, paymentMethod }),
-      });
+      // Use pre-created order if available (fixes mobile popup blocking)
+      // Otherwise create order now (fallback)
+      let orderData = preCreatedOrder;
+      
+      if (!orderData) {
+        const createRes = await fetch("/api/checkout/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...form, items, paymentMethod }),
+        });
 
-      if (!createRes.ok) {
-        let errMsg = "Failed to create order";
-        try {
-          const err = await createRes.json();
-          errMsg = err.error || errMsg;
-          if (err.message) errMsg += ` (${err.message})`;
-          if (err.details) {
-            console.error("Order creation error details:", err.details);
+        if (!createRes.ok) {
+          let errMsg = "Failed to create order";
+          try {
+            const err = await createRes.json();
+            errMsg = err.error || errMsg;
+            if (err.message) errMsg += ` (${err.message})`;
+          } catch (parseErr) {
+            errMsg = "Server returned non-JSON response (status " + createRes.status + ")";
           }
-        } catch (parseErr) {
-          errMsg = "Server returned non-JSON response (status " + createRes.status + ")";
+          throw new Error(errMsg);
         }
-        throw new Error(errMsg);
-      }
 
-      let orderData;
-      try {
-        orderData = await createRes.json();
-      } catch (parseErr) {
-        throw new Error("Invalid response from server. Please try again.");
+        try {
+          orderData = await createRes.json();
+        } catch (parseErr) {
+          throw new Error("Invalid response from server. Please try again.");
+        }
       }
 
       // COD order — no Razorpay payment needed
