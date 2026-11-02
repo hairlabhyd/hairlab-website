@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,6 +47,7 @@ export function CartDrawer() {
   const [otpSending, setOtpSending] = useState(false);
   const [otpVerifying, setOtpVerifying] = useState(false);
   const [preCreatedOrder, setPreCreatedOrder] = useState<any>(null);
+  const razorpayInstance = useRef<any>(null);
   const [otpResendTimer, setOtpResendTimer] = useState(0);
   const router = useRouter();
   const [form, setForm] = useState({
@@ -97,7 +98,7 @@ export function CartDrawer() {
     if (paymentMethod === "cod") {
       setPreCreatedOrder(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [paymentMethod, otpStep]);
 
   async function sendOtp() {
@@ -172,7 +173,7 @@ export function CartDrawer() {
     }
   }
 
-  // Pre-create order when OTP verified — so Razorpay popup opens instantly on Pay click
+  // Pre-create order AND pre-initialize Razorpay instance (fixes ALL mobile popup issues)
   async function preCreateOrder() {
     try {
       const res = await fetch("/api/checkout/create-order", {
@@ -184,6 +185,81 @@ export function CartDrawer() {
         const data = await res.json();
         setPreCreatedOrder(data);
         console.log("✓ Order pre-created:", data.orderId);
+
+        // Also pre-load Razorpay script + create instance (so tap = instant open)
+        if (data.razorpayOrderId && !data.demo && !data.cod) {
+          try {
+            await loadRazorpayScript();
+            razorpayInstance.current = new (window as any).Razorpay({
+              key: data.key,
+              amount: data.amount,
+              currency: data.currency,
+              name: "HAIR LAB.",
+              description: "Handcrafted hair care ritual",
+              image: "/hairlab-logo-green.png",
+              order_id: data.razorpayOrderId,
+              prefill: {
+                name: form.customerName,
+                email: form.customerEmail,
+                contact: form.customerPhone,
+              },
+              notes: {
+                shipping_address: form.shippingAddress,
+                shipping_city: form.shippingCity,
+                shipping_pincode: form.shippingPincode,
+                shipping_state: form.shippingState,
+              },
+              theme: { color: "#1A3D2A" },
+              handler: async function (response: any) {
+                try {
+                  const verifyRes = await fetch("/api/checkout/verify", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      orderId: data.orderId,
+                      razorpayOrderId: response.razorpay_order_id,
+                      razorpayPaymentId: response.razorpay_payment_id,
+                      razorpaySignature: response.razorpay_signature,
+                      paymentMethod: "online",
+                    }),
+                  });
+
+                  if (verifyRes.ok) {
+                    toast.success("Payment successful! Redirecting...");
+                    clear();
+                    closeCart();
+                    setCheckoutOpen(false);
+                    setForm({
+                      customerName: "",
+                      customerEmail: "",
+                      customerPhone: "",
+                      shippingAddress: "",
+                      shippingCity: "",
+                      shippingPincode: "",
+                      shippingState: "",
+                    });
+                    setOtpStep("idle");
+                    setOtpCode("");
+                    router.push(`/order-confirmation?id=${data.orderId}`);
+                  } else {
+                    toast.error("Payment verification failed. Please contact us.");
+                  }
+                } catch (e) {
+                  toast.error("Verification error. Please contact us.");
+                }
+              },
+              modal: {
+                ondismiss: function () {
+                  toast.info("Payment popup closed. Your cart is saved.");
+                  setProcessing(false);
+                },
+              },
+            });
+            console.log("✓ Razorpay instance pre-initialized");
+          } catch (e) {
+            console.error("Pre-init Razorpay failed:", e);
+          }
+        }
       }
     } catch (e) {
       console.error("Pre-create order failed:", e);
@@ -223,8 +299,14 @@ export function CartDrawer() {
     setProcessing(true);
 
     try {
-      // Use pre-created order if available (fixes mobile popup blocking)
-      // Otherwise create order now (fallback)
+      // FASTEST PATH: Razorpay instance already pre-initialized → just open() (SYNCHRONOUS, no lag)
+      if (razorpayInstance.current) {
+        console.log("⚡ Using pre-initialized Razorpay — instant open");
+        razorpayInstance.current.open();
+        return;
+      }
+
+      // Use pre-created order if available
       let orderData = preCreatedOrder;
       
       if (!orderData) {
